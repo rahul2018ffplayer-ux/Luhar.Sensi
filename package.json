@@ -1,0 +1,16 @@
+{
+  "name": "luharsensi-ai",
+  "version": "7.0.0",
+  "private": true,
+  "description": "LuharSensi with AI phone identification and AI gaming assistant",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
