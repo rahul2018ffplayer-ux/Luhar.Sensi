@@ -1,3 +1,461 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LuharSensi — Choose Platform</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#08090d;color:#f4f6fb}body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);pointer-events:none}.container{width:min(1050px,92%);margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}.logo{font-size:22px;font-weight:900}.logo span,h1 span{color:#00e5ff}.hero{text-align:center;padding:70px 0 35px}.badge{display:inline-block;border:1px solid #ffffff18;background:#ffffff08;border-radius:999px;padding:8px 13px;font-size:12px;color:#aeb8c9}.hero h1{font-size:clamp(40px,7vw,70px);line-height:1;margin:20px 0 15px}.hero p{color:#9da7b8;max-width:620px;margin:auto;line-height:1.6}.platforms{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:35px 0}.platform{background:#11141b;border:1px solid #ffffff10;border-radius:22px;padding:38px 25px;text-align:center;cursor:pointer;transition:.2s;box-shadow:0 20px 60px #0008}.platform:hover{transform:translateY(-4px);border-color:#00e5ff66}.icon{font-size:58px}.platform h2{margin:16px 0 8px}.platform p{color:#8f99aa}.btn{display:inline-block;border:0;border-radius:14px;padding:14px 24px;background:#00e5ff;color:#001016;font-weight:900;text-decoration:none;margin-top:12px}.footer{text-align:center;color:#657083;font-size:12px;padding:30px 0 45px}@media(max-width:650px){.platforms{grid-template-columns:1fr}.hero{padding-top:40px}}
-</style></head><body><div class="container"><nav class="nav"><div class="logo">LUHAR<span>SENSI</span></div><div style="color:#7f8a9c;font-size:12px">AI GAMING SETTINGS</div></nav><section class="hero"><div class="badge">FREE FIRE SENSITIVITY PLATFORM</div><h1>Choose your <span>platform</span>.</h1><p>Select your device platform first. LuharSensi will use it when building your sensitivity setup.</p></section><section class="platforms"><div class="platform" data-platform="android"><div class="icon">🤖</div><h2>Android</h2><p>For Android phones and tablets. Includes a recommended starting DPI.</p><a class="btn" href="generator.html?platform=android">CONTINUE WITH ANDROID</a></div><div class="platform" data-platform="ios"><div class="icon">🍎</div><h2>iOS</h2><p>For iPhone and iPad. DPI is hidden because iOS has no Android-style system DPI setting.</p><a class="btn" href="generator.html?platform=ios">CONTINUE WITH iOS</a></div></section><div class="footer">© 2026 LuharSensi • Built for gamers</div></div><script>document.querySelectorAll('.platform').forEach(p=>p.addEventListener('click',e=>{if(e.target.tagName==='A')return;location.href='generator.html?platform='+p.dataset.platform}));</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C8YB323Q61');
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>LuharSensi — Choose Platform</title>
+  <meta name="description" content="LuharSensi Free Fire sensitivity tools.">
+
+  <style>
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Arial,sans-serif;
+      background:#08090d;
+      color:#f4f6fb
+    }
+
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),
+        radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);
+      pointer-events:none
+    }
+
+    .container{
+      width:min(1050px,92%);
+      margin:auto
+    }
+
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:22px 0
+    }
+
+    .logo{
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:.5px
+    }
+
+    .logo span{
+      color:#00e5ff
+    }
+
+    .hero{
+      text-align:center;
+      padding:55px 0 35px
+    }
+
+    .badge{
+      display:inline-block;
+      border:1px solid #ffffff18;
+      background:#ffffff08;
+      border-radius:999px;
+      padding:8px 13px;
+      font-size:12px;
+      color:#aeb8c9
+    }
+
+    .hero h1{
+      font-size:clamp(38px,7vw,70px);
+      line-height:.95;
+      margin:20px 0 15px
+    }
+
+    .hero h1 span{
+      color:#00e5ff
+    }
+
+    .hero p{
+      color:#9da7b8;
+      max-width:620px;
+      margin:auto;
+      line-height:1.6
+    }
+
+    .card{
+      background:#11141b;
+      border:1px solid #ffffff10;
+      border-radius:22px;
+      padding:26px;
+      box-shadow:0 20px 60px #0008;
+      margin:25px 0
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px
+    }
+
+    .field label{
+      display:block;
+      font-size:13px;
+      color:#aeb7c7;
+      margin-bottom:8px
+    }
+
+    .field select,
+    .field input{
+      width:100%;
+      padding:14px;
+      background:#0a0c11;
+      border:1px solid #ffffff15;
+      border-radius:12px;
+      color:#fff;
+      font-size:15px;
+      outline:none
+    }
+
+    .field input::placeholder{
+      color:#596273
+    }
+
+    .field select:focus,
+    .field input:focus{
+      border-color:#00e5ff55
+    }
+
+    .styles{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px
+    }
+
+    .style{
+      padding:13px;
+      border:1px solid #ffffff12;
+      background:#0a0c11;
+      border-radius:12px;
+      color:#b8c0ce;
+      cursor:pointer;
+      text-align:center
+    }
+
+    .style.active{
+      border-color:#00e5ff;
+      background:#00e5ff12;
+      color:#fff
+    }
+
+    .generate{
+      width:100%;
+      border:0;
+      border-radius:14px;
+      padding:16px;
+      margin-top:20px;
+      background:#00e5ff;
+      color:#001016;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer
+    }
+
+    .result{
+      display:none
+    }
+
+    .result.show{
+      display:block
+    }
+
+    .result h2{
+      margin-top:0
+    }
+
+    .settings{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px
+    }
+
+    .setting{
+      background:#0a0c11;
+      border:1px solid #ffffff0e;
+      border-radius:14px;
+      padding:16px
+    }
+
+    .setting small{
+      color:#8993a5
+    }
+
+    .setting strong{
+      display:block;
+      font-size:28px;
+      margin-top:5px;
+      color:#00e5ff
+    }
+
+    .dpi{
+      font-size:42px;
+      font-weight:900
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      margin-top:18px
+    }
+
+    .actions button{
+      flex:1;
+      padding:13px;
+      border-radius:12px;
+      border:1px solid #ffffff16;
+      background:#ffffff08;
+      color:#fff;
+      cursor:pointer
+    }
+
+    .note{
+      color:#8791a3;
+      font-size:12px;
+      line-height:1.5;
+      margin-top:18px
+    }
+
+    .footer{
+      text-align:center;
+      color:#657083;
+      font-size:12px;
+      padding:30px 0 45px
+    }
+
+    .navlinks{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap
+    }
+
+    .navlinks a{
+      color:#8f9aad;
+      text-decoration:none;
+      padding:9px 12px;
+      border-radius:10px;
+      font-size:13px
+    }
+
+    .navlinks a:hover,
+    .navlinks a.active{
+      color:#fff;
+      background:#ffffff09
+    }
+
+    .choice-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+      margin-top:25px
+    }
+
+    .platform{
+      display:block;
+      text-decoration:none;
+      color:#fff;
+      background:#11141b;
+      border:1px solid #ffffff10;
+      border-radius:22px;
+      padding:32px;
+      text-align:center;
+      transition:.2s
+    }
+
+    .platform:hover{
+      transform:translateY(-4px);
+      border-color:#00e5ff66
+    }
+
+    .platform .emoji{
+      font-size:48px
+    }
+
+    .platform h2{
+      margin:12px 0 7px
+    }
+
+    .platform p{
+      color:#8f99aa;
+      line-height:1.5
+    }
+
+    .small{
+      font-size:12px;
+      color:#748094
+    }
+
+    .chatbox{
+      min-height:130px;
+      width:100%;
+      resize:vertical;
+      padding:15px;
+      background:#0a0c11;
+      border:1px solid #ffffff15;
+      border-radius:12px;
+      color:#fff;
+      font:inherit
+    }
+
+    .messages{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:18px
+    }
+
+    .msg{
+      padding:14px;
+      border-radius:14px;
+      line-height:1.6;
+      white-space:pre-wrap
+    }
+
+    .msg.user{
+      background:#00e5ff12;
+      border:1px solid #00e5ff22
+    }
+
+    .msg.ai{
+      background:#0a0c11;
+      border:1px solid #ffffff0d;
+      color:#b9c2d0
+    }
+
+    .btnlink{
+      display:inline-block;
+      text-decoration:none
+    }
+
+    @media(max-width:650px){
+      .grid,
+      .settings{
+        grid-template-columns:1fr
+      }
+
+      .styles{
+        grid-template-columns:1fr
+      }
+
+      .hero{
+        padding-top:35px
+      }
+
+      .card{
+        padding:18px
+      }
+
+      .actions{
+        flex-direction:column
+      }
+
+      .choice-grid{
+        grid-template-columns:1fr
+      }
+
+      .navlinks{
+        width:100%
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <nav class="nav">
+      <a href="index.html" class="logo" style="text-decoration:none;color:#fff">
+        LUHAR<span>SENSI</span>
+      </a>
+
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="generator.html">Sensitivity</a>
+        <a href="ai.html">AI Chat</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="badge">WELCOME TO LUHAR SENSI</div>
+
+      <h1>Choose your <span>platform.</span></h1>
+
+      <p>
+        Start by selecting your device platform. Then build your sensitivity
+        setup or chat with LuharSensi AI.
+      </p>
+    </section>
+
+    <section class="choice-grid">
+
+      <a
+        class="platform"
+        href="generator.html?platform=Android"
+        onclick="localStorage.setItem('platform','Android')"
+      >
+        <div class="emoji">🤖</div>
+        <h2>Android</h2>
+        <p>
+          Generate Android-friendly DPI and sensitivity settings.
+        </p>
+        <span class="small">Continue with Android →</span>
+      </a>
+
+      <a
+        class="platform"
+        href="generator.html?platform=iOS"
+        onclick="localStorage.setItem('platform','iOS')"
+      >
+        <div class="emoji">🍎</div>
+        <h2>iOS</h2>
+        <p>
+          Generate iPhone/iPad sensitivity settings without Android DPI.
+        </p>
+        <span class="small">Continue with iOS →</span>
+      </a>
+
+    </section>
+
+    <section class="card" style="text-align:center;margin-top:28px">
+
+      <h2>What do you want to do?</h2>
+
+      <p style="color:#9da7b8;line-height:1.7">
+        Choose Android or iOS above, then use the Sensitivity Generator.
+        You can also ask LuharSensi AI about aim, recoil, movement, FPS and settings.
+      </p>
+
+      <a
+        class="generate btnlink"
+        style="padding:15px 22px;color:#001016"
+        href="ai.html"
+      >
+        🤖 Open LuharSensi AI
+      </a>
+
+    </section>
+
+    <div class="footer">
+      © 2026 LuharSensi • Built for gamers
+    </div>
+
+  </div>
+</body>
+</html>
