@@ -1,230 +1,233 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6579899788641813"
+     crossorigin="anonymous"></script>
+
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-C8YB323Q61');
-</script>
-
-<title>LuharSensi AI Chat</title>
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#08090d;color:#f4f6fb}
-body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);pointer-events:none}
-.container{width:min(900px,92%);margin:auto}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:10px}
-.logo{font-size:22px;font-weight:900}
-.logo span{color:#00e5ff}
-.links{display:flex;gap:8px}
-.links a{color:#aeb7c7;text-decoration:none;border:1px solid #ffffff12;padding:8px 12px;border-radius:10px;font-size:12px}
-.links a.active{color:#fff;border-color:#00e5ff66}
-.hero{text-align:center;padding:45px 0 25px}
-.hero h1{font-size:clamp(36px,6vw,60px);margin:18px 0}
-.hero h1 span{color:#00e5ff}
-.hero p{color:#9da7b8;line-height:1.6}
-.card{background:#11141b;border:1px solid #ffffff10;border-radius:22px;padding:25px;box-shadow:0 20px 60px #0008}
-.field input{width:100%;padding:16px;background:#0a0c11;border:1px solid #ffffff15;border-radius:12px;color:#fff;font-size:15px;outline:none}
-.ask{width:100%;border:0;border-radius:14px;padding:16px;margin-top:12px;background:#00e5ff;color:#001016;font-size:16px;font-weight:900;cursor:pointer}
-.answer{white-space:pre-wrap;background:#0a0c11;border:1px solid #ffffff0e;border-radius:14px;padding:18px;margin-top:18px;line-height:1.7;color:#dce2ec;display:none}
-.context{color:#7f8a9c;font-size:12px;margin-top:12px}
-.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
-.quick button{background:#ffffff08;color:#cbd2dd;border:1px solid #ffffff12;border-radius:10px;padding:9px 11px;cursor:pointer}
-.footer{text-align:center;color:#657083;font-size:12px;padding:30px 0 45px}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<nav class="nav">
-
-<div class="logo">
-LUHAR<span>SENSI</span>
-</div>
-
-<div class="links">
-<a href="index.html">Platform</a>
-<a href="generator.html">Generator</a>
-<a class="active" href="ai.html">AI Chat</a>
-</div>
-
-</nav>
-
-<section class="hero">
-
-<h1>
-LUHAR<span>SENSI AI</span>
-</h1>
-
-<p>
-Ask about aim, drag shots, sensitivity, recoil, lag, FPS or device settings.
-</p>
-
-</section>
-
-<section class="card">
-
-<div class="context" id="context">
-No verified phone selected yet.
-</div>
-
-<div class="field" style="margin-top:16px">
-
-<input
-id="question"
-placeholder="e.g. My aim feels too fast on my phone..."
->
-
-</div>
-
-<div class="quick">
-
-<button data-q="My aim feels too fast.">
-Aim too fast
-</button>
-
-<button data-q="My drag shots feel inconsistent.">
-Drag shots
-</button>
-
-<button data-q="My game feels laggy.">
-Lag / FPS
-</button>
-
-</div>
-
-<button class="ask" id="ask">
-ASK LUHARSENSI AI
-</button>
-
-<div class="answer" id="answer"></div>
-
-</section>
-
-<div class="footer">
-AI advice is a starting point, not a guarantee of headshots.
-• © 2026 LuharSensi
-</div>
-
-</div>
-
-<script>
-
-let device=null;
-
-try{
-device=JSON.parse(
-localStorage.getItem('luharDevice')||'null'
-);
-}catch{}
-
-const platform=
-localStorage.getItem('luharPlatform')||'android';
-
-const context=
-document.getElementById('context');
-
-if(device){
-
-context.textContent=
-`Using ${device.brand||''} ${device.model||''} • ${platform.toUpperCase()} • ${device.refresh||''}${device.refresh?' Hz':''}`;
-
-}
-
-document
-.querySelectorAll('.quick button')
-.forEach(b=>{
-
-b.onclick=()=>{
-
-question.value=b.dataset.q;
-
-question.focus();
-
-};
-
-});
-
-async function askAI(){
-
-const q=question.value.trim(),
-a=answer;
-
-if(!q){
-
-a.textContent=
-'Type your gaming problem first.';
-
-a.style.display='block';
-
-return;
-
-}
-
-a.textContent=
-'🤖 Thinking...';
-
-a.style.display='block';
-
-try{
-
-const r=await fetch(
-'/api/assistant',
-{
-method:'POST',
-headers:{
-'Content-Type':'application/json'
-},
-body:JSON.stringify({
-question:q,
-phone:device,
-playstyle:'movement',
-weapon:'Mixed / All weapons'
-})
-}
-);
-
-const j=await r.json();
-
-if(!r.ok)
-throw new Error(
-j.error||'AI assistant failed.'
-);
-
-a.textContent=j.answer;
-
-}catch(e){
-
-a.textContent=
-'⚠️ '+e.message;
-
-}
-
-}
-
-ask.onclick=askAI;
-
-question.addEventListener(
-'keydown',
-e=>{
-if(e.key==='Enter')
-askAI();
-}
-);
-
-</script>
-
-</body>
-</html>
-```
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script> 
+<script> 
+  window.dataLayer = window.dataLayer || []; 
+  function gtag(){dataLayer.push(arguments);} 
+ 
+  gtag('js', new Date()); 
+ 
+  gtag('config', 'G-C8YB323Q61'); 
+</script> 
+ 
+<title>LuharSensi AI Chat</title> 
+ 
+<style> 
+*{box-sizing:border-box} 
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#08090d;color:#f4f6fb} 
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);pointer-events:none} 
+.container{width:min(900px,92%);margin:auto} 
+.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:10px} 
+.logo{font-size:22px;font-weight:900} 
+.logo span{color:#00e5ff} 
+.links{display:flex;gap:8px} 
+.links a{color:#aeb7c7;text-decoration:none;border:1px solid #ffffff12;padding:8px 12px;border-radius:10px;font-size:12px} 
+.links a.active{color:#fff;border-color:#00e5ff66} 
+.hero{text-align:center;padding:45px 0 25px} 
+.hero h1{font-size:clamp(36px,6vw,60px);margin:18px 0} 
+.hero h1 span{color:#00e5ff} 
+.hero p{color:#9da7b8;line-height:1.6} 
+.card{background:#11141b;border:1px solid #ffffff10;border-radius:22px;padding:25px;box-shadow:0 20px 60px #0008} 
+.field input{width:100%;padding:16px;background:#0a0c11;border:1px solid #ffffff15;border-radius:12px;color:#fff;font-size:15px;outline:none} 
+.ask{width:100%;border:0;border-radius:14px;padding:16px;margin-top:12px;background:#00e5ff;color:#001016;font-size:16px;font-weight:900;cursor:pointer} 
+.answer{white-space:pre-wrap;background:#0a0c11;border:1px solid #ffffff0e;border-radius:14px;padding:18px;margin-top:18px;line-height:1.7;color:#dce2ec;display:none} 
+.context{color:#7f8a9c;font-size:12px;margin-top:12px} 
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px} 
+.quick button{background:#ffffff08;color:#cbd2dd;border:1px solid #ffffff12;border-radius:10px;padding:9px 11px;cursor:pointer} 
+.footer{text-align:center;color:#657083;font-size:12px;padding:30px 0 45px} 
+</style> 
+</head> 
+ 
+<body> 
+ 
+<div class="container"> 
+ 
+<nav class="nav"> 
+ 
+<div class="logo"> 
+LUHAR<span>SENSI</span> 
+</div> 
+ 
+<div class="links"> 
+<a href="index.html">Platform</a> 
+<a href="generator.html">Generator</a> 
+<a class="active" href="ai.html">AI Chat</a> 
+</div> 
+ 
+</nav> 
+ 
+<section class="hero"> 
+ 
+<h1> 
+LUHAR<span>SENSI AI</span> 
+</h1> 
+ 
+<p> 
+Ask about aim, drag shots, sensitivity, recoil, lag, FPS or device settings. 
+</p> 
+ 
+</section> 
+ 
+<section class="card"> 
+ 
+<div class="context" id="context"> 
+No verified phone selected yet. 
+</div> 
+ 
+<div class="field" style="margin-top:16px"> 
+ 
+<input 
+id="question" 
+placeholder="e.g. My aim feels too fast on my phone..." 
+> 
+ 
+</div> 
+ 
+<div class="quick"> 
+ 
+<button data-q="My aim feels too fast."> 
+Aim too fast 
+</button> 
+ 
+<button data-q="My drag shots feel inconsistent."> 
+Drag shots 
+</button> 
+ 
+<button data-q="My game feels laggy."> 
+Lag / FPS 
+</button> 
+ 
+</div> 
+ 
+<button class="ask" id="ask"> 
+ASK LUHARSENSI AI 
+</button> 
+ 
+<div class="answer" id="answer"></div> 
+ 
+</section> 
+ 
+<div class="footer"> 
+AI advice is a starting point, not a guarantee of headshots. 
+• © 2026 LuharSensi 
+</div> 
+ 
+</div> 
+ 
+<script> 
+ 
+let device=null; 
+ 
+try{ 
+device=JSON.parse( 
+localStorage.getItem('luharDevice')||'null' 
+); 
+}catch{} 
+ 
+const platform= 
+localStorage.getItem('luharPlatform')||'android'; 
+ 
+const context= 
+document.getElementById('context'); 
+ 
+if(device){ 
+ 
+context.textContent= 
+`Using ${device.brand||''} ${device.model||''} • ${platform.toUpperCase()} • ${device.refresh||''}${device.refresh?' Hz':''}`; 
+ 
+} 
+ 
+document 
+.querySelectorAll('.quick button') 
+.forEach(b=>{ 
+ 
+b.onclick=()=>{ 
+ 
+question.value=b.dataset.q; 
+ 
+question.focus(); 
+ 
+}; 
+ 
+}); 
+ 
+async function askAI(){ 
+ 
+const q=question.value.trim(), 
+a=answer; 
+ 
+if(!q){ 
+ 
+a.textContent= 
+'Type your gaming problem first.'; 
+ 
+a.style.display='block'; 
+ 
+return; 
+ 
+} 
+ 
+a.textContent= 
+'🤖 Thinking...'; 
+ 
+a.style.display='block'; 
+ 
+try{ 
+ 
+const r=await fetch( 
+'/api/assistant', 
+{ 
+method:'POST', 
+headers:{ 
+'Content-Type':'application/json' 
+}, 
+body:JSON.stringify({ 
+question:q, 
+phone:device, 
+playstyle:'movement', 
+weapon:'Mixed / All weapons' 
+}) 
+} 
+); 
+ 
+const j=await r.json(); 
+ 
+if(!r.ok) 
+throw new Error( 
+j.error||'AI assistant failed.' 
+); 
+ 
+a.textContent=j.answer; 
+ 
+}catch(e){ 
+ 
+a.textContent= 
+'⚠️ '+e.message; 
+ 
+} 
+ 
+} 
+ 
+ask.onclick=askAI; 
+ 
+question.addEventListener( 
+'keydown', 
+e=>{ 
+if(e.key==='Enter') 
+askAI(); 
+} 
+); 
+ 
+</script> 
+ 
+</body> 
+</html> 
