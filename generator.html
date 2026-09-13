@@ -1,4 +1,593 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LuharSensi — Sensitivity Generator</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#08090d;color:#f4f6fb}body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);pointer-events:none}.container{width:min(1050px,92%);margin:auto}.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:10px}.logo{font-size:22px;font-weight:900}.logo span{color:#00e5ff}.links{display:flex;gap:8px}.links a{color:#aeb7c7;text-decoration:none;border:1px solid #ffffff12;padding:8px 12px;border-radius:10px;font-size:12px}.links a.active{color:#fff;border-color:#00e5ff66}.hero{text-align:center;padding:40px 0 25px}.badge{display:inline-block;border:1px solid #ffffff18;background:#ffffff08;border-radius:999px;padding:8px 13px;font-size:12px;color:#aeb8c9}.hero h1{font-size:clamp(34px,6vw,58px);margin:18px 0 12px}.hero h1 span{color:#00e5ff}.hero p{color:#9da7b8;line-height:1.6}.card{background:#11141b;border:1px solid #ffffff10;border-radius:22px;padding:26px;box-shadow:0 20px 60px #0008;margin:20px 0}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.field label{display:block;font-size:13px;color:#aeb7c7;margin-bottom:8px}.field select,.field input{width:100%;padding:14px;background:#0a0c11;border:1px solid #ffffff15;border-radius:12px;color:#fff;font-size:15px;outline:none}.styles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.style{padding:13px;border:1px solid #ffffff12;background:#0a0c11;border-radius:12px;color:#b8c0ce;cursor:pointer;text-align:center}.style.active{border-color:#00e5ff;background:#00e5ff12;color:#fff}.generate{width:100%;border:0;border-radius:14px;padding:16px;margin-top:20px;background:#00e5ff;color:#001016;font-size:16px;font-weight:900;cursor:pointer}.result{display:none}.result.show{display:block}.settings{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.setting{background:#0a0c11;border:1px solid #ffffff0e;border-radius:14px;padding:16px}.setting small{color:#8993a5}.setting strong{display:block;font-size:28px;margin-top:5px;color:#00e5ff}.dpi{font-size:42px;font-weight:900}.actions{display:flex;gap:10px;margin-top:18px}.actions button{flex:1;padding:13px;border-radius:12px;border:1px solid #ffffff16;background:#ffffff08;color:#fff;cursor:pointer}.note{color:#8791a3;font-size:12px;line-height:1.5;margin-top:18px}.footer{text-align:center;color:#657083;font-size:12px;padding:30px 0 45px}@media(max-width:650px){.grid,.settings{grid-template-columns:1fr}.styles{grid-template-columns:1fr}.actions{flex-direction:column}}
-</style></head><body><div class="container"><nav class="nav"><div class="logo">LUHAR<span>SENSI</span></div><div class="links"><a href="index.html">Platform</a><a class="active" href="generator.html">Generator</a><a href="ai.html">AI Chat</a></div></nav><section class="hero"><div class="badge">FREE FIRE SETTINGS GENERATOR</div><h1>Generate your <span>sensitivity</span>.</h1><p>Choose your phone, playstyle and weapon preference. LuharSensi generates a device-informed starting setup.</p></section><section class="card"><div class="grid"><div class="field"><label>PLATFORM</label><select id="platform"><option value="android">Android</option><option value="ios">iOS</option></select></div><div class="field"><label>PHONE MODEL</label><input id="phone" type="text" placeholder="e.g. Redmi Note 10" autocomplete="off"></div><div class="field"><label>GAME</label><select id="game"><option>Free Fire</option><option>Free Fire MAX</option></select></div><div class="field"><label>MAIN WEAPON</label><select id="weapon"><option>Mixed / All weapons</option><option>SMG</option><option>AR</option><option>Shotgun</option><option>Sniper</option></select></div></div><div id="deviceStatus" class="note" style="margin-top:14px">Type the phone naturally — LuharSensi AI will verify the model before generating settings.</div><div style="margin-top:20px" class="field"><label>PLAYSTYLE</label><div class="styles"><div class="style active" data-style="movement">🏃 Movement</div><div class="style" data-style="balanced">⚖️ Balanced</div><div class="style" data-style="accuracy">🎯 Accuracy</div></div></div><button class="generate" id="generate">ANALYZE PHONE & GENERATE ⚡</button></section><section class="card result" id="result"><h2>Device-informed setup</h2><div id="deviceSummary" class="note" style="margin-bottom:18px"></div><div id="dpiBlock"><div style="color:#8e98aa;font-size:13px;margin-bottom:8px">Recommended starting DPI</div><div class="dpi" id="dpi">900</div></div><div id="iphoneNote" class="note" style="display:none;margin:8px 0 18px">iPhone/iPad detected: DPI is hidden because iOS does not provide an Android-style system DPI setting.</div><div class="settings"><div class="setting"><small>General</small><strong id="general">190</strong></div><div class="setting"><small>Red Dot</small><strong id="red">180</strong></div><div class="setting"><small>2× Scope</small><strong id="two">170</strong></div><div class="setting"><small>4× Scope</small><strong id="four">160</strong></div><div class="setting"><small>Sniper</small><strong id="sniper">90</strong></div><div class="setting"><small>Free Look</small><strong id="free">140</strong></div></div><div class="actions"><button id="copy">📋 Copy settings</button><button id="again">🔄 Re-analyze</button></div><div id="why" class="note"></div><div class="note">These are device-informed starting recommendations, not guaranteed “headshot” settings.</div></section><div class="footer">Need help? <a href="ai.html" style="color:#00e5ff">Ask LuharSensi AI</a> • © 2026 LuharSensi</div></div><script>
-const params=new URLSearchParams(location.search);const platformEl=document.getElementById('platform');platformEl.value=params.get('platform')==='ios'?'ios':'android';let selected='movement',currentDevice=null;const styles=document.querySelectorAll('.style');styles.forEach(x=>x.onclick=()=>{styles.forEach(y=>y.classList.remove('active'));x.classList.add('active');selected=x.dataset.style});function clamp(n,a,b){return Math.round(Math.max(a,Math.min(b,n)))}function setStatus(t,bad=false){const s=document.getElementById('deviceStatus');s.textContent=t;s.style.color=bad?'#ff9b9b':''}function localCalculate(d){let base=selected==='movement'?184:selected==='balanced'?174:162;const refresh=Number(d.refresh||60),performance=Number(d.performance||60),touch=Number(d.touch||75);if(refresh>=120)base+=4;else if(refresh<=60)base-=4;base+=Math.round((touch-80)/5)+Math.round((performance-70)/12);const weapon=document.getElementById('weapon').value;if(weapon==='Shotgun')base+=7;if(weapon==='Sniper')base-=10;const dpi=d.ios?null:clamp(480+performance*.9+touch*.6+(refresh>90?25:0),400,900);return{dpi,base,red:clamp(base-7,50,200),two:clamp(base-17,50,200),four:clamp(base-29,40,200),sn:clamp(base-91,40,150),free:clamp(base-47,50,200)}}async function identify(input){const r=await fetch('/api/identify-phone',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:input})});if(!r.ok){let m='Phone identification failed.';try{const j=await r.json();if(j.error)m=j.error}catch{}throw new Error(m)}return r.json()}function showResult(d){currentDevice=d;localStorage.setItem('luharDevice',JSON.stringify(d));localStorage.setItem('luharPlatform',platformEl.value);const v=localCalculate(d);document.getElementById('dpi').textContent=v.dpi??'—';document.getElementById('dpiBlock').style.display=d.ios?'none':'block';document.getElementById('iphoneNote').style.display=d.ios?'block':'none';general.textContent=v.base;red.textContent=v.red;two.textContent=v.two;four.textContent=v.four;sniper.textContent=v.sn;free.textContent=v.free;const bits=[d.brand,d.model].filter(Boolean),spec=[];if(d.refresh)spec.push(`${d.refresh} Hz`);if(d.performance)spec.push(`performance ${d.performance}/100`);if(d.touch)spec.push(`touch ${d.touch}/100`);deviceSummary.textContent=`${bits.join(' ')}${spec.length?' • '+spec.join(' • '):''}`;why.textContent=`Why these settings: ${selected} playstyle + ${document.getElementById('weapon').value.toLowerCase()} preference + available device characteristics.`;result.classList.add('show');result.scrollIntoView({behavior:'smooth',block:'start'})}async function analyze(){const input=phone.value.trim();if(!input){setStatus('Enter a phone model first.',true);result.classList.remove('show');return}setStatus('🤖 AI is identifying the phone...');result.classList.remove('show');try{const d=await identify(input);if(!d.verified||!d.model||Number(d.confidence||0)<.75){setStatus('⚠️ Phone could not be verified confidently.',true);return}d.performance=clamp(Number(d.performance||60),1,100);d.touch=clamp(Number(d.touch||75),1,100);d.refresh=Math.max(30,Number(d.refresh||60));d.ios=platformEl.value==='ios'||!!d.ios;setStatus(`✅ AI identified: ${d.brand} ${d.model}`);showResult(d)}catch(e){setStatus('⚠️ '+e.message,true)}}platformEl.onchange=()=>{localStorage.setItem('luharPlatform',platformEl.value)};generate.onclick=analyze;again.onclick=analyze;copy.onclick=async()=>{const t=`LuharSensi Settings\nPlatform: ${platformEl.value}\nPhone: ${currentDevice?currentDevice.brand+' '+currentDevice.model:phone.value}\nDPI: ${dpiBlock.style.display==='none'?'Not applicable on iOS':dpi.textContent}\nGeneral: ${general.textContent}\nRed Dot: ${red.textContent}\n2× Scope: ${two.textContent}\n4× Scope: ${four.textContent}\nSniper: ${sniper.textContent}\nFree Look: ${free.textContent}`;try{await navigator.clipboard.writeText(t);copy.textContent='✅ Copied!';setTimeout(()=>copy.textContent='📋 Copy settings',1400)}catch{alert(t)}};phone.addEventListener('keydown',e=>{if(e.key==='Enter')analyze()});</script></body></html>
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C8YB323Q61');
+</script>
+
+<title>LuharSensi — Sensitivity Generator</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#08090d;color:#f4f6fb}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);pointer-events:none}
+.container{width:min(1050px,92%);margin:auto}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:10px}
+.logo{font-size:22px;font-weight:900}
+.logo span{color:#00e5ff}
+.links{display:flex;gap:8px}
+.links a{color:#aeb7c7;text-decoration:none;border:1px solid #ffffff12;padding:8px 12px;border-radius:10px;font-size:12px}
+.links a.active{color:#fff;border-color:#00e5ff66}
+.hero{text-align:center;padding:40px 0 25px}
+.badge{display:inline-block;border:1px solid #ffffff18;background:#ffffff08;border-radius:999px;padding:8px 13px;font-size:12px;color:#aeb8c9}
+.hero h1{font-size:clamp(34px,6vw,58px);margin:18px 0 12px}
+.hero h1 span{color:#00e5ff}
+.hero p{color:#9da7b8;line-height:1.6}
+.card{background:#11141b;border:1px solid #ffffff10;border-radius:22px;padding:26px;box-shadow:0 20px 60px #0008;margin:20px 0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.field label{display:block;font-size:13px;color:#aeb7c7;margin-bottom:8px}
+.field select,.field input{width:100%;padding:14px;background:#0a0c11;border:1px solid #ffffff15;border-radius:12px;color:#fff;font-size:15px;outline:none}
+.styles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.style{padding:13px;border:1px solid #ffffff12;background:#0a0c11;border-radius:12px;color:#b8c0ce;cursor:pointer;text-align:center}
+.style.active{border-color:#00e5ff;background:#00e5ff12;color:#fff}
+.generate{width:100%;border:0;border-radius:14px;padding:16px;margin-top:20px;background:#00e5ff;color:#001016;font-size:16px;font-weight:900;cursor:pointer}
+.result{display:none}
+.result.show{display:block}
+.settings{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.setting{background:#0a0c11;border:1px solid #ffffff0e;border-radius:14px;padding:16px}
+.setting small{color:#8993a5}
+.setting strong{display:block;font-size:28px;margin-top:5px;color:#00e5ff}
+.dpi{font-size:42px;font-weight:900}
+.actions{display:flex;gap:10px;margin-top:18px}
+.actions button{flex:1;padding:13px;border-radius:12px;border:1px solid #ffffff16;background:#ffffff08;color:#fff;cursor:pointer}
+.note{color:#8791a3;font-size:12px;line-height:1.5;margin-top:18px}
+.footer{text-align:center;color:#657083;font-size:12px;padding:30px 0 45px}
+
+@media(max-width:650px){
+.grid,.settings{grid-template-columns:1fr}
+.styles{grid-template-columns:1fr}
+.actions{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<nav class="nav">
+<div class="logo">LUHAR<span>SENSI</span></div>
+
+<div class="links">
+<a href="index.html">Platform</a>
+<a class="active" href="generator.html">Generator</a>
+<a href="ai.html">AI Chat</a>
+</div>
+</nav>
+
+<section class="hero">
+
+<div class="badge">FREE FIRE SETTINGS GENERATOR</div>
+
+<h1>Generate your <span>sensitivity</span>.</h1>
+
+<p>
+Choose your phone, playstyle and weapon preference.
+LuharSensi generates a device-informed starting setup.
+</p>
+
+</section>
+
+<section class="card">
+
+<div class="grid">
+
+<div class="field">
+<label>PLATFORM</label>
+
+<select id="platform">
+<option value="android">Android</option>
+<option value="ios">iOS</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>PHONE MODEL</label>
+
+<input id="phone" type="text"
+placeholder="e.g. Redmi Note 10"
+autocomplete="off">
+
+</div>
+
+<div class="field">
+<label>GAME</label>
+
+<select id="game">
+<option>Free Fire</option>
+<option>Free Fire MAX</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>MAIN WEAPON</label>
+
+<select id="weapon">
+<option>Mixed / All weapons</option>
+<option>SMG</option>
+<option>AR</option>
+<option>Shotgun</option>
+<option>Sniper</option>
+</select>
+
+</div>
+
+</div>
+
+<div id="deviceStatus" class="note" style="margin-top:14px">
+Type the phone naturally — LuharSensi AI will verify the model before generating settings.
+</div>
+
+<div style="margin-top:20px" class="field">
+
+<label>PLAYSTYLE</label>
+
+<div class="styles">
+
+<div class="style active" data-style="movement">
+🏃 Movement
+</div>
+
+<div class="style" data-style="balanced">
+⚖️ Balanced
+</div>
+
+<div class="style" data-style="accuracy">
+🎯 Accuracy
+</div>
+
+</div>
+
+</div>
+
+<button class="generate" id="generate">
+ANALYZE PHONE & GENERATE ⚡
+</button>
+
+</section>
+
+<section class="card result" id="result">
+
+<h2>Device-informed setup</h2>
+
+<div id="deviceSummary"
+class="note"
+style="margin-bottom:18px">
+</div>
+
+<div id="dpiBlock">
+
+<div style="color:#8e98aa;font-size:13px;margin-bottom:8px">
+Recommended starting DPI
+</div>
+
+<div class="dpi" id="dpi">
+900
+</div>
+
+</div>
+
+<div id="iphoneNote"
+class="note"
+style="display:none;margin:8px 0 18px">
+
+iPhone/iPad detected: DPI is hidden because iOS does not provide an Android-style system DPI setting.
+
+</div>
+
+<div class="settings">
+
+<div class="setting">
+<small>General</small>
+<strong id="general">190</strong>
+</div>
+
+<div class="setting">
+<small>Red Dot</small>
+<strong id="red">180</strong>
+</div>
+
+<div class="setting">
+<small>2× Scope</small>
+<strong id="two">170</strong>
+</div>
+
+<div class="setting">
+<small>4× Scope</small>
+<strong id="four">160</strong>
+</div>
+
+<div class="setting">
+<small>Sniper</small>
+<strong id="sniper">90</strong>
+</div>
+
+<div class="setting">
+<small>Free Look</small>
+<strong id="free">140</strong>
+</div>
+
+</div>
+
+<div class="actions">
+
+<button id="copy">
+📋 Copy settings
+</button>
+
+<button id="again">
+🔄 Re-analyze
+</button>
+
+</div>
+
+<div id="why" class="note"></div>
+
+<div class="note">
+These are device-informed starting recommendations, not guaranteed “headshot” settings.
+</div>
+
+</section>
+
+<div class="footer">
+
+Need help?
+<a href="ai.html" style="color:#00e5ff">
+Ask LuharSensi AI
+</a>
+
+• © 2026 LuharSensi
+
+</div>
+
+</div>
+
+<script>
+
+const params=new URLSearchParams(location.search);
+
+const platformEl=document.getElementById('platform');
+
+platformEl.value=
+params.get('platform')==='ios'?'ios':'android';
+
+let selected='movement',
+currentDevice=null;
+
+const styles=document.querySelectorAll('.style');
+
+styles.forEach(x=>x.onclick=()=>{
+
+styles.forEach(y=>y.classList.remove('active'));
+
+x.classList.add('active');
+
+selected=x.dataset.style;
+
+});
+
+function clamp(n,a,b){
+
+return Math.round(
+Math.max(a,Math.min(b,n))
+);
+
+}
+
+function setStatus(t,bad=false){
+
+const s=document.getElementById('deviceStatus');
+
+s.textContent=t;
+
+s.style.color=bad?'#ff9b9b':'';
+
+}
+
+function localCalculate(d){
+
+let base=
+selected==='movement'
+?184
+:selected==='balanced'
+?174
+:162;
+
+const refresh=Number(d.refresh||60),
+performance=Number(d.performance||60),
+touch=Number(d.touch||75);
+
+if(refresh>=120)
+base+=4;
+else if(refresh<=60)
+base-=4;
+
+base+=Math.round((touch-80)/5)
++Math.round((performance-70)/12);
+
+const weapon=
+document.getElementById('weapon').value;
+
+if(weapon==='Shotgun')
+base+=7;
+
+if(weapon==='Sniper')
+base-=10;
+
+const dpi=d.ios
+?null
+:clamp(
+480+
+performance*.9+
+touch*.6+
+(refresh>90?25:0),
+400,
+900
+);
+
+return{
+
+dpi,
+
+base,
+
+red:clamp(base-7,50,200),
+
+two:clamp(base-17,50,200),
+
+four:clamp(base-29,40,200),
+
+sn:clamp(base-91,40,150),
+
+free:clamp(base-47,50,200)
+
+};
+
+}
+
+async function identify(input){
+
+const r=await fetch(
+'/api/identify-phone',
+{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify({
+phone:input
+})
+}
+);
+
+if(!r.ok){
+
+let m='Phone identification failed.';
+
+try{
+
+const j=await r.json();
+
+if(j.error)
+m=j.error;
+
+}catch{}
+
+throw new Error(m);
+
+}
+
+return r.json();
+
+}
+
+function showResult(d){
+
+currentDevice=d;
+
+localStorage.setItem(
+'luharDevice',
+JSON.stringify(d)
+);
+
+localStorage.setItem(
+'luharPlatform',
+platformEl.value
+);
+
+const v=localCalculate(d);
+
+document.getElementById('dpi').textContent=
+v.dpi??'—';
+
+document.getElementById('dpiBlock').style.display=
+d.ios?'none':'block';
+
+document.getElementById('iphoneNote').style.display=
+d.ios?'block':'none';
+
+general.textContent=v.base;
+
+red.textContent=v.red;
+
+two.textContent=v.two;
+
+four.textContent=v.four;
+
+sniper.textContent=v.sn;
+
+free.textContent=v.free;
+
+const bits=[
+d.brand,
+d.model
+].filter(Boolean);
+
+const spec=[];
+
+if(d.refresh)
+spec.push(`${d.refresh} Hz`);
+
+if(d.performance)
+spec.push(`performance ${d.performance}/100`);
+
+if(d.touch)
+spec.push(`touch ${d.touch}/100`);
+
+deviceSummary.textContent=
+`${bits.join(' ')}${
+spec.length?' • '+spec.join(' • '):''
+}`;
+
+why.textContent=
+`Why these settings: ${selected} playstyle + ${
+document.getElementById('weapon').value.toLowerCase()
+} preference + available device characteristics.`;
+
+result.classList.add('show');
+
+result.scrollIntoView({
+behavior:'smooth',
+block:'start'
+});
+
+}
+
+async function analyze(){
+
+const input=phone.value.trim();
+
+if(!input){
+
+setStatus(
+'Enter a phone model first.',
+true
+);
+
+result.classList.remove('show');
+
+return;
+
+}
+
+setStatus(
+'🤖 AI is identifying the phone...'
+);
+
+result.classList.remove('show');
+
+try{
+
+const d=await identify(input);
+
+if(
+!d.verified||
+!d.model||
+Number(d.confidence||0)<.75
+){
+
+setStatus(
+'⚠️ Phone could not be verified confidently.',
+true
+);
+
+return;
+
+}
+
+d.performance=
+clamp(
+Number(d.performance||60),
+1,
+100
+);
+
+d.touch=
+clamp(
+Number(d.touch||75),
+1,
+100
+);
+
+d.refresh=
+Math.max(
+30,
+Number(d.refresh||60)
+);
+
+d.ios=
+platformEl.value==='ios'||
+!!d.ios;
+
+setStatus(
+`✅ AI identified: ${d.brand} ${d.model}`
+);
+
+showResult(d);
+
+}catch(e){
+
+setStatus(
+'⚠️ '+e.message,
+true
+);
+
+}
+
+}
+
+platformEl.onchange=()=>{
+
+localStorage.setItem(
+'luharPlatform',
+platformEl.value
+);
+
+};
+
+generate.onclick=analyze;
+
+again.onclick=analyze;
+
+copy.onclick=async()=>{
+
+const t=
+`LuharSensi Settings
+Platform: ${platformEl.value}
+Phone: ${
+currentDevice
+?currentDevice.brand+' '+currentDevice.model
+:phone.value
+}
+DPI: ${
+dpiBlock.style.display==='none'
+?'Not applicable on iOS'
+:dpi.textContent
+}
+General: ${general.textContent}
+Red Dot: ${red.textContent}
+2× Scope: ${two.textContent}
+4× Scope: ${four.tex
+```
