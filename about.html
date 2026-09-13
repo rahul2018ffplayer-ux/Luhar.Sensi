@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - LuharSensi</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Inter,system-ui,Arial,sans-serif;
+    background:#08090d;
+    color:#f4f6fb;
+}
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at 20% 10%,rgba(80,80,255,.10),transparent 30%),
+    radial-gradient(circle at 80% 90%,rgba(0,220,255,.07),transparent 30%);
+    pointer-events:none;
+}
+header{
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 7%;
+    border-bottom:1px solid #20232c;
+    background:rgba(8,9,13,.88);
+    backdrop-filter:blur(12px);
+}
+.logo{
+    font-size:24px;
+    font-weight:800;
+    color:#fff;
+    text-decoration:none;
+}
+.logo span{color:#6c63ff}
+nav{
+    display:flex;
+    gap:22px;
+}
+nav a{
+    color:#aeb4c2;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+}
+nav a:hover{color:#fff}
+.container{
+    position:relative;
+    z-index:1;
+    max-width:900px;
+    margin:auto;
+    padding:70px 20px 100px;
+}
+.hero{text-align:center;margin-bottom:45px}
+.hero h1{
+    font-size:clamp(35px,6vw,58px);
+    margin:0 0 14px;
+}
+.hero p{
+    color:#9da4b4;
+    font-size:17px;
+    line-height:1.7;
+}
+.card{
+    background:#101219;
+    border:1px solid #242833;
+    border-radius:18px;
+    padding:30px;
+    margin-bottom:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+.card h2{
+    margin-top:0;
+    font-size:23px;
+}
+.card p,.card li{
+    color:#aeb4c2;
+    line-height:1.8;
+}
+.card ul{padding-left:22px}
+footer{
+    position:relative;
+    z-index:1;
+    border-top:1px solid #20232c;
+    padding:28px 20px;
+    text-align:center;
+    color:#777e8d;
+    font-size:13px;
+}
+footer a{
+    color:#999fac;
+    text-decoration:none;
+    margin:0 8px;
+}
+@media(max-width:650px){
+    header{padding:16px 20px}
+    nav{gap:12px}
+    nav a{font-size:12px}
+    .card{padding:23px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">Luhar<span>Sensi</span></a>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="generator.html">Generator</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>About LuharSensi</h1>
+        <p>
+            Simple gaming tools designed to help players find,
+            test and improve their settings.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>What is LuharSensi?</h2>
+        <p>
+            LuharSensi is a gaming-focused website created to provide
+            useful tools and information for players. Our goal is to make
+            finding suitable sensitivity settings and gaming resources
+            simple and easy.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>Our Goal</h2>
+        <p>
+            We want to build simple, fast and useful gaming tools that
+            players can access from both phones and computers without
+            complicated setup.
+        </p>
+    </section>
+
+    <section class="card">
+        <h2>What We Provide</h2>
+        <ul>
+            <li>Gaming sensitivity tools</li>
+            <li>Gaming-related guides and information</li>
+            <li>Useful online tools</li>
+            <li>Simple and mobile-friendly experiences</li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2>Our Approach</h2>
+        <p>
+            LuharSensi is continuously being improved. We listen to
+            feedback and work on making our tools faster, easier to use,
+            and more useful for the gaming community.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 LuharSensi. All rights reserved.</p>
+    <p>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+    </p>
+</footer>
+
+</body>
+</html>
