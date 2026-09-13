@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,7 +24,7 @@ body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle 
 .nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:10px}
 .logo{font-size:22px;font-weight:900}
 .logo span{color:#00e5ff}
-.links{display:flex;gap:8px}
+.links{display:flex;gap:8px;flex-wrap:wrap}
 .links a{color:#aeb7c7;text-decoration:none;border:1px solid #ffffff12;padding:8px 12px;border-radius:10px;font-size:12px}
 .links a.active{color:#fff;border-color:#00e5ff66}
 .hero{text-align:center;padding:40px 0 25px}
@@ -57,6 +56,8 @@ body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle 
 .grid,.settings{grid-template-columns:1fr}
 .styles{grid-template-columns:1fr}
 .actions{flex-direction:column}
+.nav{align-items:flex-start;flex-direction:column}
+.links{width:100%}
 }
 </style>
 </head>
@@ -66,13 +67,18 @@ body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle 
 <div class="container">
 
 <nav class="nav">
+
 <div class="logo">LUHAR<span>SENSI</span></div>
 
 <div class="links">
 <a href="index.html">Platform</a>
 <a class="active" href="generator.html">Generator</a>
 <a href="ai.html">AI Chat</a>
+<a href="about.html">About</a>
+<a href="privacy.html">Privacy</a>
+<a href="contact.html">Contact</a>
 </div>
+
 </nav>
 
 <section class="hero">
@@ -105,9 +111,12 @@ LuharSensi generates a device-informed starting setup.
 <div class="field">
 <label>PHONE MODEL</label>
 
-<input id="phone" type="text"
+<input
+id="phone"
+type="text"
 placeholder="e.g. Redmi Note 10"
-autocomplete="off">
+autocomplete="off"
+>
 
 </div>
 
@@ -172,7 +181,8 @@ ANALYZE PHONE & GENERATE ⚡
 
 <h2>Device-informed setup</h2>
 
-<div id="deviceSummary"
+<div
+id="deviceSummary"
 class="note"
 style="margin-bottom:18px">
 </div>
@@ -189,7 +199,8 @@ Recommended starting DPI
 
 </div>
 
-<div id="iphoneNote"
+<div
+id="iphoneNote"
 class="note"
 style="display:none;margin:8px 0 18px">
 
@@ -266,25 +277,49 @@ Ask LuharSensi AI
 
 <script>
 
-const params=new URLSearchParams(location.search);
+const params = new URLSearchParams(location.search);
 
-const platformEl=document.getElementById('platform');
+const platformEl = document.getElementById('platform');
+const phone = document.getElementById('phone');
+const generate = document.getElementById('generate');
+const again = document.getElementById('again');
+const copy = document.getElementById('copy');
+const result = document.getElementById('result');
+const dpi = document.getElementById('dpi');
+const dpiBlock = document.getElementById('dpiBlock');
+const iphoneNote = document.getElementById('iphoneNote');
+const deviceSummary = document.getElementById('deviceSummary');
+const why = document.getElementById('why');
+const general = document.getElementById('general');
+const red = document.getElementById('red');
+const two = document.getElementById('two');
+const four = document.getElementById('four');
+const sniper = document.getElementById('sniper');
+const free = document.getElementById('free');
 
-platformEl.value=
-params.get('platform')==='ios'?'ios':'android';
+platformEl.value =
+params.get('platform') === 'ios'
+? 'ios'
+: 'android';
 
-let selected='movement',
-currentDevice=null;
+let selected = 'movement';
+let currentDevice = null;
 
-const styles=document.querySelectorAll('.style');
+const styles = document.querySelectorAll('.style');
 
-styles.forEach(x=>x.onclick=()=>{
+styles.forEach(x => {
 
-styles.forEach(y=>y.classList.remove('active'));
+x.onclick = () => {
+
+styles.forEach(y =>
+y.classList.remove('active')
+);
 
 x.classList.add('active');
 
-selected=x.dataset.style;
+selected = x.dataset.style;
+
+};
 
 });
 
@@ -298,70 +333,79 @@ Math.max(a,Math.min(b,n))
 
 function setStatus(t,bad=false){
 
-const s=document.getElementById('deviceStatus');
+const s =
+document.getElementById('deviceStatus');
 
-s.textContent=t;
+s.textContent = t;
 
-s.style.color=bad?'#ff9b9b':'';
+s.style.color =
+bad ? '#ff9b9b' : '';
 
 }
 
 function localCalculate(d){
 
-let base=
-selected==='movement'
-?184
-:selected==='balanced'
-?174
-:162;
+let base =
+selected === 'movement'
+? 184
+: selected === 'balanced'
+? 174
+: 162;
 
-const refresh=Number(d.refresh||60),
-performance=Number(d.performance||60),
-touch=Number(d.touch||75);
+const refresh =
+Number(d.refresh || 60);
 
-if(refresh>=120)
-base+=4;
-else if(refresh<=60)
-base-=4;
+const performance =
+Number(d.performance || 60);
 
-base+=Math.round((touch-80)/5)
-+Math.round((performance-70)/12);
+const touch =
+Number(d.touch || 75);
 
-const weapon=
+if(refresh >= 120)
+base += 4;
+else if(refresh <= 60)
+base -= 4;
+
+base +=
+Math.round((touch - 80) / 5)
++
+Math.round((performance - 70) / 12);
+
+const weapon =
 document.getElementById('weapon').value;
 
-if(weapon==='Shotgun')
-base+=7;
+if(weapon === 'Shotgun')
+base += 7;
 
-if(weapon==='Sniper')
-base-=10;
+if(weapon === 'Sniper')
+base -= 10;
 
-const dpi=d.ios
-?null
-:clamp(
-480+
-performance*.9+
-touch*.6+
-(refresh>90?25:0),
+const dpiValue = d.ios
+? null
+: clamp(
+480 +
+performance * .9 +
+touch * .6 +
+(refresh > 90 ? 25 : 0),
 400,
 900
 );
 
-return{
+return {
 
-dpi,
+dpi: dpiValue,
 
 base,
 
-red:clamp(base-7,50,200),
+red: clamp(base - 7,50,200),
 
-two:clamp(base-17,50,200),
+two: clamp(base - 17,50,200),
 
-four:clamp(base-29,40,200),
+four: clamp(base - 29,40,200),
 
-sn:clamp(base-91,40,150),
+sn: clamp(base - 91,40,150),
 
-free:clamp(base-47,50,200)
+free: clamp(base - 47,50,200)
 
 };
 
@@ -369,7 +413,7 @@ free:clamp(base-47,50,200)
 
 async function identify(input){
 
-const r=await fetch(
+const r = await fetch(
 '/api/identify-phone',
 {
 method:'POST',
@@ -384,14 +428,15 @@ phone:input
 
 if(!r.ok){
 
-let m='Phone identification failed.';
+let m =
+'Phone identification failed.';
 
 try{
 
-const j=await r.json();
+const j = await r.json();
 
 if(j.error)
-m=j.error;
+m = j.error;
 
 }catch{}
 
@@ -405,7 +450,7 @@ return r.json();
 
 function showResult(d){
 
-currentDevice=d;
+currentDevice = d;
 
 localStorage.setItem(
 'luharDevice',
@@ -417,51 +462,57 @@ localStorage.setItem(
 platformEl.value
 );
 
-const v=localCalculate(d);
+const v = localCalculate(d);
 
-document.getElementById('dpi').textContent=
-v.dpi??'—';
+dpi.textContent =
+v.dpi ?? '—';
 
-document.getElementById('dpiBlock').style.display=
-d.ios?'none':'block';
+dpiBlock.style.display =
+d.ios ? 'none' : 'block';
 
-document.getElementById('iphoneNote').style.display=
-d.ios?'block':'none';
+iphoneNote.style.display =
+d.ios ? 'block' : 'none';
 
-general.textContent=v.base;
+general.textContent = v.base;
 
-red.textContent=v.red;
+red.textContent = v.red;
 
-two.textContent=v.two;
+two.textContent = v.two;
 
-four.textContent=v.four;
+four.textContent = v.four;
 
-sniper.textContent=v.sn;
+sniper.textContent = v.sn;
 
-free.textContent=v.free;
+free.textContent = v.free;
 
-const bits=[
+const bits = [
 d.brand,
 d.model
 ].filter(Boolean);
 
-const spec=[];
+const spec = [];
 
 if(d.refresh)
 spec.push(`${d.refresh} Hz`);
 
 if(d.performance)
-spec.push(`performance ${d.performance}/100`);
+spec.push(
+`performance ${d.performance}/100`
+);
 
 if(d.touch)
-spec.push(`touch ${d.touch}/100`);
+spec.push(
+`touch ${d.touch}/100`
+);
 
-deviceSummary.textContent=
+deviceSummary.textContent =
 `${bits.join(' ')}${
-spec.length?' • '+spec.join(' • '):''
+spec.length
+? ' • ' + spec.join(' • ')
+: ''
 }`;
 
-why.textContent=
+why.textContent =
 `Why these settings: ${selected} playstyle + ${
 document.getElementById('weapon').value.toLowerCase()
 } preference + available device characteristics.`;
@@ -477,7 +528,7 @@ block:'start'
 
 async function analyze(){
 
-const input=phone.value.trim();
+const input = phone.value.trim();
 
 if(!input){
 
@@ -500,12 +551,12 @@ result.classList.remove('show');
 
 try{
 
-const d=await identify(input);
+const d = await identify(input);
 
 if(
-!d.verified||
-!d.model||
-Number(d.confidence||0)<.75
+!d.verified ||
+!d.model ||
+Number(d.confidence || 0) < .75
 ){
 
 setStatus(
@@ -517,28 +568,28 @@ return;
 
 }
 
-d.performance=
+d.performance =
 clamp(
-Number(d.performance||60),
+Number(d.performance || 60),
 1,
 100
 );
 
-d.touch=
+d.touch =
 clamp(
-Number(d.touch||75),
+Number(d.touch || 75),
 1,
 100
 );
 
-d.refresh=
+d.refresh =
 Math.max(
 30,
-Number(d.refresh||60)
+Number(d.refresh || 60)
 );
 
-d.ios=
-platformEl.value==='ios'||
+d.ios =
+platformEl.value === 'ios' ||
 !!d.ios;
 
 setStatus(
@@ -550,7 +601,7 @@ showResult(d);
 }catch(e){
 
 setStatus(
-'⚠️ '+e.message,
+'⚠️ ' + e.message,
 true
 );
 
@@ -558,7 +609,7 @@ true
 
 }
 
-platformEl.onchange=()=>{
+platformEl.onchange = () => {
 
 localStorage.setItem(
 'luharPlatform',
@@ -567,27 +618,55 @@ platformEl.value
 
 };
 
-generate.onclick=analyze;
+generate.onclick = analyze;
 
-again.onclick=analyze;
+again.onclick = analyze;
 
-copy.onclick=async()=>{
+copy.onclick = async () => {
 
-const t=
+const t =
 `LuharSensi Settings
 Platform: ${platformEl.value}
 Phone: ${
 currentDevice
-?currentDevice.brand+' '+currentDevice.model
-:phone.value
+? currentDevice.brand + ' ' + currentDevice.model
+: phone.value
 }
 DPI: ${
-dpiBlock.style.display==='none'
-?'Not applicable on iOS'
-:dpi.textContent
+dpiBlock.style.display === 'none'
+? 'Not applicable on iOS'
+: dpi.textContent
 }
 General: ${general.textContent}
 Red Dot: ${red.textContent}
 2× Scope: ${two.textContent}
-4× Scope: ${four.tex
-```
+4× Scope: ${four.textContent}
+Sniper: ${sniper.textContent}
+Free Look: ${free.textContent}`;
+
+try{
+
+await navigator.clipboard.writeText(t);
+
+copy.textContent = '✅ Copied!';
+
+setTimeout(() => {
+copy.textContent = '📋 Copy settings';
+},1500);
+
+}catch{
+
+copy.textContent = '⚠️ Copy failed';
+
+setTimeout(() => {
+copy.textContent = '📋 Copy settings';
+},1500);
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
