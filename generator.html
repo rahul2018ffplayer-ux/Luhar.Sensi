@@ -92,7 +92,7 @@ body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle 
 <h1>Generate your <span>sensitivity</span>.</h1>
 
 <p>
-Choose your phone, playstyle and weapon preference.
+Choose your phone, RAM, playstyle and weapon preference.
 LuharSensi generates a device-informed starting setup.
 </p>
 
@@ -121,6 +121,23 @@ type="text"
 placeholder="e.g. Redmi Note 10"
 autocomplete="off"
 >
+
+</div>
+
+<div class="field">
+<label>RAM</label>
+
+<select id="ram">
+<option value="2">2 GB</option>
+<option value="3">3 GB</option>
+<option value="4">4 GB</option>
+<option value="6">6 GB</option>
+<option value="8" selected>8 GB</option>
+<option value="12">12 GB</option>
+<option value="16">16 GB</option>
+<option value="24">24 GB</option>
+<option value="32">32 GB</option>
+</select>
 
 </div>
 
@@ -285,6 +302,7 @@ const params = new URLSearchParams(location.search);
 
 const platformEl = document.getElementById('platform');
 const phone = document.getElementById('phone');
+const ram = document.getElementById('ram');
 const generate = document.getElementById('generate');
 const again = document.getElementById('again');
 const copy = document.getElementById('copy');
@@ -365,16 +383,36 @@ Number(d.performance || 60);
 const touch =
 Number(d.touch || 75);
 
+const ramValue =
+Number(ram.value || 8);
+
+/* Refresh rate */
 if(refresh >= 120)
 base += 4;
 else if(refresh <= 60)
 base -= 4;
 
+/* Performance + touch */
 base +=
 Math.round((touch - 80) / 5)
 +
 Math.round((performance - 70) / 12);
 
+/* RAM influence */
+if(ramValue <= 2)
+base -= 6;
+else if(ramValue <= 3)
+base -= 4;
+else if(ramValue <= 4)
+base -= 2;
+else if(ramValue >= 16)
+base += 5;
+else if(ramValue >= 12)
+base += 3;
+else if(ramValue >= 8)
+base += 1;
+
+/* Weapon influence */
 const weapon =
 document.getElementById('weapon').value;
 
@@ -384,12 +422,14 @@ base += 7;
 if(weapon === 'Sniper')
 base -= 10;
 
+/* DPI */
 const dpiValue = d.ios
 ? null
 : clamp(
 480 +
 performance * .9 +
 touch * .6 +
+(ramValue >= 8 ? 10 : 0) +
 (refresh > 90 ? 25 : 0),
 400,
 900
@@ -496,6 +536,8 @@ d.model
 
 const spec = [];
 
+spec.push(`${ram.value} GB RAM`);
+
 if(d.refresh)
 spec.push(`${d.refresh} Hz`);
 
@@ -519,7 +561,7 @@ spec.length
 why.textContent =
 `Why these settings: ${selected} playstyle + ${
 document.getElementById('weapon').value.toLowerCase()
-} preference + available device characteristics.`;
+} preference + ${ram.value} GB RAM + available device characteristics.`;
 
 result.classList.add('show');
 
@@ -622,6 +664,15 @@ platformEl.value
 
 };
 
+/* Recalculate when RAM changes after a result is already visible */
+ram.onchange = () => {
+
+if(currentDevice){
+showResult(currentDevice);
+}
+
+};
+
 generate.onclick = analyze;
 
 again.onclick = analyze;
@@ -636,6 +687,7 @@ currentDevice
 ? currentDevice.brand + ' ' + currentDevice.model
 : phone.value
 }
+RAM: ${ram.value} GB
 DPI: ${
 dpiBlock.style.display === 'none'
 ? 'Not applicable on iOS'
