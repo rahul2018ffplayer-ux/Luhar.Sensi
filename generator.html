@@ -1,2346 +1,1474 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>LuharSensi — Free Fire Sensitivity Generator</title>
 
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6579899788641813"
      crossorigin="anonymous"></script>
 
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script>
-
 <script>
 window.dataLayer = window.dataLayer || [];
-
-function gtag(){
-  dataLayer.push(arguments);
-}
-
+function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'G-C8YB323Q61');
 </script>
 
-<title>LuharSensi — Sensitivity Generator</title>
-
 <style>
-
 *{
   box-sizing:border-box;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
-  font-family:Inter,system-ui,Arial,sans-serif;
-  background:#08090d;
+  min-height:100vh;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(88,101,242,.16),transparent 28%),
+    radial-gradient(circle at 85% 80%,rgba(0,255,170,.08),transparent 28%),
+    #08090d;
   color:#f4f6fb;
 }
 
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(
-      circle at 20% 0%,
-      #25345a33,
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 90% 20%,
-      #00e5ff12,
-      transparent 30%
-    );
-  pointer-events:none;
+a{
+  color:inherit;
+  text-decoration:none;
 }
 
-.container{
-  width:min(1050px,92%);
-  margin:auto;
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(16px);
+  background:rgba(8,9,13,.82);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .nav{
+  max-width:1100px;
+  margin:auto;
+  padding:15px 20px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:22px 0;
-  gap:10px;
+  justify-content:space-between;
+  gap:20px;
 }
 
 .logo{
   font-size:22px;
   font-weight:900;
+  letter-spacing:-.7px;
 }
 
 .logo span{
-  color:#00e5ff;
+  color:#7c8cff;
 }
 
-.links{
+nav{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
 }
 
-.links a{
-  color:#aeb7c7;
-  text-decoration:none;
-  border:1px solid #ffffff12;
-  padding:8px 12px;
+nav a{
+  padding:9px 13px;
   border-radius:10px;
-  font-size:12px;
+  color:#aeb5c7;
+  font-size:14px;
+  transition:.2s;
 }
 
-.links a.active{
+nav a:hover,
+nav a.active{
   color:#fff;
-  border-color:#00e5ff66;
+  background:rgba(255,255,255,.07);
+}
+
+.container{
+  width:min(950px,calc(100% - 30px));
+  margin:0 auto;
+  padding:45px 0 70px;
 }
 
 .hero{
   text-align:center;
-  padding:40px 0 25px;
+  margin-bottom:30px;
 }
 
 .badge{
   display:inline-block;
-  border:1px solid #ffffff18;
-  background:#ffffff08;
+  padding:7px 12px;
+  border:1px solid rgba(124,140,255,.28);
+  background:rgba(124,140,255,.09);
+  color:#aeb8ff;
   border-radius:999px;
-  padding:8px 13px;
   font-size:12px;
-  color:#aeb8c9;
+  font-weight:700;
+  margin-bottom:15px;
 }
 
-.hero h1{
-  font-size:clamp(34px,6vw,58px);
-  margin:18px 0 12px;
-}
-
-.hero h1 span{
-  color:#00e5ff;
+h1{
+  margin:0;
+  font-size:clamp(32px,7vw,54px);
+  line-height:1;
+  letter-spacing:-2px;
 }
 
 .hero p{
-  color:#9da7b8;
+  max-width:650px;
+  margin:15px auto 0;
+  color:#9ca4b7;
   line-height:1.6;
 }
 
 .card{
-  background:#11141b;
-  border:1px solid #ffffff10;
-  border-radius:22px;
-  padding:26px;
-  box-shadow:0 20px 60px #0008;
-  margin:20px 0;
+  background:rgba(17,19,27,.86);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:24px;
+  box-shadow:0 20px 70px rgba(0,0,0,.25);
+  margin-bottom:20px;
+}
+
+.card h2{
+  margin:0 0 8px;
+  font-size:20px;
+}
+
+.card-sub{
+  color:#8e96aa;
+  font-size:13px;
+  margin-bottom:20px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:18px;
+  gap:17px;
 }
 
-.field label{
-  display:block;
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+label{
   font-size:13px;
-  color:#aeb7c7;
-  margin-bottom:8px;
+  font-weight:700;
+  color:#dce1ed;
 }
 
-.field select,
-.field input{
+input,
+select{
   width:100%;
-  padding:14px;
-  background:#0a0c11;
-  border:1px solid #ffffff15;
-  border-radius:12px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#0c0e14;
   color:#fff;
-  font-size:15px;
+  border-radius:12px;
+  padding:13px 14px;
   outline:none;
+  font-size:14px;
+  transition:.2s;
 }
 
-.field select:focus,
-.field input:focus{
-  border-color:#00e5ff66;
+input:focus,
+select:focus{
+  border-color:#7180ff;
+  box-shadow:0 0 0 3px rgba(113,128,255,.1);
 }
 
-.styles{
+.hint{
+  font-size:11px;
+  color:#747d92;
+}
+
+.radio-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:10px;
 }
 
-.style{
+.radio{
+  position:relative;
+}
+
+.radio input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.radio label{
+  display:block;
   padding:13px;
-  border:1px solid #ffffff12;
-  background:#0a0c11;
+  border:1px solid rgba(255,255,255,.09);
+  background:#0c0e14;
   border-radius:12px;
-  color:#b8c0ce;
   cursor:pointer;
-  text-align:center;
+  transition:.2s;
 }
 
-.style:hover{
-  border-color:#00e5ff55;
-}
-
-.style.active{
-  border-color:#00e5ff;
-  background:#00e5ff12;
+.radio input:checked + label{
+  border-color:#7180ff;
+  background:rgba(113,128,255,.12);
   color:#fff;
+}
+
+.radio label:hover{
+  border-color:rgba(255,255,255,.2);
+}
+
+.verify-row{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.verify-row button{
+  white-space:nowrap;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  border-radius:12px;
+  padding:13px 18px;
+  color:#fff;
+  background:linear-gradient(135deg,#6878ff,#8c61ff);
+  font-weight:800;
+  font-size:14px;
+  transition:.2s;
+}
+
+button:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+}
+
+button:disabled{
+  cursor:not-allowed;
+  opacity:.55;
+  transform:none;
+}
+
+.secondary{
+  background:#171a24;
+  border:1px solid rgba(255,255,255,.1);
 }
 
 .generate{
   width:100%;
-  border:0;
-  border-radius:14px;
-  padding:16px;
   margin-top:20px;
-  background:#00e5ff;
-  color:#001016;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.generate:disabled{
-  opacity:.6;
-  cursor:wait;
-}
-
-.result{
-  display:none;
-}
-
-.result.show{
-  display:block;
-}
-
-.device-box{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-bottom:20px;
-}
-
-.device-item{
-  background:#0a0c11;
-  border:1px solid #ffffff0e;
-  border-radius:14px;
-  padding:13px;
-}
-
-.device-item small{
-  color:#7f899b;
-  font-size:11px;
-}
-
-.device-item strong{
-  display:block;
-  margin-top:5px;
-  color:#fff;
-  font-size:14px;
-}
-
-.tier-low{
-  color:#ffb36b !important;
-}
-
-.tier-mid{
-  color:#ffe083 !important;
-}
-
-.tier-high{
-  color:#8fe7ff !important;
-}
-
-.tier-gaming{
-  color:#d5a6ff !important;
-}
-
-.settings{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.setting{
-  background:#0a0c11;
-  border:1px solid #ffffff0e;
-  border-radius:14px;
   padding:16px;
-}
-
-.setting small{
-  color:#8993a5;
-}
-
-.setting strong{
-  display:block;
-  font-size:28px;
-  margin-top:5px;
-  color:#00e5ff;
-}
-
-.dpi-title{
-  color:#8e98aa;
-  font-size:13px;
-  margin-bottom:8px;
-}
-
-.dpi{
-  font-size:42px;
-  font-weight:900;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:18px;
-}
-
-.actions button{
-  flex:1;
-  padding:13px;
-  border-radius:12px;
-  border:1px solid #ffffff16;
-  background:#ffffff08;
-  color:#fff;
-  cursor:pointer;
-}
-
-.actions button:hover{
-  border-color:#00e5ff55;
-}
-
-.note{
-  color:#8791a3;
-  font-size:12px;
-  line-height:1.5;
-  margin-top:18px;
+  font-size:15px;
 }
 
 .status{
-  min-height:18px;
-}
-
-.analysis{
-  background:#0a0c11;
-  border:1px solid #ffffff0e;
-  border-radius:14px;
-  padding:15px;
-  margin-top:18px;
-}
-
-.analysis-title{
-  color:#00e5ff;
-  font-weight:800;
+  display:none;
+  margin-top:15px;
+  padding:13px 14px;
+  border-radius:12px;
   font-size:13px;
-  margin-bottom:8px;
+  line-height:1.5;
 }
 
-.analysis-text{
-  color:#aeb7c7;
+.status.show{
+  display:block;
+}
+
+.status.info{
+  background:rgba(84,126,255,.09);
+  border:1px solid rgba(84,126,255,.2);
+  color:#b9c5ff;
+}
+
+.status.success{
+  background:rgba(48,205,137,.08);
+  border:1px solid rgba(48,205,137,.2);
+  color:#8ce7bd;
+}
+
+.status.error{
+  background:rgba(255,75,94,.08);
+  border:1px solid rgba(255,75,94,.2);
+  color:#ff9aa5;
+}
+
+.device-box{
+  display:none;
+  margin-top:18px;
+  padding:17px;
+  border-radius:15px;
+  background:#0c0f16;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.device-box.show{
+  display:block;
+}
+
+.device-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.device-name{
+  font-weight:900;
+  font-size:17px;
+}
+
+.verified{
+  color:#72e2a8;
   font-size:12px;
-  line-height:1.7;
+  font-weight:800;
 }
 
-.footer{
+.device-details{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin-top:14px;
+}
+
+.detail{
+  padding:10px;
+  border-radius:10px;
+  background:#12151d;
+}
+
+.detail small{
+  display:block;
+  color:#747d91;
+  font-size:10px;
+  margin-bottom:4px;
+}
+
+.detail strong{
+  font-size:12px;
+}
+
+.results{
+  display:none;
+}
+
+.results.show{
+  display:block;
+}
+
+.result-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.result-header h2{
+  margin:0;
+}
+
+.result-tag{
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(48,205,137,.09);
+  color:#7ee6af;
+  border:1px solid rgba(48,205,137,.2);
+  font-size:11px;
+  font-weight:800;
+}
+
+.sensitivity-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.sense{
+  padding:17px;
+  border-radius:15px;
+  background:#0d1017;
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.sense-name{
+  color:#8d96aa;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+.sense-value{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.dpi-box{
+  margin-top:15px;
+  padding:15px;
+  border-radius:14px;
+  background:rgba(124,140,255,.07);
+  border:1px solid rgba(124,140,255,.14);
+}
+
+.dpi-title{
+  font-size:12px;
+  color:#9ea8c0;
+}
+
+.dpi-value{
+  font-size:22px;
+  font-weight:900;
+  margin-top:3px;
+}
+
+.copy-btn{
+  margin-top:18px;
+  width:100%;
+}
+
+.note{
+  margin-top:15px;
+  color:#858da1;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.ad{
+  min-height:90px;
+  margin:20px 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+footer{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:25px 15px;
   text-align:center;
-  color:#657083;
+  color:#727a8e;
   font-size:12px;
-  padding:30px 0 45px;
 }
 
-@media(max-width:800px){
-
-  .device-box{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-}
-
-@media(max-width:650px){
-
-  .grid,
-  .settings{
-    grid-template-columns:1fr;
-  }
-
-  .styles{
-    grid-template-columns:1fr;
-  }
-
-  .actions{
-    flex-direction:column;
-  }
-
-  .device-box{
-    grid-template-columns:1fr;
-  }
-
+@media(max-width:700px){
   .nav{
     align-items:flex-start;
     flex-direction:column;
   }
 
-  .links{
+  nav{
     width:100%;
+    overflow-x:auto;
+    flex-wrap:nowrap;
   }
 
+  nav a{
+    white-space:nowrap;
+  }
+
+  .container{
+    padding-top:30px;
+  }
+
+  .grid,
+  .sensitivity-grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .device-details{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .verify-row{
+    flex-direction:column;
+  }
+
+  .radio-grid{
+    grid-template-columns:1fr;
+  }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-<div class="container">
-
-
-<nav class="nav">
-
-<div class="logo">
-LUHAR<span>SENSI</span>
-</div>
-
-<div class="links">
-
-<a href="index.html">
-Platform
-</a>
-
-<a
-class="active"
-href="generator.html"
->
-Generator
-</a>
-
-<a href="ai.html">
-AI Chat
-</a>
-
-<a href="about.html">
-About
-</a>
-
-<a href="privacy.html">
-Privacy
-</a>
-
-<a href="contact.html">
-Contact
-</a>
-
-</div>
-
-</nav>
-
-
-<section class="hero">
-
-<div class="badge">
-FREE FIRE SETTINGS GENERATOR
-</div>
-
-<h1>
-Generate your <span>sensitivity</span>.
-</h1>
-
-<p>
-Enter your exact phone and LuharSensi will research
-its device characteristics before creating a sensitivity
-starting profile.
-</p>
-
-</section>
-
-
-<section class="card">
-
-<div class="grid">
-
-
-<div class="field">
-
-<label>
-PLATFORM
-</label>
-
-<select id="platform">
-
-<option value="android">
-Android
-</option>
-
-<option value="ios">
-iOS
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>
-PHONE MODEL
-</label>
-
-<input
-id="phone"
-type="text"
-placeholder="e.g. Redmi Note 10"
-autocomplete="off"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-RAM
-</label>
-
-<select id="ram">
-
-<option value="2">
-2 GB
-</option>
-
-<option value="3">
-3 GB
-</option>
-
-<option value="4">
-4 GB
-</option>
-
-<option value="6">
-6 GB
-</option>
-
-<option value="8" selected>
-8 GB
-</option>
-
-<option value="12">
-12 GB
-</option>
-
-<option value="16">
-16 GB
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>
-GAME
-</label>
-
-<select id="game">
-
-<option>
-Free Fire
-</option>
-
-<option>
-Free Fire MAX
-</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>
-MAIN WEAPON
-</label>
-
-<select id="weapon">
-
-<option>
-Mixed / All weapons
-</option>
-
-<option>
-SMG
-</option>
-
-<option>
-AR
-</option>
-
-<option>
-Shotgun
-</option>
-
-<option>
-Sniper
-</option>
-
-</select>
-
-</div>
-
-
-</div>
-
-
-<div
-id="deviceStatus"
-class="note status"
-style="margin-top:14px"
->
-Type your phone model. LuharSensi will verify it before generating settings.
-</div>
-
-
-<div
-style="margin-top:20px"
-class="field"
->
-
-<label>
-PLAYSTYLE
-</label>
-
-
-<div class="styles">
-
-
-<div
-class="style active"
-data-style="movement"
->
-🏃 Movement
-</div>
-
-
-<div
-class="style"
-data-style="balanced"
->
-⚖️ Balanced
-</div>
-
-
-<div
-class="style"
-data-style="accuracy"
->
-🎯 Accuracy
-</div>
-
-
-</div>
-
-</div>
-
-
-<button
-class="generate"
-id="generate"
->
-ANALYZE PHONE & GENERATE ⚡
-</button>
-
-
-</section>
-
-
-
-<section
-class="card result"
-id="result"
->
-
-<h2>
-Device-informed setup
-</h2>
-
-
-<div
-id="deviceSummary"
-class="note"
-style="margin-bottom:18px"
->
-</div>
-
-
-<div
-class="device-box"
->
-
-
-<div class="device-item">
-
-<small>
-CHIPSET
-</small>
-
-<strong id="chipset">
-—
-</strong>
-
-</div>
-
-
-<div class="device-item">
-
-<small>
-DEVICE TIER
-</small>
-
-<strong id="tier">
-—
-</strong>
-
-</div>
-
-
-<div class="device-item">
-
-<small>
-REFRESH RATE
-</small>
-
-<strong id="refresh">
-—
-</strong>
-
-</div>
-
-
-<div class="device-item">
-
-<small>
-PERFORMANCE
-</small>
-
-<strong id="performance">
-—
-</strong>
-
-</div>
-
-
-<div class="device-item">
-
-<small>
-TOUCH
-</small>
-
-<strong id="touch">
-—
-</strong>
-
-</div>
-
-
-<div class="device-item">
-
-<small>
-SCREEN
-</small>
-
-<strong id="screen">
-—
-</strong>
-
-</div>
-
-
-<div class="device-item">
-
-<small>
-RAM
-</small>
-
-<strong id="ramInfo">
-—
-</strong>
-
-</div>
-
-
-<div class="device-item">
-
-<small>
-CONFIDENCE
-</small>
-
-<strong id="confidence">
-—
-</strong>
-
-</div>
-
-
-</div>
-
-
-<div id="dpiBlock">
-
-<div class="dpi-title">
-Recommended starting DPI
-</div>
-
-<div
-class="dpi"
-id="dpi"
->
-—
-</div>
-
-</div>
-
-
-<div
-id="iphoneNote"
-class="note"
-style="display:none;margin:8px 0 18px"
->
-iPhone/iPad detected: DPI is hidden because iOS does not provide an Android-style system DPI setting.
-</div>
-
-
-<div class="settings">
-
-
-<div class="setting">
-
-<small>
-General
-</small>
-
-<strong id="general">
-—
-</strong>
-
-</div>
-
-
-<div class="setting">
-
-<small>
-Red Dot
-</small>
-
-<strong id="red">
-—
-</strong>
-
-</div>
-
-
-<div class="setting">
-
-<small>
-2× Scope
-</small>
-
-<strong id="two">
-—
-</strong>
-
-</div>
-
-
-<div class="setting">
-
-<small>
-4× Scope
-</small>
-
-<strong id="four">
-—
-</strong>
-
-</div>
-
-
-<div class="setting">
-
-<small>
-Sniper
-</small>
-
-<strong id="sniper">
-—
-</strong>
-
-</div>
-
-
-<div class="setting">
-
-<small>
-Free Look
-</small>
-
-<strong id="free">
-—
-</strong>
-
-</div>
-
-
-</div>
-
-
-<div
-class="analysis"
->
-
-<div class="analysis-title">
-WHY THIS PROFILE?
-</div>
-
-<div
-class="analysis-text"
-id="why"
->
-</div>
-
-</div>
-
-
-<div class="actions">
-
-<button id="copy">
-📋 Copy settings
-</button>
-
-<button id="again">
-🔄 Re-analyze
-</button>
-
-</div>
-
-
-<div class="note">
-These are device-informed starting recommendations.
-They are not guaranteed “headshot” settings.
-Test small changes rather than changing everything at once.
-</div>
-
-
-</section>
-
-
-<div class="footer">
-
-Need help?
-
-<a
-href="ai.html"
-style="color:#00e5ff"
->
-Ask LuharSensi AI
-</a>
-
-<br><br>
-
-• © 2026 LuharSensi
-
-</div>
-
-
-</div>
-
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo">Luhar<span>Sensi</span></a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="generator.html" class="active">Generator</a>
+      <a href="ai.html">AI Chat</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="badge">FREE FIRE SENSITIVITY ENGINE</div>
+    <h1>Generate Your Sensitivity</h1>
+    <p>
+      Verify your exact phone first, then create a stable sensitivity
+      based on your device, RAM, playstyle and weapon preference.
+    </p>
+  </section>
+
+  <div class="ad">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-6579899788641813"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <section class="card">
+
+    <h2>1. Verify your phone</h2>
+    <div class="card-sub">
+      We must verify the exact model before generating settings.
+    </div>
+
+    <div class="field">
+      <label for="phone">Phone model</label>
+
+      <div class="verify-row">
+        <input
+          id="phone"
+          type="text"
+          autocomplete="off"
+          placeholder="Example: Tecno Spark 8C"
+        >
+
+        <button id="verifyBtn" type="button">
+          Verify phone
+        </button>
+      </div>
+
+      <div class="hint">
+        Case does not matter. Common spelling variations may also be recognized.
+      </div>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div id="deviceBox" class="device-box">
+
+      <div class="device-top">
+        <div>
+          <div class="device-name" id="deviceName">—</div>
+          <div class="verified">✓ Verified device</div>
+        </div>
+      </div>
+
+      <div class="device-details">
+
+        <div class="detail">
+          <small>Chipset</small>
+          <strong id="deviceChipset">—</strong>
+        </div>
+
+        <div class="detail">
+          <small>Tier</small>
+          <strong id="deviceTier">—</strong>
+        </div>
+
+        <div class="detail">
+          <small>Refresh</small>
+          <strong id="deviceRefresh">—</strong>
+        </div>
+
+        <div class="detail">
+          <small>Confidence</small>
+          <strong id="deviceConfidence">—</strong>
+        </div>
+
+      </div>
+
+      <div class="note" id="deviceNote"></div>
+
+    </div>
+
+  </section>
+
+  <section class="card">
+
+    <h2>2. Your gaming setup</h2>
+    <div class="card-sub">
+      These choices affect the generated sensitivity.
+    </div>
+
+    <div class="grid">
+
+      <div class="field">
+        <label for="ram">RAM</label>
+
+        <select id="ram">
+          <option value="2">2 GB</option>
+          <option value="3">3 GB</option>
+          <option value="4">4 GB</option>
+          <option value="6" selected>6 GB</option>
+          <option value="8">8 GB</option>
+          <option value="12">12 GB</option>
+          <option value="16">16 GB</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="playstyle">Playstyle</label>
+
+        <select id="playstyle">
+          <option value="movement">Movement</option>
+          <option value="balanced">Balanced</option>
+          <option value="accuracy">Accuracy</option>
+        </select>
+      </div>
+
+      <div class="field full">
+
+        <label>Main weapon preference</label>
+
+        <div class="radio-grid">
+
+          <div class="radio">
+            <input
+              type="radio"
+              name="weapon"
+              id="weaponMixed"
+              value="Mixed / All weapons"
+              checked
+            >
+            <label for="weaponMixed">
+              Mixed / All weapons
+            </label>
+          </div>
+
+          <div class="radio">
+            <input
+              type="radio"
+              name="weapon"
+              id="weaponSmg"
+              value="SMG"
+            >
+            <label for="weaponSmg">
+              SMG
+            </label>
+          </div>
+
+          <div class="radio">
+            <input
+              type="radio"
+              name="weapon"
+              id="weaponShotgun"
+              value="Shotgun"
+            >
+            <label for="weaponShotgun">
+              Shotgun
+            </label>
+          </div>
+
+          <div class="radio">
+            <input
+              type="radio"
+              name="weapon"
+              id="weaponAR"
+              value="AR"
+            >
+            <label for="weaponAR">
+              AR
+            </label>
+          </div>
+
+          <div class="radio">
+            <input
+              type="radio"
+              name="weapon"
+              id="weaponSniper"
+              value="Sniper"
+            >
+            <label for="weaponSniper">
+              Sniper
+            </label>
+          </div>
+
+          <div class="radio">
+            <input
+              type="radio"
+              name="weapon"
+              id="weaponOneTap"
+              value="One-tap / Headshot"
+            >
+            <label for="weaponOneTap">
+              One-tap / Headshot
+            </label>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="card">
+
+    <h2>3. DPI preference</h2>
+
+    <div class="card-sub">
+      DPI is optional. LuharSensi will not force a high DPI on weaker phones.
+    </div>
+
+    <div class="radio-grid">
+
+      <div class="radio">
+        <input
+          type="radio"
+          name="dpiMode"
+          id="dpiKeep"
+          value="keep"
+          checked
+        >
+        <label for="dpiKeep">
+          ✓ Keep my current DPI
+        </label>
+      </div>
+
+      <div class="radio">
+        <input
+          type="radio"
+          name="dpiMode"
+          id="dpiRecommend"
+          value="recommend"
+        >
+        <label for="dpiRecommend">
+          🔧 Recommend DPI
+        </label>
+      </div>
+
+    </div>
+
+    <div id="currentDpiField" style="margin-top:15px">
+
+      <div class="field">
+        <label for="currentDpi">
+          Your current DPI
+        </label>
+
+        <input
+          id="currentDpi"
+          type="number"
+          min="300"
+          max="1200"
+          value="default"
+          placeholder="Example: 900"
+        >
+
+        <div class="hint">
+          If you don't know your DPI, you can leave this empty.
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="card">
+
+    <button
+      id="generateBtn"
+      class="generate"
+      type="button"
+      disabled
+    >
+      Verify your phone first
+    </button>
+
+  </section>
+
+  <section id="results" class="card results">
+
+    <div class="result-header">
+
+      <div>
+        <h2>Your sensitivity</h2>
+        <div class="card-sub" style="margin:5px 0 0">
+          Generated from verified device information.
+        </div>
+      </div>
+
+      <div class="result-tag">
+        DEVICE VERIFIED
+      </div>
+
+    </div>
+
+    <div class="sensitivity-grid">
+
+      <div class="sense">
+        <div class="sense-name">General</div>
+        <div class="sense-value" id="sGeneral">—</div>
+      </div>
+
+      <div class="sense">
+        <div class="sense-name">Red Dot</div>
+        <div class="sense-value" id="sRedDot">—</div>
+      </div>
+
+      <div class="sense">
+        <div class="sense-name">2X Scope</div>
+        <div class="sense-value" id="s2x">—</div>
+      </div>
+
+      <div class="sense">
+        <div class="sense-name">4X Scope</div>
+        <div class="sense-value" id="s4x">—</div>
+      </div>
+
+      <div class="sense">
+        <div class="sense-name">Sniper Scope</div>
+        <div class="sense-value" id="sSniper">—</div>
+      </div>
+
+      <div class="sense">
+        <div class="sense-name">Free Look</div>
+        <div class="sense-value" id="sFreeLook">—</div>
+      </div>
+
+    </div>
+
+    <div class="dpi-box">
+
+      <div class="dpi-title">
+        DPI recommendation
+      </div>
+
+      <div class="dpi-value" id="dpiResult">
+        Keep your current DPI
+      </div>
+
+      <div class="note" id="dpiNote" style="margin-top:7px"></div>
+
+    </div>
+
+    <button
+      id="copyBtn"
+      class="copy-btn secondary"
+      type="button"
+    >
+      Copy settings
+    </button>
+
+    <div class="note">
+      These settings are a starting point, not a guarantee of headshots.
+      Test them in training and change only a small amount at a time.
+    </div>
+
+  </section>
+
+  <div class="ad">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-6579899788641813"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 LuharSensi — Free Fire sensitivity tools
+</footer>
 
 <script>
+const phoneInput = document.getElementById("phone");
+const verifyBtn = document.getElementById("verifyBtn");
+const generateBtn = document.getElementById("generateBtn");
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+const statusBox = document.getElementById("status");
+const deviceBox = document.getElementById("deviceBox");
+const results = document.getElementById("results");
 
-const params =
-  new URLSearchParams(location.search);
+let verifiedDevice = null;
+let lastVerifiedInput = "";
 
-const platformEl =
-  document.getElementById("platform");
+function showStatus(message, type = "info"){
+  statusBox.textContent = message;
+  statusBox.className = "status show " + type;
+}
 
-const phone =
-  document.getElementById("phone");
+function hideStatus(){
+  statusBox.className = "status";
+  statusBox.textContent = "";
+}
 
-const ram =
-  document.getElementById("ram");
+function normalizeClientPhone(value){
+  return String(value || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[®™]/g,"")
+    .replace(/\s+/g," ");
+}
 
-const game =
-  document.getElementById("game");
+function clearVerification(){
+  verifiedDevice = null;
+  lastVerifiedInput = "";
 
-const weapon =
-  document.getElementById("weapon");
+  deviceBox.classList.remove("show");
+  results.classList.remove("show");
 
-const generate =
-  document.getElementById("generate");
+  generateBtn.disabled = true;
+  generateBtn.textContent = "Verify your phone first";
+}
 
-const again =
-  document.getElementById("again");
+phoneInput.addEventListener("input", () => {
+  const current = normalizeClientPhone(phoneInput.value);
 
-const copy =
-  document.getElementById("copy");
-
-const result =
-  document.getElementById("result");
-
-const dpi =
-  document.getElementById("dpi");
-
-const dpiBlock =
-  document.getElementById("dpiBlock");
-
-const iphoneNote =
-  document.getElementById("iphoneNote");
-
-const deviceSummary =
-  document.getElementById("deviceSummary");
-
-const why =
-  document.getElementById("why");
-
-const general =
-  document.getElementById("general");
-
-const red =
-  document.getElementById("red");
-
-const two =
-  document.getElementById("two");
-
-const four =
-  document.getElementById("four");
-
-const sniper =
-  document.getElementById("sniper");
-
-const free =
-  document.getElementById("free");
-
-const chipset =
-  document.getElementById("chipset");
-
-const tier =
-  document.getElementById("tier");
-
-const refresh =
-  document.getElementById("refresh");
-
-const performance =
-  document.getElementById("performance");
-
-const touch =
-  document.getElementById("touch");
-
-const screen =
-  document.getElementById("screen");
-
-const ramInfo =
-  document.getElementById("ramInfo");
-
-const confidence =
-  document.getElementById("confidence");
-
-
-/* =========================================================
-   PLATFORM
-========================================================= */
-
-platformEl.value =
-  params.get("platform") === "ios"
-    ? "ios"
-    : "android";
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let selected =
-  "movement";
-
-let currentDevice =
-  null;
-
-
-/* =========================================================
-   PLAYSTYLE
-========================================================= */
-
-const styles =
-  document.querySelectorAll(".style");
-
-styles.forEach(style => {
-
-  style.addEventListener(
-    "click",
-    () => {
-
-      styles.forEach(item =>
-        item.classList.remove("active")
-      );
-
-      style.classList.add("active");
-
-      selected =
-        style.dataset.style;
-
-      /*
-        Recalculate instantly when the user changes
-        playstyle after already analyzing a phone.
-      */
-
-      if(currentDevice){
-        showResult(currentDevice);
-      }
-
-    }
-  );
-
+  if (
+    lastVerifiedInput &&
+    current !== lastVerifiedInput
+  ){
+    clearVerification();
+    hideStatus();
+  }
 });
 
+verifyBtn.addEventListener("click", async () => {
 
-/* =========================================================
-   HELPERS
-========================================================= */
+  const phone = phoneInput.value.trim();
 
-function clamp(
-  value,
-  min,
-  max
-){
-
-  const number =
-    Number(value);
-
-  if(!Number.isFinite(number)){
-    return Math.round(
-      (min + max) / 2
-    );
+  if(!phone){
+    showStatus("Enter your phone model first.","error");
+    phoneInput.focus();
+    return;
   }
 
-  return Math.round(
-    Math.max(
-      min,
-      Math.min(max,number)
-    )
+  verifyBtn.disabled = true;
+  verifyBtn.textContent = "Verifying...";
+  clearVerification();
+
+  showStatus(
+    "Checking the exact phone model. No sensitivity will be generated unless it is verified.",
+    "info"
   );
 
-}
-
-
-function safeNumber(
-  value,
-  fallback
-){
-
-  const n =
-    Number(value);
-
-  return Number.isFinite(n)
-    ? n
-    : fallback;
-
-}
-
-
-function setStatus(
-  text,
-  bad = false
-){
-
-  const status =
-    document.getElementById(
-      "deviceStatus"
-    );
-
-  status.textContent =
-    text;
-
-  status.style.color =
-    bad
-      ? "#ff9b9b"
-      : "";
-
-}
-
-
-/* =========================================================
-   DEVICE TIER FALLBACK
-========================================================= */
-
-function getTier(d){
-
-  const reported =
-    String(
-      d.tier || ""
-    ).toLowerCase();
-
-  if(
-    reported === "low" ||
-    reported === "mid" ||
-    reported === "high" ||
-    reported === "gaming"
-  ){
-
-    return reported;
-
-  }
-
-
-  const p =
-    safeNumber(
-      d.performance,
-      50
-    );
-
-  const t =
-    safeNumber(
-      d.touch,
-      50
-    );
-
-  const r =
-    safeNumber(
-      d.refresh,
-      60
-    );
-
-
-  if(
-    p >= 82 &&
-    t >= 75 &&
-    r >= 90
-  ){
-
-    return "gaming";
-
-  }
-
-
-  if(
-    p >= 72 ||
-    (
-      p >= 65 &&
-      r >= 90
-    )
-  ){
-
-    return "high";
-
-  }
-
-
-  if(p >= 45){
-    return "mid";
-  }
-
-
-  return "low";
-
-}
-
-
-/* =========================================================
-   SENSITIVITY ENGINE
-=========================================================
-
-   IMPORTANT:
-
-   This is deterministic.
-
-   It does NOT generate random sensitivity values.
-
-   The device tier is the main factor.
-
-   Low-end:
-     Higher starting sensitivity
-
-   Mid-range:
-     Balanced starting sensitivity
-
-   High-end:
-     More controlled sensitivity
-
-   Gaming:
-     Controlled high-refresh profile
-
-========================================================= */
-
-function calculateSensitivity(d){
-
-  const deviceTier =
-    getTier(d);
-
-  const devicePerformance =
-    safeNumber(
-      d.performance,
-      50
-    );
-
-  const deviceTouch =
-    safeNumber(
-      d.touch,
-      50
-    );
-
-  const deviceRefresh =
-    safeNumber(
-      d.refresh,
-      60
-    );
-
-  const screenSize =
-    safeNumber(
-      d.screenSize,
-      6.5
-    );
-
-  const ramValue =
-    safeNumber(
-      ram.value,
-      8
-    );
-
-  const selectedWeapon =
-    weapon.value;
-
-
-  /* -------------------------------------------------------
-     1. DEVICE TIER BASE
-  ------------------------------------------------------- */
-
-  const bases = {
-
-    low:{
-      movement:195,
-      balanced:190,
-      accuracy:184
-    },
-
-    mid:{
-      movement:188,
-      balanced:183,
-      accuracy:177
-    },
-
-    high:{
-      movement:180,
-      balanced:175,
-      accuracy:169
-    },
-
-    gaming:{
-      movement:176,
-      balanced:171,
-      accuracy:165
-    }
-
-  };
-
-
-  let base =
-    bases[deviceTier]?.[selected]
-    ?? 183;
-
-
-  /* -------------------------------------------------------
-     2. PERFORMANCE ADJUSTMENT
-
-     Lower performance:
-       slightly higher sensitivity
-
-     Higher performance:
-       slightly lower / controlled
-  ------------------------------------------------------- */
-
-  if(devicePerformance <= 35){
-
-    base += 3;
-
-  }else if(devicePerformance <= 50){
-
-    base += 1;
-
-  }else if(devicePerformance >= 88){
-
-    base -= 2;
-
-  }else if(devicePerformance >= 75){
-
-    base -= 1;
-
-  }
-
-
-  /* -------------------------------------------------------
-     3. TOUCH RESPONSE
-
-     Lower touch responsiveness:
-       slightly higher sensitivity
-
-     Strong touch:
-       slightly lower sensitivity
-  ------------------------------------------------------- */
-
-  if(deviceTouch < 45){
-
-    base += 3;
-
-  }else if(deviceTouch < 60){
-
-    base += 1;
-
-  }else if(deviceTouch >= 90){
-
-    base -= 2;
-
-  }else if(deviceTouch >= 80){
-
-    base -= 1;
-
-  }
-
-
-  /* -------------------------------------------------------
-     4. REFRESH RATE
-
-     High refresh allows more controlled movement.
-
-     We do NOT massively change sensitivity just
-     because a phone has 120/144Hz.
-  ------------------------------------------------------- */
-
-  if(deviceRefresh >= 144){
-
-    base -= 3;
-
-  }else if(deviceRefresh >= 120){
-
-    base -= 2;
-
-  }else if(deviceRefresh >= 90){
-
-    base -= 1;
-
-  }else if(deviceRefresh <= 60){
-
-    /*
-      Keep lower-end 60Hz phones responsive.
-    */
-
-    if(
-      deviceTier === "low" ||
-      devicePerformance < 50
-    ){
-
-      base += 1;
-
-    }
-
-  }
-
-
-  /* -------------------------------------------------------
-     5. SCREEN SIZE
-
-     Larger screens can feel more sensitive because
-     the same physical finger movement covers more
-     pixels/space.
-
-     Keep this adjustment small.
-  ------------------------------------------------------- */
-
-  if(screenSize >= 6.8){
-
-    base -= 2;
-
-  }else if(screenSize >= 6.6){
-
-    base -= 1;
-
-  }else if(
-    screenSize > 0 &&
-    screenSize <= 6.2
-  ){
-
-    base += 1;
-
-  }
-
-
-  /* -------------------------------------------------------
-     6. RAM
-
-     RAM is NOT allowed to dominate the result.
-
-     It only gives a small adjustment because chipset
-     and touch/display characteristics matter more.
-  ------------------------------------------------------- */
-
-  if(ramValue <= 2){
-
-    base += 2;
-
-  }else if(ramValue <= 3){
-
-    base += 1;
-
-  }else if(ramValue >= 16){
-
-    base -= 1;
-
-  }
-
-
-  /* -------------------------------------------------------
-     7. WEAPON
-
-     Shotgun:
-       slightly faster close-range response.
-
-     Sniper:
-       more controlled scope movement.
-  ------------------------------------------------------- */
-
-  if(selectedWeapon === "Shotgun"){
-
-    base += 4;
-
-  }else if(selectedWeapon === "Sniper"){
-
-    base -= 8;
-
-  }else if(selectedWeapon === "SMG"){
-
-    base += 1;
-
-  }
-
-
-  base =
-    clamp(
-      base,
-      150,
-      200
-    );
-
-
-  /* -------------------------------------------------------
-     8. INDIVIDUAL SCOPE VALUES
-
-     These are proportional rather than arbitrary
-     unrelated numbers.
-  ------------------------------------------------------- */
-
-  let redOffset = 8;
-  let twoOffset = 18;
-  let fourOffset = 31;
-  let sniperOffset = 92;
-  let freeOffset = 48;
-
-
-  if(selectedWeapon === "Shotgun"){
-
-    redOffset = 6;
-    twoOffset = 14;
-    fourOffset = 27;
-
-  }
-
-
-  if(selectedWeapon === "Sniper"){
-
-    redOffset = 10;
-    twoOffset = 22;
-    fourOffset = 36;
-    sniperOffset = 78;
-
-  }
-
-
-  const values = {
-
-    general:
-      base,
-
-    red:
-      clamp(
-        base - redOffset,
-        50,
-        200
-      ),
-
-    two:
-      clamp(
-        base - twoOffset,
-        50,
-        200
-      ),
-
-    four:
-      clamp(
-        base - fourOffset,
-        40,
-        200
-      ),
-
-    sniper:
-      clamp(
-        base - sniperOffset,
-        40,
-        150
-      ),
-
-    free:
-      clamp(
-        base - freeOffset,
-        50,
-        200
-      )
-
-  };
-
-
-  /* -------------------------------------------------------
-     9. DPI
-
-     DPI is only for Android.
-
-     Lower-end devices get a higher starting DPI,
-     while stronger/high-refresh devices get a more
-     controlled value.
-
-     This is a starting recommendation, not a requirement.
-  ------------------------------------------------------- */
-
-  let recommendedDpi;
-
-
-  if(deviceTier === "low"){
-
-    recommendedDpi = 900;
-
-  }else if(deviceTier === "mid"){
-
-    recommendedDpi = 850;
-
-  }else if(deviceTier === "high"){
-
-    recommendedDpi = 800;
-
-  }else{
-
-    recommendedDpi = 750;
-
-  }
-
-
-  /*
-    Touch adjustment.
-  */
-
-  if(deviceTouch < 50){
-
-    recommendedDpi += 25;
-
-  }else if(deviceTouch >= 90){
-
-    recommendedDpi -= 25;
-
-  }
-
-
-  recommendedDpi =
-    clamp(
-      recommendedDpi,
-      600,
-      1000
-    );
-
-
-  return {
-
-    ...values,
-
-    dpi:
-      d.ios
-        ? null
-        : recommendedDpi,
-
-    tier:
-      deviceTier
-
-  };
-
-}
-
-
-/* =========================================================
-   IDENTIFY PHONE
-========================================================= */
-
-async function identify(
-  input
-){
-
-  const response =
-    await fetch(
-      "/api/identify-phone",
-      {
-
-        method:"POST",
-
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
-
-        body:JSON.stringify({
-          phone:input
-        })
-
+  try{
+
+    const response = await fetch("/api/identify-phone",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        phone:phone
+      })
+    });
+
+    const data = await response.json();
+
+    if(!response.ok){
+
+      if(response.status === 429){
+        const seconds = Number(data.retryAfterSeconds || 0);
+
+        if(seconds > 0){
+          showStatus(
+            "Verification limit reached. Please try again later.",
+            "error"
+          );
+        }else{
+          showStatus(
+            data.error || "AI verification is temporarily unavailable.",
+            "error"
+          );
+        }
+      }else{
+        showStatus(
+          data.error || data.note || "Phone verification failed.",
+          "error"
+        );
       }
+
+      return;
+    }
+
+    if(!data.verified){
+
+      showStatus(
+        data.note ||
+        "The exact phone model could not be verified confidently. No sensitivity was generated.",
+        "error"
+      );
+
+      return;
+    }
+
+    verifiedDevice = data;
+    lastVerifiedInput = normalizeClientPhone(phone);
+
+    document.getElementById("deviceName").textContent =
+      `${data.brand} ${data.model}`;
+
+    document.getElementById("deviceChipset").textContent =
+      data.chipset || "Unknown";
+
+    document.getElementById("deviceTier").textContent =
+      data.tier
+        ? data.tier.charAt(0).toUpperCase() + data.tier.slice(1)
+        : "Unknown";
+
+    document.getElementById("deviceRefresh").textContent =
+      `${data.refresh || 60} Hz`;
+
+    document.getElementById("deviceConfidence").textContent =
+      `${Math.round(Number(data.confidence || 0) * 100)}%`;
+
+    document.getElementById("deviceNote").textContent =
+      data.note || "Device verified.";
+
+    deviceBox.classList.add("show");
+
+    generateBtn.disabled = false;
+    generateBtn.textContent = "Generate sensitivity";
+
+    showStatus(
+      data.cached
+        ? "✓ Phone verified using cached device information."
+        : "✓ Phone verified successfully.",
+      "success"
     );
-
-
-  let data = null;
-
-  try{
-
-    data =
-      await response.json();
-
-  }catch{
-
-    data = null;
-
-  }
-
-
-  if(!response.ok){
-
-    throw new Error(
-      data?.error ||
-      "Phone identification failed."
-    );
-
-  }
-
-
-  return data;
-
-}
-
-
-/* =========================================================
-   SHOW RESULT
-========================================================= */
-
-function showResult(d){
-
-  currentDevice =
-    d;
-
-
-  /*
-    Save device information so AI Chat can use
-    the same researched phone.
-  */
-
-  try{
 
     localStorage.setItem(
       "luharDevice",
-      JSON.stringify(d)
+      JSON.stringify(data)
     );
 
     localStorage.setItem(
       "luharPlatform",
-      platformEl.value
+      data.ios ? "ios" : "android"
     );
 
-  }catch{}
-
-
-  const values =
-    calculateSensitivity(d);
-
-
-  /* -------------------------------------------------------
-     SETTINGS
-  ------------------------------------------------------- */
-
-  general.textContent =
-    values.general;
-
-  red.textContent =
-    values.red;
-
-  two.textContent =
-    values.two;
-
-  four.textContent =
-    values.four;
-
-  sniper.textContent =
-    values.sniper;
-
-  free.textContent =
-    values.free;
-
-
-  /* -------------------------------------------------------
-     DPI
-  ------------------------------------------------------- */
-
-  dpiBlock.style.display =
-    d.ios
-      ? "none"
-      : "block";
-
-  iphoneNote.style.display =
-    d.ios
-      ? "block"
-      : "none";
-
-  dpi.textContent =
-    values.dpi ?? "—";
-
-
-  /* -------------------------------------------------------
-     DEVICE DATA
-  ------------------------------------------------------- */
-
-  const deviceTier =
-    getTier(d);
-
-  const devicePerformance =
-    safeNumber(
-      d.performance,
-      50
-    );
-
-  const deviceTouch =
-    safeNumber(
-      d.touch,
-      50
-    );
-
-  const deviceRefresh =
-    safeNumber(
-      d.refresh,
-      60
-    );
-
-  const screenSize =
-    safeNumber(
-      d.screenSize,
-      0
-    );
-
-  const confidenceValue =
-    safeNumber(
-      d.confidence,
-      0
-    );
-
-
-  chipset.textContent =
-    d.chipset ||
-    "Unknown";
-
-
-  tier.textContent =
-    deviceTier.toUpperCase();
-
-
-  tier.className =
-    "tier-" + deviceTier;
-
-
-  refresh.textContent =
-    deviceRefresh + " Hz";
-
-
-  performance.textContent =
-    devicePerformance + "/100";
-
-
-  touch.textContent =
-    deviceTouch + "/100";
-
-
-  screen.textContent =
-    screenSize > 0
-      ? screenSize + '"'
-      : "Unknown";
-
-
-  ramInfo.textContent =
-    ram.value + " GB";
-
-
-  confidence.textContent =
-    Math.round(
-      confidenceValue * 100
-    ) + "%";
-
-
-  /* -------------------------------------------------------
-     SUMMARY
-  ------------------------------------------------------- */
-
-  const phoneName =
-    [
-      d.brand,
-      d.model
-    ]
-    .filter(Boolean)
-    .join(" ");
-
-
-  deviceSummary.textContent =
-    `${phoneName || "Verified device"} • ` +
-    `${ram.value} GB RAM • ` +
-    `${deviceTier.toUpperCase()} tier • ` +
-    `${deviceRefresh} Hz`;
-
-
-  /* -------------------------------------------------------
-     EXPLANATION
-  ------------------------------------------------------- */
-
-  const tierExplanation = {
-
-    low:
-      "Low-end profile: sensitivity starts higher to keep movement and camera response responsive.",
-
-    mid:
-      "Mid-range profile: balanced sensitivity for a mix of movement, drag control and tracking.",
-
-    high:
-      "High-end profile: sensitivity is slightly more controlled because the device can generally deliver smoother input.",
-
-    gaming:
-      "Gaming profile: controlled sensitivity is used for strong performance, high refresh and responsive input."
-
-  };
-
-
-  const weaponExplanation = {
-
-    "Mixed / All weapons":
-      "mixed weapons",
-
-    "SMG":
-      "SMG tracking",
-
-    "AR":
-      "AR control",
-
-    "Shotgun":
-      "close-range shotgun movement",
-
-    "Sniper":
-      "precision sniper control"
-
-  };
-
-
-  why.textContent =
-    `${tierExplanation[deviceTier]} ` +
-    `The profile also considers ${selected} playstyle, ` +
-    `${weaponExplanation[weapon.value] || "your weapon choice"}, ` +
-    `${deviceRefresh} Hz refresh, touch response ${deviceTouch}/100, ` +
-    `performance ${devicePerformance}/100 and your selected ${ram.value} GB RAM. ` +
-    `The device tier has much more influence than RAM alone.`;
-
-
-  /* -------------------------------------------------------
-     RESULT
-  ------------------------------------------------------- */
-
-  result.classList.add(
-    "show"
-  );
-
-
-  result.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-
-}
-
-
-/* =========================================================
-   ANALYZE
-========================================================= */
-
-async function analyze(){
-
-  const input =
-    phone.value.trim();
-
-
-  if(!input){
-
-    setStatus(
-      "Enter a phone model first.",
-      true
-    );
-
-    result.classList.remove(
-      "show"
-    );
-
-    phone.focus();
-
-    return;
-
-  }
-
-
-  generate.disabled =
-    true;
-
-  generate.textContent =
-    "RESEARCHING PHONE...";
-
-
-  setStatus(
-    "🤖 Researching and verifying the phone..."
-  );
-
-
-  result.classList.remove(
-    "show"
-  );
-
-
-  try{
-
-    const d =
-      await identify(input);
-
-
-    if(
-      !d ||
-      !d.verified ||
-      !d.model ||
-      Number(
-        d.confidence || 0
-      ) < 0.75
-    ){
-
-      setStatus(
-        "⚠️ The exact phone model could not be verified confidently.",
-        true
-      );
-
-      return;
-
+    if(typeof gtag === "function"){
+      gtag("event","phone_verified",{
+        phone_model:`${data.brand} ${data.model}`,
+        cached:Boolean(data.cached)
+      });
     }
-
-
-    /*
-      Normalize returned values.
-    */
-
-    d.performance =
-      clamp(
-        safeNumber(
-          d.performance,
-          50
-        ),
-        1,
-        100
-      );
-
-
-    d.touch =
-      clamp(
-        safeNumber(
-          d.touch,
-          50
-        ),
-        1,
-        100
-      );
-
-
-    d.refresh =
-      clamp(
-        safeNumber(
-          d.refresh,
-          60
-        ),
-        30,
-        240
-      );
-
-
-    d.screenSize =
-      safeNumber(
-        d.screenSize,
-        0
-      );
-
-
-    d.confidence =
-      Math.max(
-        0,
-        Math.min(
-          1,
-          safeNumber(
-            d.confidence,
-            0
-          )
-        )
-      );
-
-
-    d.ios =
-      platformEl.value === "ios" ||
-      Boolean(d.ios);
-
-
-    d.tier =
-      getTier(d);
-
-
-    setStatus(
-      `✅ Verified: ${d.brand || ""} ${d.model}`
-    );
-
-
-    showResult(d);
-
 
   }catch(error){
 
-    console.error(
-      error
-    );
+    console.error(error);
 
-
-    setStatus(
-      "⚠️ " +
-      (
-        error.message ||
-        "Phone research failed."
-      ),
-      true
+    showStatus(
+      "Could not contact the verification server. Please try again.",
+      "error"
     );
 
   }finally{
 
-    generate.disabled =
-      false;
+    verifyBtn.disabled = false;
+    verifyBtn.textContent = "Verify phone";
 
-    generate.textContent =
-      "ANALYZE PHONE & GENERATE ⚡";
+  }
+
+});
+
+
+document.querySelectorAll('input[name="dpiMode"]').forEach(input => {
+
+  input.addEventListener("change", () => {
+
+    const mode =
+      document.querySelector('input[name="dpiMode"]:checked').value;
+
+    document.getElementById("currentDpiField").style.display =
+      mode === "keep" ? "block" : "none";
+
+  });
+
+});
+
+
+function clamp(value,min,max){
+  return Math.max(min,Math.min(max,Math.round(value)));
+}
+
+function getWeapon(){
+
+  const selected =
+    document.querySelector('input[name="weapon"]:checked');
+
+  return selected ? selected.value : "Mixed / All weapons";
+
+}
+
+
+function generateSensitivity(){
+
+  if(!verifiedDevice || !verifiedDevice.verified){
+
+    showStatus(
+      "You must verify your exact phone before generating sensitivity.",
+      "error"
+    );
+
+    return;
+  }
+
+  const ram =
+    Number(document.getElementById("ram").value);
+
+  const playstyle =
+    document.getElementById("playstyle").value;
+
+  const weapon =
+    getWeapon();
+
+  const dpiMode =
+    document.querySelector(
+      'input[name="dpiMode"]:checked'
+    ).value;
+
+  const performance =
+    Number(verifiedDevice.performance || 50);
+
+  const touch =
+    Number(verifiedDevice.touch || 50);
+
+  const refresh =
+    Number(verifiedDevice.refresh || 60);
+
+  /*
+    Base sensitivity.
+
+    The values are intentionally moderate.
+    Device performance affects the result slightly,
+    but the generator never invents a hardware value.
+  */
+
+  let base;
+
+  if(playstyle === "movement"){
+    base = 190;
+  }else if(playstyle === "balanced"){
+    base = 184;
+  }else{
+    base = 177;
+  }
+
+  /*
+    RAM adjustment:
+    More RAM does NOT automatically mean higher sensitivity.
+    The adjustment is intentionally small.
+  */
+
+  if(ram <= 2){
+    base -= 3;
+  }else if(ram === 3){
+    base -= 2;
+  }else if(ram === 4){
+    base -= 1;
+  }else if(ram >= 12){
+    base += 1;
+  }
+
+  /*
+    Refresh/touch/performance adjustments are conservative.
+  */
+
+  if(refresh >= 120){
+    base += 2;
+  }else if(refresh >= 90){
+    base += 1;
+  }
+
+  if(touch >= 75){
+    base += 1;
+  }
+
+  if(performance < 35){
+    base -= 2;
+  }
+
+  /*
+    Weapon adjustments.
+  */
+
+  if(weapon === "SMG"){
+    base += 2;
+  }else if(weapon === "Shotgun"){
+    base += 3;
+  }else if(weapon === "AR"){
+    base -= 1;
+  }else if(weapon === "Sniper"){
+    base -= 7;
+  }else if(weapon === "One-tap / Headshot"){
+    base += 1;
+  }
+
+  const general = clamp(base,150,200);
+
+  const redDot = clamp(
+    general - 2,
+    145,
+    200
+  );
+
+  const scope2x = clamp(
+    general - 8,
+    135,
+    195
+  );
+
+  const scope4x = clamp(
+    general - 16,
+    125,
+    185
+  );
+
+  const sniper = clamp(
+    general - 28,
+    90,
+    170
+  );
+
+  const freeLook = clamp(
+    general + 5,
+    150,
+    200
+  );
+
+
+  document.getElementById("sGeneral").textContent =
+    general;
+
+  document.getElementById("sRedDot").textContent =
+    redDot;
+
+  document.getElementById("s2x").textContent =
+    scope2x;
+
+  document.getElementById("s4x").textContent =
+    scope4x;
+
+  document.getElementById("sSniper").textContent =
+    sniper;
+
+  document.getElementById("sFreeLook").textContent =
+    freeLook;
+
+
+  const dpiResult =
+    document.getElementById("dpiResult");
+
+  const dpiNote =
+    document.getElementById("dpiNote");
+
+  if(dpiMode === "keep"){
+
+    const currentDpi =
+      Number(document.getElementById("currentDpi").value);
+
+    if(
+      Number.isFinite(currentDpi) &&
+      currentDpi >= 300 &&
+      currentDpi <= 1200
+    ){
+
+      dpiResult.textContent =
+        `${currentDpi} DPI`;
+
+      dpiNote.textContent =
+        "Your current DPI is being kept. Sensitivity is generated without forcing a DPI change.";
+
+    }else{
+
+      dpiResult.textContent =
+        "Keep your current DPI";
+
+      dpiNote.textContent =
+        "No DPI was recommended. Keeping your existing DPI is the safer default.";
+
+    }
+
+  }else{
+
+    /*
+      DPI recommendation is deliberately conservative.
+
+      Low-end phones:
+      do NOT automatically receive high DPI.
+    */
+
+    let recommendedDpi;
+
+    const tier =
+      String(verifiedDevice.tier || "unknown").toLowerCase();
+
+    if(tier === "low" || performance < 40){
+
+      recommendedDpi = 600;
+
+      dpiNote.textContent =
+        "Your device is in the lower performance range, so a conservative DPI is recommended rather than an aggressive value.";
+
+    }else if(tier === "mid" || performance < 70){
+
+      recommendedDpi = 700;
+
+      dpiNote.textContent =
+        "A moderate DPI is recommended to balance touch response and stability.";
+
+    }else if(tier === "gaming" || performance >= 85){
+
+      recommendedDpi = 800;
+
+      dpiNote.textContent =
+        "Your device has stronger performance, so a moderate-high DPI can be tested.";
+
+    }else{
+
+      recommendedDpi = 750;
+
+      dpiNote.textContent =
+        "A moderate DPI is recommended as a starting point.";
+
+    }
+
+    dpiResult.textContent =
+      `${recommendedDpi} DPI`;
+
+  }
+
+
+  results.classList.add("show");
+
+  results.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+  const resultData = {
+    device:`${verifiedDevice.brand} ${verifiedDevice.model}`,
+    ram,
+    playstyle,
+    weapon,
+    general,
+    redDot,
+    scope2x,
+    scope4x,
+    sniper,
+    freeLook,
+    dpi:dpiResult.textContent
+  };
+
+  localStorage.setItem(
+    "luharLastSensitivity",
+    JSON.stringify(resultData)
+  );
+
+  if(typeof gtag === "function"){
+
+    gtag("event","sensitivity_generated",{
+      phone_model:`${verifiedDevice.brand} ${verifiedDevice.model}`,
+      ram:ram,
+      playstyle:playstyle,
+      weapon:weapon,
+      dpi_mode:dpiMode
+    });
 
   }
 
 }
 
 
-/* =========================================================
-   PLATFORM
-========================================================= */
-
-platformEl.addEventListener(
-  "change",
-  () => {
-
-    try{
-
-      localStorage.setItem(
-        "luharPlatform",
-        platformEl.value
-      );
-
-    }catch{}
-
-
-    /*
-      If changing Android/iOS after analysis,
-      update the result immediately.
-    */
-
-    if(currentDevice){
-
-      currentDevice.ios =
-        platformEl.value === "ios" ||
-        Boolean(currentDevice.ios);
-
-      showResult(
-        currentDevice
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   RAM
-========================================================= */
-
-ram.addEventListener(
-  "change",
-  () => {
-
-    if(currentDevice){
-
-      showResult(
-        currentDevice
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   WEAPON
-========================================================= */
-
-weapon.addEventListener(
-  "change",
-  () => {
-
-    if(currentDevice){
-
-      showResult(
-        currentDevice
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   GENERATE
-========================================================= */
-
-generate.addEventListener(
+generateBtn.addEventListener(
   "click",
-  analyze
+  generateSensitivity
 );
 
 
-/* =========================================================
-   RE-ANALYZE
-========================================================= */
-
-again.addEventListener(
-  "click",
-  analyze
-);
-
-
-/* =========================================================
-   COPY
-========================================================= */
-
-copy.addEventListener(
+document.getElementById("copyBtn").addEventListener(
   "click",
   async () => {
 
-    const phoneName =
-      currentDevice
-        ? `${currentDevice.brand || ""} ${currentDevice.model || ""}`.trim()
-        : phone.value;
+    if(!verifiedDevice){
+      return;
+    }
 
+    const text = `
+LuharSensi Free Fire Settings
 
-    const text =
-`LuharSensi Settings
+Phone: ${verifiedDevice.brand} ${verifiedDevice.model}
+RAM: ${document.getElementById("ram").value} GB
+Playstyle: ${document.getElementById("playstyle").value}
+Weapon: ${getWeapon()}
 
-Platform: ${platformEl.value}
-Game: ${game.value}
-Phone: ${phoneName}
-RAM: ${ram.value} GB
-Device Tier: ${currentDevice ? getTier(currentDevice).toUpperCase() : "Unknown"}
+General: ${document.getElementById("sGeneral").textContent}
+Red Dot: ${document.getElementById("sRedDot").textContent}
+2X Scope: ${document.getElementById("s2x").textContent}
+4X Scope: ${document.getElementById("s4x").textContent}
+Sniper Scope: ${document.getElementById("sSniper").textContent}
+Free Look: ${document.getElementById("sFreeLook").textContent}
 
-DPI: ${
-  dpiBlock.style.display === "none"
-    ? "Not applicable on iOS"
-    : dpi.textContent
-}
-
-General: ${general.textContent}
-Red Dot: ${red.textContent}
-2× Scope: ${two.textContent}
-4× Scope: ${four.textContent}
-Sniper: ${sniper.textContent}
-Free Look: ${free.textContent}
-
-Playstyle: ${selected}
-Main Weapon: ${weapon.value}`;
-
+DPI: ${document.getElementById("dpiResult").textContent}
+`.trim();
 
     try{
 
-      await navigator.clipboard.writeText(
-        text
-      );
+      await navigator.clipboard.writeText(text);
 
+      const old =
+        document.getElementById("copyBtn").textContent;
 
-      copy.textContent =
-        "✅ Copied!";
+      document.getElementById("copyBtn").textContent =
+        "✓ Copied";
 
+      if(typeof gtag === "function"){
+        gtag("event","copy_settings");
+      }
 
-      setTimeout(
-        () => {
+      setTimeout(() => {
 
-          copy.textContent =
-            "📋 Copy settings";
+        document.getElementById("copyBtn").textContent =
+          old;
 
-        },
-        1500
-      );
+      },1500);
 
+    }catch(error){
 
-    }catch{
-
-      copy.textContent =
-        "⚠️ Copy failed";
-
-
-      setTimeout(
-        () => {
-
-          copy.textContent =
-            "📋 Copy settings";
-
-        },
-        1500
-      );
+      alert("Copy failed. Please select and copy the settings manually.");
 
     }
 
@@ -2348,45 +1476,36 @@ Main Weapon: ${weapon.value}`;
 );
 
 
-/* =========================================================
-   RESTORE PREVIOUS DEVICE
-========================================================= */
+/*
+  Restore previously verified device from localStorage
+  only as a display convenience.
+
+  We still require the server verification for the
+  current phone input before generation.
+*/
 
 try{
 
   const saved =
     JSON.parse(
-      localStorage.getItem(
-        "luharDevice"
-      ) || "null"
+      localStorage.getItem("luharDevice") || "null"
     );
 
-
-  if(
-    saved &&
-    saved.verified &&
-    saved.model
-  ){
+  if(saved && saved.verified){
 
     /*
-      Do not automatically show the old result.
-      We only keep it available for AI Chat.
+      Do not automatically trust saved data for generation.
+      It is only retained locally until the user verifies
+      the current input again.
     */
-
-    currentDevice =
-      saved;
 
   }
 
-}catch{
-
-  currentDevice =
-    null;
-
+}catch(error){
+  console.log("No saved device data.");
 }
 
 </script>
 
 </body>
-
 </html>
