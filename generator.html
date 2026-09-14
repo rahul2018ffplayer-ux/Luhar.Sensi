@@ -11,57 +11,270 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-C8YB323Q61');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-C8YB323Q61');
 </script>
 
 <title>LuharSensi — Sensitivity Generator</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#08090d;color:#f4f6fb}
-body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);pointer-events:none}
-.container{width:min(1050px,92%);margin:auto}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:10px}
-.logo{font-size:22px;font-weight:900}
-.logo span{color:#00e5ff}
-.links{display:flex;gap:8px;flex-wrap:wrap}
-.links a{color:#aeb7c7;text-decoration:none;border:1px solid #ffffff12;padding:8px 12px;border-radius:10px;font-size:12px}
-.links a.active{color:#fff;border-color:#00e5ff66}
-.hero{text-align:center;padding:40px 0 25px}
-.badge{display:inline-block;border:1px solid #ffffff18;background:#ffffff08;border-radius:999px;padding:8px 13px;font-size:12px;color:#aeb8c9}
-.hero h1{font-size:clamp(34px,6vw,58px);margin:18px 0 12px}
-.hero h1 span{color:#00e5ff}
-.hero p{color:#9da7b8;line-height:1.6}
-.card{background:#11141b;border:1px solid #ffffff10;border-radius:22px;padding:26px;box-shadow:0 20px 60px #0008;margin:20px 0}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.field label{display:block;font-size:13px;color:#aeb7c7;margin-bottom:8px}
-.field select,.field input{width:100%;padding:14px;background:#0a0c11;border:1px solid #ffffff15;border-radius:12px;color:#fff;font-size:15px;outline:none}
-.styles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.style{padding:13px;border:1px solid #ffffff12;background:#0a0c11;border-radius:12px;color:#b8c0ce;cursor:pointer;text-align:center}
-.style.active{border-color:#00e5ff;background:#00e5ff12;color:#fff}
-.generate{width:100%;border:0;border-radius:14px;padding:16px;margin-top:20px;background:#00e5ff;color:#001016;font-size:16px;font-weight:900;cursor:pointer}
-.result{display:none}
-.result.show{display:block}
-.settings{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.setting{background:#0a0c11;border:1px solid #ffffff0e;border-radius:14px;padding:16px}
-.setting small{color:#8993a5}
-.setting strong{display:block;font-size:28px;margin-top:5px;color:#00e5ff}
-.dpi{font-size:42px;font-weight:900}
-.actions{display:flex;gap:10px;margin-top:18px}
-.actions button{flex:1;padding:13px;border-radius:12px;border:1px solid #ffffff16;background:#ffffff08;color:#fff;cursor:pointer}
-.note{color:#8791a3;font-size:12px;line-height:1.5;margin-top:18px}
-.footer{text-align:center;color:#657083;font-size:12px;padding:30px 0 45px}
+
+body{
+margin:0;
+font-family:Inter,system-ui,Arial,sans-serif;
+background:#08090d;
+color:#f4f6fb
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),
+radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);
+pointer-events:none
+}
+
+.container{
+width:min(1050px,92%);
+margin:auto
+}
+
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:22px 0;
+gap:10px
+}
+
+.logo{
+font-size:22px;
+font-weight:900
+}
+
+.logo span{
+color:#00e5ff
+}
+
+.links{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+
+.links a{
+color:#aeb7c7;
+text-decoration:none;
+border:1px solid #ffffff12;
+padding:8px 12px;
+border-radius:10px;
+font-size:12px
+}
+
+.links a.active{
+color:#fff;
+border-color:#00e5ff66
+}
+
+.hero{
+text-align:center;
+padding:40px 0 25px
+}
+
+.badge{
+display:inline-block;
+border:1px solid #ffffff18;
+background:#ffffff08;
+border-radius:999px;
+padding:8px 13px;
+font-size:12px;
+color:#aeb8c9
+}
+
+.hero h1{
+font-size:clamp(34px,6vw,58px);
+margin:18px 0 12px
+}
+
+.hero h1 span{
+color:#00e5ff
+}
+
+.hero p{
+color:#9da7b8;
+line-height:1.6
+}
+
+.card{
+background:#11141b;
+border:1px solid #ffffff10;
+border-radius:22px;
+padding:26px;
+box-shadow:0 20px 60px #0008;
+margin:20px 0
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px
+}
+
+.field label{
+display:block;
+font-size:13px;
+color:#aeb7c7;
+margin-bottom:8px
+}
+
+.field select,
+.field input{
+width:100%;
+padding:14px;
+background:#0a0c11;
+border:1px solid #ffffff15;
+border-radius:12px;
+color:#fff;
+font-size:15px;
+outline:none
+}
+
+.styles{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px
+}
+
+.style{
+padding:13px;
+border:1px solid #ffffff12;
+background:#0a0c11;
+border-radius:12px;
+color:#b8c0ce;
+cursor:pointer;
+text-align:center
+}
+
+.style.active{
+border-color:#00e5ff;
+background:#00e5ff12;
+color:#fff
+}
+
+.generate{
+width:100%;
+border:0;
+border-radius:14px;
+padding:16px;
+margin-top:20px;
+background:#00e5ff;
+color:#001016;
+font-size:16px;
+font-weight:900;
+cursor:pointer
+}
+
+.generate:disabled{
+opacity:.6;
+cursor:wait
+}
+
+.result{
+display:none
+}
+
+.result.show{
+display:block
+}
+
+.settings{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px
+}
+
+.setting{
+background:#0a0c11;
+border:1px solid #ffffff0e;
+border-radius:14px;
+padding:16px
+}
+
+.setting small{
+color:#8993a5
+}
+
+.setting strong{
+display:block;
+font-size:28px;
+margin-top:5px;
+color:#00e5ff
+}
+
+.dpi{
+font-size:42px;
+font-weight:900
+}
+
+.actions{
+display:flex;
+gap:10px;
+margin-top:18px
+}
+
+.actions button{
+flex:1;
+padding:13px;
+border-radius:12px;
+border:1px solid #ffffff16;
+background:#ffffff08;
+color:#fff;
+cursor:pointer
+}
+
+.note{
+color:#8791a3;
+font-size:12px;
+line-height:1.5;
+margin-top:18px
+}
+
+.footer{
+text-align:center;
+color:#657083;
+font-size:12px;
+padding:30px 0 45px
+}
 
 @media(max-width:650px){
-.grid,.settings{grid-template-columns:1fr}
-.styles{grid-template-columns:1fr}
-.actions{flex-direction:column}
-.nav{align-items:flex-start;flex-direction:column}
-.links{width:100%}
+
+.grid,
+.settings{
+grid-template-columns:1fr
+}
+
+.styles{
+grid-template-columns:1fr
+}
+
+.actions{
+flex-direction:column
+}
+
+.nav{
+align-items:flex-start;
+flex-direction:column
+}
+
+.links{
+width:100%
+}
+
 }
 </style>
 </head>
@@ -72,7 +285,9 @@ body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle 
 
 <nav class="nav">
 
-<div class="logo">LUHAR<span>SENSI</span></div>
+<div class="logo">
+LUHAR<span>SENSI</span>
+</div>
 
 <div class="links">
 <a href="index.html">Platform</a>
@@ -85,34 +300,50 @@ body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle 
 
 </nav>
 
+
 <section class="hero">
 
-<div class="badge">FREE FIRE SETTINGS GENERATOR</div>
+<div class="badge">
+FREE FIRE SETTINGS GENERATOR
+</div>
 
-<h1>Generate your <span>sensitivity</span>.</h1>
+<h1>
+Generate your <span>sensitivity</span>.
+</h1>
 
 <p>
-Choose your phone, RAM, playstyle and weapon preference.
+Choose your phone, RAM, playstyle and weapon preference.<br>
 LuharSensi generates a device-informed starting setup.
 </p>
 
 </section>
+
 
 <section class="card">
 
 <div class="grid">
 
 <div class="field">
+
 <label>PLATFORM</label>
 
 <select id="platform">
-<option value="android">Android</option>
-<option value="ios">iOS</option>
+
+<option value="android">
+Android
+</option>
+
+<option value="ios">
+iOS
+</option>
+
 </select>
 
 </div>
 
+
 <div class="field">
+
 <label>PHONE MODEL</label>
 
 <input
@@ -124,10 +355,13 @@ autocomplete="off"
 
 </div>
 
+
 <div class="field">
+
 <label>RAM</label>
 
 <select id="ram">
+
 <option value="2">2 GB</option>
 <option value="3">3 GB</option>
 <option value="4">4 GB</option>
@@ -135,44 +369,62 @@ autocomplete="off"
 <option value="8" selected>8 GB</option>
 <option value="12">12 GB</option>
 <option value="16">16 GB</option>
-<option value="24">24 GB</option>
-<option value="32">32 GB</option>
+
 </select>
 
 </div>
 
+
 <div class="field">
+
 <label>GAME</label>
 
 <select id="game">
+
 <option>Free Fire</option>
 <option>Free Fire MAX</option>
+
 </select>
 
 </div>
 
+
 <div class="field">
+
 <label>MAIN WEAPON</label>
 
 <select id="weapon">
+
 <option>Mixed / All weapons</option>
 <option>SMG</option>
 <option>AR</option>
 <option>Shotgun</option>
 <option>Sniper</option>
+
 </select>
 
 </div>
 
 </div>
 
-<div id="deviceStatus" class="note" style="margin-top:14px">
+
+<div
+id="deviceStatus"
+class="note"
+style="margin-top:14px"
+>
 Type the phone naturally — LuharSensi AI will verify the model before generating settings.
 </div>
 
-<div style="margin-top:20px" class="field">
 
-<label>PLAYSTYLE</label>
+<div
+style="margin-top:20px"
+class="field"
+>
+
+<label>
+PLAYSTYLE
+</label>
 
 <div class="styles">
 
@@ -192,42 +444,61 @@ Type the phone naturally — LuharSensi AI will verify the model before generati
 
 </div>
 
-<button class="generate" id="generate">
+
+<button
+class="generate"
+id="generate"
+>
 ANALYZE PHONE & GENERATE ⚡
 </button>
 
 </section>
 
-<section class="card result" id="result">
 
-<h2>Device-informed setup</h2>
+<section
+class="card result"
+id="result"
+>
+
+<h2>
+Device-informed setup
+</h2>
+
 
 <div
 id="deviceSummary"
 class="note"
-style="margin-bottom:18px">
+style="margin-bottom:18px"
+>
 </div>
+
 
 <div id="dpiBlock">
 
-<div style="color:#8e98aa;font-size:13px;margin-bottom:8px">
+<div
+style="color:#8e98aa;font-size:13px;margin-bottom:8px"
+>
 Recommended starting DPI
 </div>
 
-<div class="dpi" id="dpi">
+<div
+class="dpi"
+id="dpi"
+>
 900
 </div>
 
 </div>
 
+
 <div
 id="iphoneNote"
 class="note"
-style="display:none;margin:8px 0 18px">
-
+style="display:none;margin:8px 0 18px"
+>
 iPhone/iPad detected: DPI is hidden because iOS does not provide an Android-style system DPI setting.
-
 </div>
+
 
 <div class="settings">
 
@@ -263,6 +534,7 @@ iPhone/iPad detected: DPI is hidden because iOS does not provide an Android-styl
 
 </div>
 
+
 <div class="actions">
 
 <button id="copy">
@@ -275,7 +547,13 @@ iPhone/iPad detected: DPI is hidden because iOS does not provide an Android-styl
 
 </div>
 
-<div id="why" class="note"></div>
+
+<div
+id="why"
+class="note"
+>
+</div>
+
 
 <div class="note">
 These are device-informed starting recommendations, not guaranteed “headshot” settings.
@@ -283,12 +561,19 @@ These are device-informed starting recommendations, not guaranteed “headshot�
 
 </section>
 
+
 <div class="footer">
 
 Need help?
-<a href="ai.html" style="color:#00e5ff">
+
+<a
+href="ai.html"
+style="color:#00e5ff"
+>
 Ask LuharSensi AI
 </a>
+
+<br><br>
 
 • © 2026 LuharSensi
 
@@ -296,38 +581,91 @@ Ask LuharSensi AI
 
 </div>
 
+
 <script>
 
-const params = new URLSearchParams(location.search);
+const params =
+new URLSearchParams(location.search);
 
-const platformEl = document.getElementById('platform');
-const phone = document.getElementById('phone');
-const ram = document.getElementById('ram');
-const generate = document.getElementById('generate');
-const again = document.getElementById('again');
-const copy = document.getElementById('copy');
-const result = document.getElementById('result');
-const dpi = document.getElementById('dpi');
-const dpiBlock = document.getElementById('dpiBlock');
-const iphoneNote = document.getElementById('iphoneNote');
-const deviceSummary = document.getElementById('deviceSummary');
-const why = document.getElementById('why');
-const general = document.getElementById('general');
-const red = document.getElementById('red');
-const two = document.getElementById('two');
-const four = document.getElementById('four');
-const sniper = document.getElementById('sniper');
-const free = document.getElementById('free');
+
+const platformEl =
+document.getElementById('platform');
+
+const phone =
+document.getElementById('phone');
+
+const ram =
+document.getElementById('ram');
+
+const game =
+document.getElementById('game');
+
+const weapon =
+document.getElementById('weapon');
+
+const generate =
+document.getElementById('generate');
+
+const again =
+document.getElementById('again');
+
+const copy =
+document.getElementById('copy');
+
+const result =
+document.getElementById('result');
+
+const dpi =
+document.getElementById('dpi');
+
+const dpiBlock =
+document.getElementById('dpiBlock');
+
+const iphoneNote =
+document.getElementById('iphoneNote');
+
+const deviceSummary =
+document.getElementById('deviceSummary');
+
+const why =
+document.getElementById('why');
+
+const general =
+document.getElementById('general');
+
+const red =
+document.getElementById('red');
+
+const two =
+document.getElementById('two');
+
+const four =
+document.getElementById('four');
+
+const sniper =
+document.getElementById('sniper');
+
+const free =
+document.getElementById('free');
+
 
 platformEl.value =
 params.get('platform') === 'ios'
 ? 'ios'
 : 'android';
 
+
 let selected = 'movement';
+
 let currentDevice = null;
 
-const styles = document.querySelectorAll('.style');
+
+/* -----------------------------
+   PLAYSTYLE
+----------------------------- */
+
+const styles =
+document.querySelectorAll('.style');
 
 styles.forEach(x => {
 
@@ -339,11 +677,21 @@ y.classList.remove('active')
 
 x.classList.add('active');
 
-selected = x.dataset.style;
+selected =
+x.dataset.style;
+
+if(currentDevice){
+showResult(currentDevice);
+}
 
 };
 
 });
+
+
+/* -----------------------------
+   HELPERS
+----------------------------- */
 
 function clamp(n,a,b){
 
@@ -352,6 +700,7 @@ Math.max(a,Math.min(b,n))
 );
 
 }
+
 
 function setStatus(t,bad=false){
 
@@ -365,14 +714,32 @@ bad ? '#ff9b9b' : '';
 
 }
 
-function localCalculate(d){
 
-let base =
-selected === 'movement'
-? 184
-: selected === 'balanced'
-? 174
-: 162;
+/*
+   Smooth score function.
+
+   This prevents one specification from
+   suddenly creating a huge sensitivity jump.
+*/
+
+function score(value,min,max){
+
+return Math.max(
+0,
+Math.min(
+1,
+(Number(value)-min)/(max-min)
+)
+);
+
+}
+
+
+/* -----------------------------
+   MAIN SENSITIVITY ENGINE
+----------------------------- */
+
+function localCalculate(d){
 
 const refresh =
 Number(d.refresh || 60);
@@ -386,89 +753,419 @@ Number(d.touch || 75);
 const ramValue =
 Number(ram.value || 8);
 
-/* Refresh rate */
-if(refresh >= 120)
+const selectedWeapon =
+weapon.value;
+
+const selectedGame =
+game.value;
+
+
+/*
+   DEVICE SCORE
+
+   Touch response gets the largest influence
+   because sensitivity feel is strongly related
+   to how quickly the screen responds.
+
+   Performance and refresh rate have smaller
+   influence.
+*/
+
+const touchScore =
+score(touch,50,100);
+
+const performanceScore =
+score(performance,40,100);
+
+const refreshScore =
+score(refresh,60,144);
+
+
+let deviceScore =
+(
+touchScore * 0.50 +
+performanceScore * 0.25 +
+refreshScore * 0.25
+);
+
+
+/*
+   Start from a middle-high General value.
+
+   The generator should NOT automatically push
+   every phone to 190-200.
+*/
+
+let base =
+150 +
+deviceScore * 28;
+
+
+/* -----------------------------
+   PLAYSTYLE
+----------------------------- */
+
+if(selected === 'movement'){
+
+base += 8;
+
+}
+
+else if(selected === 'balanced'){
+
+base += 2;
+
+}
+
+else if(selected === 'accuracy'){
+
+base -= 7;
+
+}
+
+
+/* -----------------------------
+   REFRESH RATE
+----------------------------- */
+
+if(refresh >= 144){
+
 base += 4;
-else if(refresh <= 60)
-base -= 4;
 
-/* Performance + touch */
-base +=
-Math.round((touch - 80) / 5)
-+
-Math.round((performance - 70) / 12);
+}
+else if(refresh >= 120){
 
-/* RAM influence */
-if(ramValue <= 2)
-base -= 6;
-else if(ramValue <= 3)
-base -= 4;
-else if(ramValue <= 4)
-base -= 2;
-else if(ramValue >= 16)
-base += 5;
-else if(ramValue >= 12)
-base += 3;
-else if(ramValue >= 8)
+base += 2;
+
+}
+else if(refresh >= 90){
+
 base += 1;
 
-/* Weapon influence */
-const weapon =
-document.getElementById('weapon').value;
+}
+else if(refresh <= 60){
 
-if(weapon === 'Shotgun')
-base += 7;
+base -= 2;
 
-if(weapon === 'Sniper')
-base -= 10;
+}
 
-/* DPI */
-const dpiValue = d.ios
-? null
-: clamp(
+
+/* -----------------------------
+   TOUCH RESPONSE
+----------------------------- */
+
+if(touch >= 90){
+
+base += 4;
+
+}
+else if(touch >= 80){
+
+base += 2;
+
+}
+else if(touch <= 60){
+
+base -= 4;
+
+}
+else if(touch <= 70){
+
+base -= 2;
+
+}
+
+
+/* -----------------------------
+   PERFORMANCE
+----------------------------- */
+
+if(performance >= 90){
+
+base += 3;
+
+}
+else if(performance >= 80){
+
+base += 1;
+
+}
+else if(performance <= 55){
+
+base -= 3;
+
+}
+
+
+/*
+   RAM
+
+   RAM is intentionally a SMALL modifier.
+
+   RAM does not directly determine touch
+   sensitivity. It mainly helps stability.
+*/
+
+if(ramValue <= 2){
+
+base -= 2;
+
+}
+else if(ramValue <= 3){
+
+base -= 1;
+
+}
+else if(ramValue >= 12){
+
+base += 1;
+
+}
+
+if(ramValue >= 16){
+
+base += 1;
+
+}
+
+
+/* -----------------------------
+   GAME
+----------------------------- */
+
+if(selectedGame === 'Free Fire MAX'){
+
+/*
+   MAX can feel slightly heavier on weaker
+   devices, so only a very small adjustment.
+*/
+
+if(performance < 65){
+
+base -= 1;
+
+}
+
+}
+
+
+/* -----------------------------
+   WEAPON
+----------------------------- */
+
+if(selectedWeapon === 'Shotgun'){
+
+base += 6;
+
+}
+
+else if(selectedWeapon === 'SMG'){
+
+base += 3;
+
+}
+
+else if(selectedWeapon === 'AR'){
+
+base += 1;
+
+}
+
+else if(selectedWeapon === 'Sniper'){
+
+base -= 7;
+
+}
+
+
+/*
+   Keep General in a realistic range.
+*/
+
+base =
+clamp(base,135,195);
+
+
+/* -----------------------------
+   SCOPE SETTINGS
+----------------------------- */
+
+/*
+   Instead of random independent values,
+   scopes are calculated from General.
+
+   This keeps the whole profile consistent.
+*/
+
+let redValue =
+base - 8;
+
+let twoValue =
+base - 20;
+
+let fourValue =
+base - 34;
+
+let sniperValue =
+base - 82;
+
+let freeValue =
+base - 42;
+
+
+/* PLAYSTYLE FINE-TUNING */
+
+if(selected === 'movement'){
+
+redValue += 3;
+twoValue += 2;
+
+}
+
+else if(selected === 'accuracy'){
+
+redValue -= 2;
+twoValue -= 3;
+fourValue -= 3;
+
+}
+
+
+/* WEAPON FINE-TUNING */
+
+if(selectedWeapon === 'Shotgun'){
+
+redValue += 3;
+twoValue += 1;
+
+}
+
+if(selectedWeapon === 'Sniper'){
+
+fourValue -= 3;
+sniperValue -= 5;
+
+}
+
+
+/* -----------------------------
+   FINAL SCOPE LIMITS
+----------------------------- */
+
+redValue =
+clamp(redValue,100,195);
+
+twoValue =
+clamp(twoValue,85,185);
+
+fourValue =
+clamp(fourValue,70,175);
+
+sniperValue =
+clamp(sniperValue,40,120);
+
+freeValue =
+clamp(freeValue,80,175);
+
+
+/* -----------------------------
+   DPI
+----------------------------- */
+
+let dpiValue = null;
+
+if(!d.ios){
+
+/*
+   DPI is based mainly on touch response
+   and device performance.
+
+   RAM has almost no direct effect.
+*/
+
+dpiValue =
 480 +
-performance * .9 +
-touch * .6 +
-(ramValue >= 8 ? 10 : 0) +
-(refresh > 90 ? 25 : 0),
-400,
-900
-);
+touch * 2.1 +
+performance * 0.35;
+
+if(refresh >= 120){
+
+dpiValue += 20;
+
+}
+else if(refresh >= 90){
+
+dpiValue += 10;
+
+}
+
+
+/*
+   Better RAM can help stability slightly,
+   but does NOT massively change DPI.
+*/
+
+if(ramValue >= 12){
+
+dpiValue += 5;
+
+}
+
+
+dpiValue =
+clamp(dpiValue,500,900);
+
+}
+
+
+/* -----------------------------
+   RETURN SETTINGS
+----------------------------- */
 
 return {
 
-dpi: dpiValue,
+dpi:dpiValue,
 
-base,
+base:base,
 
-red: clamp(base - 7,50,200),
+red:redValue,
 
-two: clamp(base - 17,50,200),
+two:twoValue,
 
-four: clamp(base - 29,40,200),
+four:fourValue,
 
-sn: clamp(base - 91,40,150),
+sn:sniperValue,
 
-free: clamp(base - 47,50,200)
+free:freeValue
 
 };
 
 }
 
+
+/* -----------------------------
+   PHONE AI VERIFICATION
+----------------------------- */
+
 async function identify(input){
 
-const r = await fetch(
+const r =
+await fetch(
 '/api/identify-phone',
 {
 method:'POST',
+
 headers:{
 'Content-Type':'application/json'
 },
+
 body:JSON.stringify({
 phone:input
 })
+
 }
 );
+
 
 if(!r.ok){
 
@@ -477,7 +1174,8 @@ let m =
 
 try{
 
-const j = await r.json();
+const j =
+await r.json();
 
 if(j.error)
 m = j.error;
@@ -488,13 +1186,22 @@ throw new Error(m);
 
 }
 
+
 return r.json();
 
 }
 
+
+/* -----------------------------
+   DISPLAY RESULT
+----------------------------- */
+
 function showResult(d){
 
 currentDevice = d;
+
+
+/* Save device */
 
 localStorage.setItem(
 'luharDevice',
@@ -506,75 +1213,148 @@ localStorage.setItem(
 platformEl.value
 );
 
-const v = localCalculate(d);
+
+/* Calculate */
+
+const v =
+localCalculate(d);
+
+
+/* DPI */
 
 dpi.textContent =
 v.dpi ?? '—';
 
+
 dpiBlock.style.display =
 d.ios ? 'none' : 'block';
+
 
 iphoneNote.style.display =
 d.ios ? 'block' : 'none';
 
-general.textContent = v.base;
 
-red.textContent = v.red;
+/* Sensitivity */
 
-two.textContent = v.two;
+general.textContent =
+v.base;
 
-four.textContent = v.four;
+red.textContent =
+v.red;
 
-sniper.textContent = v.sn;
+two.textContent =
+v.two;
 
-free.textContent = v.free;
+four.textContent =
+v.four;
+
+sniper.textContent =
+v.sn;
+
+free.textContent =
+v.free;
+
+
+/* -----------------------------
+   DEVICE SUMMARY
+----------------------------- */
 
 const bits = [
+
 d.brand,
 d.model
+
 ].filter(Boolean);
+
 
 const spec = [];
 
-spec.push(`${ram.value} GB RAM`);
 
-if(d.refresh)
-spec.push(`${d.refresh} Hz`);
+/* RAM */
 
-if(d.performance)
+spec.push(
+`${ram.value} GB RAM`
+);
+
+
+/* Refresh */
+
+if(d.refresh){
+
+spec.push(
+`${d.refresh} Hz`
+);
+
+}
+
+
+/* Performance */
+
+if(d.performance){
+
 spec.push(
 `performance ${d.performance}/100`
 );
 
-if(d.touch)
+}
+
+
+/* Touch */
+
+if(d.touch){
+
 spec.push(
 `touch ${d.touch}/100`
 );
 
+}
+
+
 deviceSummary.textContent =
+
 `${bits.join(' ')}${
 spec.length
 ? ' • ' + spec.join(' • ')
 : ''
 }`;
 
+
+/* -----------------------------
+   EXPLANATION
+----------------------------- */
+
 why.textContent =
+
 `Why these settings: ${selected} playstyle + ${
-document.getElementById('weapon').value.toLowerCase()
-} preference + ${ram.value} GB RAM + available device characteristics.`;
+weapon.value.toLowerCase()
+} preference + ${ram.value} GB RAM + ${
+game.value
+} + device touch/performance/refresh characteristics.`;
+
 
 result.classList.add('show');
 
+
 result.scrollIntoView({
+
 behavior:'smooth',
+
 block:'start'
+
 });
 
 }
 
+
+/* -----------------------------
+   ANALYZE
+----------------------------- */
+
 async function analyze(){
 
-const input = phone.value.trim();
+const input =
+phone.value.trim();
+
 
 if(!input){
 
@@ -589,15 +1369,29 @@ return;
 
 }
 
+
 setStatus(
 '🤖 AI is identifying the phone...'
 );
 
 result.classList.remove('show');
 
+
+generate.disabled = true;
+
+generate.textContent =
+'VERIFYING PHONE...';
+
+
 try{
 
-const d = await identify(input);
+const d =
+await identify(input);
+
+
+/*
+   Require confident AI verification.
+*/
 
 if(
 !d.verified ||
@@ -614,12 +1408,18 @@ return;
 
 }
 
+
+/*
+   Normalize AI values.
+*/
+
 d.performance =
 clamp(
 Number(d.performance || 60),
 1,
 100
 );
+
 
 d.touch =
 clamp(
@@ -628,21 +1428,32 @@ Number(d.touch || 75),
 100
 );
 
+
 d.refresh =
 Math.max(
 30,
 Number(d.refresh || 60)
 );
 
+
+/*
+   Platform override.
+*/
+
 d.ios =
 platformEl.value === 'ios' ||
 !!d.ios;
+
+
+/* Success */
 
 setStatus(
 `✅ AI identified: ${d.brand} ${d.model}`
 );
 
+
 showResult(d);
+
 
 }catch(e){
 
@@ -651,9 +1462,21 @@ setStatus(
 true
 );
 
+}finally{
+
+generate.disabled = false;
+
+generate.textContent =
+'ANALYZE PHONE & GENERATE ⚡';
+
 }
 
 }
+
+
+/* -----------------------------
+   PLATFORM
+----------------------------- */
 
 platformEl.onchange = () => {
 
@@ -662,60 +1485,153 @@ localStorage.setItem(
 platformEl.value
 );
 
-};
 
-/* Recalculate when RAM changes after a result is already visible */
-ram.onchange = () => {
+/*
+   If the result is already visible,
+   update DPI visibility immediately.
+*/
 
 if(currentDevice){
+
+currentDevice.ios =
+platformEl.value === 'ios';
+
 showResult(currentDevice);
+
 }
 
 };
 
-generate.onclick = analyze;
 
-again.onclick = analyze;
+/* -----------------------------
+   RAM
+----------------------------- */
+
+ram.onchange = () => {
+
+if(currentDevice){
+
+showResult(currentDevice);
+
+}
+
+};
+
+
+/* -----------------------------
+   WEAPON
+----------------------------- */
+
+weapon.onchange = () => {
+
+if(currentDevice){
+
+showResult(currentDevice);
+
+}
+
+};
+
+
+/* -----------------------------
+   GAME
+----------------------------- */
+
+game.onchange = () => {
+
+if(currentDevice){
+
+showResult(currentDevice);
+
+}
+
+};
+
+
+/* -----------------------------
+   BUTTONS
+----------------------------- */
+
+generate.onclick =
+analyze;
+
+again.onclick =
+analyze;
+
+
+/* -----------------------------
+   COPY SETTINGS
+----------------------------- */
 
 copy.onclick = async () => {
 
+
 const t =
+
 `LuharSensi Settings
+
 Platform: ${platformEl.value}
+
 Phone: ${
 currentDevice
 ? currentDevice.brand + ' ' + currentDevice.model
 : phone.value
 }
+
+Game: ${game.value}
+
 RAM: ${ram.value} GB
+
+Playstyle: ${selected}
+
+Weapon: ${weapon.value}
+
 DPI: ${
 dpiBlock.style.display === 'none'
 ? 'Not applicable on iOS'
 : dpi.textContent
 }
+
 General: ${general.textContent}
+
 Red Dot: ${red.textContent}
+
 2× Scope: ${two.textContent}
+
 4× Scope: ${four.textContent}
+
 Sniper: ${sniper.textContent}
+
 Free Look: ${free.textContent}`;
+
 
 try{
 
 await navigator.clipboard.writeText(t);
 
-copy.textContent = '✅ Copied!';
+copy.textContent =
+'✅ Copied!';
+
 
 setTimeout(() => {
-copy.textContent = '📋 Copy settings';
+
+copy.textContent =
+'📋 Copy settings';
+
 },1500);
+
 
 }catch{
 
-copy.textContent = '⚠️ Copy failed';
+copy.textContent =
+'⚠️ Copy failed';
+
 
 setTimeout(() => {
-copy.textContent = '📋 Copy settings';
+
+copy.textContent =
+'📋 Copy settings';
+
 },1500);
 
 }
