@@ -277,6 +277,92 @@ button:disabled{
   font-size:15px;
 }
 
+.mode-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.mode-card{
+  position:relative;
+}
+
+.mode-card input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.mode-label{
+  display:block;
+  padding:18px;
+  min-height:125px;
+  border:1px solid rgba(255,255,255,.09);
+  background:#0c0e14;
+  border-radius:15px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.mode-label:hover{
+  border-color:rgba(255,255,255,.2);
+}
+
+.mode-card input:checked + .mode-label{
+  border-color:#7180ff;
+  background:rgba(113,128,255,.12);
+}
+
+.mode-icon{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.mode-title{
+  font-weight:900;
+  font-size:15px;
+}
+
+.mode-description{
+  color:#858da1;
+  font-size:11px;
+  line-height:1.5;
+  margin-top:5px;
+}
+
+.ai-limit-box{
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  border-radius:14px;
+  background:rgba(255,75,94,.08);
+  border:1px solid rgba(255,75,94,.22);
+  color:#ffabb3;
+  line-height:1.5;
+  font-size:13px;
+}
+
+.ai-limit-box.show{
+  display:block;
+}
+
+.ai-limit-title{
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.standard-fallback{
+  display:none;
+  width:100%;
+  margin-top:12px;
+  background:#171a24;
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.standard-fallback.show{
+  display:block;
+}
+
 .status{
   display:none;
   margin-top:15px;
@@ -393,6 +479,12 @@ button:disabled{
   font-weight:800;
 }
 
+.ai-tag{
+  background:rgba(124,140,255,.1);
+  color:#aeb8ff;
+  border-color:rgba(124,140,255,.2);
+}
+
 .sensitivity-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -466,6 +558,7 @@ footer{
 }
 
 @media(max-width:700px){
+
   .nav{
     align-items:flex-start;
     flex-direction:column;
@@ -486,7 +579,8 @@ footer{
   }
 
   .grid,
-  .sensitivity-grid{
+  .sensitivity-grid,
+  .mode-grid{
     grid-template-columns:1fr;
   }
 
@@ -513,7 +607,10 @@ footer{
 
 <header>
   <div class="nav">
-    <a href="index.html" class="logo">Luhar<span>Sensi</span></a>
+
+    <a href="index.html" class="logo">
+      Luhar<span>Sensi</span>
+    </a>
 
     <nav>
       <a href="index.html">Home</a>
@@ -523,417 +620,866 @@ footer{
       <a href="privacy.html">Privacy</a>
       <a href="contact.html">Contact</a>
     </nav>
+
   </div>
 </header>
 
 <main class="container">
 
-  <section class="hero">
-    <div class="badge">FREE FIRE SENSITIVITY ENGINE</div>
-    <h1>Generate Your Sensitivity</h1>
-    <p>
-      Verify your exact phone first, then create a stable sensitivity
-      based on your device, RAM, playstyle and weapon preference.
-    </p>
-  </section>
+<section class="hero">
 
-  <div class="ad">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-6579899788641813"
-         data-ad-slot="auto"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+  <div class="badge">
+    FREE FIRE SENSITIVITY ENGINE
   </div>
 
-  <section class="card">
+  <h1>
+    Generate Your Sensitivity
+  </h1>
 
-    <h2>1. Verify your phone</h2>
-    <div class="card-sub">
-      We must verify the exact model before generating settings.
-    </div>
+  <p>
+    Verify your exact phone, choose how you want your
+    sensitivity generated, and create settings based
+    on your device and gaming setup.
+  </p>
 
-    <div class="field">
-      <label for="phone">Phone model</label>
+</section>
 
-      <div class="verify-row">
-        <input
-          id="phone"
-          type="text"
-          autocomplete="off"
-          placeholder="Example: Tecno Spark 8C"
-        >
+<!-- TOP AD -->
 
-        <button id="verifyBtn" type="button">
-          Verify phone
-        </button>
-      </div>
+<div class="ad">
 
-      <div class="hint">
-        Case does not matter. Common spelling variations may also be recognized.
-      </div>
-    </div>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6579899788641813"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
 
-    <div id="status" class="status"></div>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 
-    <div id="deviceBox" class="device-box">
+</div>
 
-      <div class="device-top">
-        <div>
-          <div class="device-name" id="deviceName">—</div>
-          <div class="verified">✓ Verified device</div>
-        </div>
-      </div>
 
-      <div class="device-details">
+<!-- PHONE VERIFICATION -->
 
-        <div class="detail">
-          <small>Chipset</small>
-          <strong id="deviceChipset">—</strong>
-        </div>
+<section class="card">
 
-        <div class="detail">
-          <small>Tier</small>
-          <strong id="deviceTier">—</strong>
-        </div>
+  <h2>
+    1. Verify your phone
+  </h2>
 
-        <div class="detail">
-          <small>Refresh</small>
-          <strong id="deviceRefresh">—</strong>
-        </div>
+  <div class="card-sub">
+    We must verify the exact model before generating settings.
+  </div>
 
-        <div class="detail">
-          <small>Confidence</small>
-          <strong id="deviceConfidence">—</strong>
-        </div>
+  <div class="field">
 
-      </div>
+    <label for="phone">
+      Phone model
+    </label>
 
-      <div class="note" id="deviceNote"></div>
+    <div class="verify-row">
 
-    </div>
+      <input
+        id="phone"
+        type="text"
+        autocomplete="off"
+        placeholder="Example: Tecno Spark 8C"
+      >
 
-  </section>
-
-  <section class="card">
-
-    <h2>2. Your gaming setup</h2>
-    <div class="card-sub">
-      These choices affect the generated sensitivity.
-    </div>
-
-    <div class="grid">
-
-      <div class="field">
-        <label for="ram">RAM</label>
-
-        <select id="ram">
-          <option value="2">2 GB</option>
-          <option value="3">3 GB</option>
-          <option value="4">4 GB</option>
-          <option value="6" selected>6 GB</option>
-          <option value="8">8 GB</option>
-          <option value="12">12 GB</option>
-          <option value="16">16 GB</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="playstyle">Playstyle</label>
-
-        <select id="playstyle">
-          <option value="movement">Movement</option>
-          <option value="balanced">Balanced</option>
-          <option value="accuracy">Accuracy</option>
-        </select>
-      </div>
-
-      <div class="field full">
-
-        <label>Main weapon preference</label>
-
-        <div class="radio-grid">
-
-          <div class="radio">
-            <input
-              type="radio"
-              name="weapon"
-              id="weaponMixed"
-              value="Mixed / All weapons"
-              checked
-            >
-            <label for="weaponMixed">
-              Mixed / All weapons
-            </label>
-          </div>
-
-          <div class="radio">
-            <input
-              type="radio"
-              name="weapon"
-              id="weaponSmg"
-              value="SMG"
-            >
-            <label for="weaponSmg">
-              SMG
-            </label>
-          </div>
-
-          <div class="radio">
-            <input
-              type="radio"
-              name="weapon"
-              id="weaponShotgun"
-              value="Shotgun"
-            >
-            <label for="weaponShotgun">
-              Shotgun
-            </label>
-          </div>
-
-          <div class="radio">
-            <input
-              type="radio"
-              name="weapon"
-              id="weaponAR"
-              value="AR"
-            >
-            <label for="weaponAR">
-              AR
-            </label>
-          </div>
-
-          <div class="radio">
-            <input
-              type="radio"
-              name="weapon"
-              id="weaponSniper"
-              value="Sniper"
-            >
-            <label for="weaponSniper">
-              Sniper
-            </label>
-          </div>
-
-          <div class="radio">
-            <input
-              type="radio"
-              name="weapon"
-              id="weaponOneTap"
-              value="One-tap / Headshot"
-            >
-            <label for="weaponOneTap">
-              One-tap / Headshot
-            </label>
-          </div>
-
-        </div>
-
-      </div>
+      <button
+        id="verifyBtn"
+        type="button"
+      >
+        Verify phone
+      </button>
 
     </div>
 
-  </section>
-
-  <section class="card">
-
-    <h2>3. DPI preference</h2>
-
-    <div class="card-sub">
-      DPI is optional. LuharSensi will not force a high DPI on weaker phones.
+    <div class="hint">
+      Case does not matter. Common spelling variations may also be recognized.
     </div>
 
-    <div class="radio-grid">
+  </div>
 
-      <div class="radio">
-        <input
-          type="radio"
-          name="dpiMode"
-          id="dpiKeep"
-          value="keep"
-          checked
-        >
-        <label for="dpiKeep">
-          ✓ Keep my current DPI
-        </label>
-      </div>
+  <div
+    id="status"
+    class="status"
+  ></div>
 
-      <div class="radio">
-        <input
-          type="radio"
-          name="dpiMode"
-          id="dpiRecommend"
-          value="recommend"
-        >
-        <label for="dpiRecommend">
-          🔧 Recommend DPI
-        </label>
-      </div>
 
-    </div>
+  <div
+    id="deviceBox"
+    class="device-box"
+  >
 
-    <div id="currentDpiField" style="margin-top:15px">
-
-      <div class="field">
-        <label for="currentDpi">
-          Your current DPI
-        </label>
-
-        <input
-          id="currentDpi"
-          type="number"
-          min="300"
-          max="1200"
-          value="default"
-          placeholder="Example: 900"
-        >
-
-        <div class="hint">
-          If you don't know your DPI, you can leave this empty.
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-  <section class="card">
-
-    <button
-      id="generateBtn"
-      class="generate"
-      type="button"
-      disabled
-    >
-      Verify your phone first
-    </button>
-
-  </section>
-
-  <section id="results" class="card results">
-
-    <div class="result-header">
+    <div class="device-top">
 
       <div>
-        <h2>Your sensitivity</h2>
-        <div class="card-sub" style="margin:5px 0 0">
-          Generated from verified device information.
+
+        <div
+          class="device-name"
+          id="deviceName"
+        >
+          —
         </div>
-      </div>
 
-      <div class="result-tag">
-        DEVICE VERIFIED
-      </div>
+        <div class="verified">
+          ✓ Verified device
+        </div>
 
-    </div>
-
-    <div class="sensitivity-grid">
-
-      <div class="sense">
-        <div class="sense-name">General</div>
-        <div class="sense-value" id="sGeneral">—</div>
-      </div>
-
-      <div class="sense">
-        <div class="sense-name">Red Dot</div>
-        <div class="sense-value" id="sRedDot">—</div>
-      </div>
-
-      <div class="sense">
-        <div class="sense-name">2X Scope</div>
-        <div class="sense-value" id="s2x">—</div>
-      </div>
-
-      <div class="sense">
-        <div class="sense-name">4X Scope</div>
-        <div class="sense-value" id="s4x">—</div>
-      </div>
-
-      <div class="sense">
-        <div class="sense-name">Sniper Scope</div>
-        <div class="sense-value" id="sSniper">—</div>
-      </div>
-
-      <div class="sense">
-        <div class="sense-name">Free Look</div>
-        <div class="sense-value" id="sFreeLook">—</div>
       </div>
 
     </div>
 
-    <div class="dpi-box">
 
-      <div class="dpi-title">
-        DPI recommendation
+    <div class="device-details">
+
+      <div class="detail">
+
+        <small>
+          Chipset
+        </small>
+
+        <strong id="deviceChipset">
+          —
+        </strong>
+
       </div>
 
-      <div class="dpi-value" id="dpiResult">
-        Keep your current DPI
+
+      <div class="detail">
+
+        <small>
+          Tier
+        </small>
+
+        <strong id="deviceTier">
+          —
+        </strong>
+
       </div>
 
-      <div class="note" id="dpiNote" style="margin-top:7px"></div>
+
+      <div class="detail">
+
+        <small>
+          Refresh
+        </small>
+
+        <strong id="deviceRefresh">
+          —
+        </strong>
+
+      </div>
+
+
+      <div class="detail">
+
+        <small>
+          Confidence
+        </small>
+
+        <strong id="deviceConfidence">
+          —
+        </strong>
+
+      </div>
 
     </div>
 
-    <button
-      id="copyBtn"
-      class="copy-btn secondary"
-      type="button"
-    >
-      Copy settings
-    </button>
 
-    <div class="note">
-      These settings are a starting point, not a guarantee of headshots.
-      Test them in training and change only a small amount at a time.
-    </div>
+    <div
+      class="note"
+      id="deviceNote"
+    ></div>
 
-  </section>
-
-  <div class="ad">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-6579899788641813"
-         data-ad-slot="auto"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
   </div>
 
+</section>
+
+
+<!-- GAMING SETUP -->
+
+<section class="card">
+
+  <h2>
+    2. Your gaming setup
+  </h2>
+
+  <div class="card-sub">
+    These choices affect the generated sensitivity.
+  </div>
+
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label for="ram">
+        RAM
+      </label>
+
+      <select id="ram">
+
+        <option value="2">
+          2 GB
+        </option>
+
+        <option value="3">
+          3 GB
+        </option>
+
+        <option value="4">
+          4 GB
+        </option>
+
+        <option value="6" selected>
+          6 GB
+        </option>
+
+        <option value="8">
+          8 GB
+        </option>
+
+        <option value="12">
+          12 GB
+        </option>
+
+        <option value="16">
+          16 GB
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="playstyle">
+        Playstyle
+      </label>
+
+      <select id="playstyle">
+
+        <option value="movement">
+          Movement
+        </option>
+
+        <option value="balanced">
+          Balanced
+        </option>
+
+        <option value="accuracy">
+          Accuracy
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="field full">
+
+      <label>
+        Main preference
+      </label>
+
+      <div class="radio-grid">
+
+        <div class="radio">
+
+          <input
+            type="radio"
+            name="weapon"
+            id="weaponMixed"
+            value="Mixed / All"
+            checked
+          >
+
+          <label for="weaponMixed">
+            Mixed / All
+          </label>
+
+        </div>
+
+
+        <div class="radio">
+
+          <input
+            type="radio"
+            name="weapon"
+            id="weaponSmg"
+            value="SMG"
+          >
+
+          <label for="weaponSmg">
+            SMG
+          </label>
+
+        </div>
+
+
+        <div class="radio">
+
+          <input
+            type="radio"
+            name="weapon"
+            id="weaponShotgun"
+            value="Shotgun"
+          >
+
+          <label for="weaponShotgun">
+            Shotgun
+          </label>
+
+        </div>
+
+
+        <div class="radio">
+
+          <input
+            type="radio"
+            name="weapon"
+            id="weaponAR"
+            value="AR"
+          >
+
+          <label for="weaponAR">
+            AR
+          </label>
+
+        </div>
+
+
+        <div class="radio">
+
+          <input
+            type="radio"
+            name="weapon"
+            id="weaponSniper"
+            value="Sniper"
+          >
+
+          <label for="weaponSniper">
+            Sniper
+          </label>
+
+        </div>
+
+
+        <div class="radio">
+
+          <input
+            type="radio"
+            name="weapon"
+            id="weaponOneTap"
+            value="One-tap"
+          >
+
+          <label for="weaponOneTap">
+            One-tap
+          </label>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DPI -->
+
+<section class="card">
+
+  <h2>
+    3. DPI preference
+  </h2>
+
+  <div class="card-sub">
+    DPI is optional. LuharSensi will not force a high DPI on weaker phones.
+  </div>
+
+
+  <div class="radio-grid">
+
+    <div class="radio">
+
+      <input
+        type="radio"
+        name="dpiMode"
+        id="dpiKeep"
+        value="keep"
+        checked
+      >
+
+      <label for="dpiKeep">
+        ✓ Keep my current DPI
+      </label>
+
+    </div>
+
+
+    <div class="radio">
+
+      <input
+        type="radio"
+        name="dpiMode"
+        id="dpiRecommend"
+        value="recommend"
+      >
+
+      <label for="dpiRecommend">
+        🔧 Recommend DPI
+      </label>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="currentDpiField"
+    style="margin-top:15px"
+  >
+
+    <div class="field">
+
+      <label for="currentDpi">
+        Your current DPI
+      </label>
+
+      <input
+        id="currentDpi"
+        type="number"
+        min="300"
+        max="1200"
+        placeholder="Example: 900"
+      >
+
+      <div class="hint">
+        If you don't know your DPI, you can leave this empty.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GENERATION MODE -->
+
+<section class="card">
+
+  <h2>
+    4. Choose generation mode
+  </h2>
+
+  <div class="card-sub">
+    Choose whether you want AI to create your sensitivity or use the standard generator.
+  </div>
+
+
+  <div class="mode-grid">
+
+    <div class="mode-card">
+
+      <input
+        type="radio"
+        name="generationMode"
+        id="modeAI"
+        value="ai"
+        checked
+      >
+
+      <label
+        for="modeAI"
+        class="mode-label"
+      >
+
+        <div class="mode-icon">
+          🤖
+        </div>
+
+        <div class="mode-title">
+          Generate with AI
+        </div>
+
+        <div class="mode-description">
+          Uses your verified device information to create a more personalized starting point.
+        </div>
+
+      </label>
+
+    </div>
+
+
+    <div class="mode-card">
+
+      <input
+        type="radio"
+        name="generationMode"
+        id="modeStandard"
+        value="standard"
+      >
+
+      <label
+        for="modeStandard"
+        class="mode-label"
+      >
+
+        <div class="mode-icon">
+          ⚡
+        </div>
+
+        <div class="mode-title">
+          Generate without AI
+        </div>
+
+        <div class="mode-description">
+          Fast local generation. Does not use an AI request and remains available when AI is unavailable.
+        </div>
+
+      </label>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="aiLimitBox"
+    class="ai-limit-box"
+  >
+
+    <div class="ai-limit-title">
+      ⚠️ AI limit is over
+    </div>
+
+    AI generation is temporarily unavailable.
+    Please come back later or generate your sensitivity
+    without AI.
+
+  </div>
+
+
+  <button
+    id="fallbackBtn"
+    class="standard-fallback"
+    type="button"
+  >
+    Generate without AI
+  </button>
+
+</section>
+
+
+<!-- GENERATE -->
+
+<section class="card">
+
+  <button
+    id="generateBtn"
+    class="generate"
+    type="button"
+    disabled
+  >
+    Verify your phone first
+  </button>
+
+</section>
+
+
+<!-- RESULTS -->
+
+<section
+  id="results"
+  class="card results"
+>
+
+  <div class="result-header">
+
+    <div>
+
+      <h2>
+        Your sensitivity
+      </h2>
+
+      <div
+        class="card-sub"
+        style="margin:5px 0 0"
+      >
+        Generated from your verified device information.
+      </div>
+
+    </div>
+
+
+    <div
+      id="resultTag"
+      class="result-tag"
+    >
+      STANDARD
+    </div>
+
+  </div>
+
+
+  <div class="sensitivity-grid">
+
+    <div class="sense">
+
+      <div class="sense-name">
+        General
+      </div>
+
+      <div
+        class="sense-value"
+        id="sGeneral"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="sense">
+
+      <div class="sense-name">
+        Red Dot
+      </div>
+
+      <div
+        class="sense-value"
+        id="sRedDot"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="sense">
+
+      <div class="sense-name">
+        2X Scope
+      </div>
+
+      <div
+        class="sense-value"
+        id="s2x"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="sense">
+
+      <div class="sense-name">
+        4X Scope
+      </div>
+
+      <div
+        class="sense-value"
+        id="s4x"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="sense">
+
+      <div class="sense-name">
+        Sniper Scope
+      </div>
+
+      <div
+        class="sense-value"
+        id="sSniper"
+      >
+        —
+      </div>
+
+    </div>
+
+
+    <div class="sense">
+
+      <div class="sense-name">
+        Free Look
+      </div>
+
+      <div
+        class="sense-value"
+        id="sFreeLook"
+      >
+        —
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="dpi-box">
+
+    <div class="dpi-title">
+      DPI recommendation
+    </div>
+
+    <div
+      class="dpi-value"
+      id="dpiResult"
+    >
+      Keep your current DPI
+    </div>
+
+    <div
+      class="note"
+      id="dpiNote"
+      style="margin-top:7px"
+    ></div>
+
+  </div>
+
+
+  <div
+    class="note"
+    id="aiResultNote"
+  ></div>
+
+
+  <button
+    id="copyBtn"
+    class="copy-btn secondary"
+    type="button"
+  >
+    Copy settings
+  </button>
+
+
+  <div class="note">
+    These settings are a starting point, not a guarantee.
+    Test them in training and change only a small amount at a time.
+  </div>
+
+</section>
+
+
+<!-- BOTTOM AD -->
+
+<div class="ad">
+
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6579899788641813"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+
+</div>
+
 </main>
+
 
 <footer>
   © 2026 LuharSensi — Free Fire sensitivity tools
 </footer>
 
-<script>
-const phoneInput = document.getElementById("phone");
-const verifyBtn = document.getElementById("verifyBtn");
-const generateBtn = document.getElementById("generateBtn");
 
-const statusBox = document.getElementById("status");
-const deviceBox = document.getElementById("deviceBox");
-const results = document.getElementById("results");
+<script>
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const phoneInput =
+  document.getElementById("phone");
+
+const verifyBtn =
+  document.getElementById("verifyBtn");
+
+const generateBtn =
+  document.getElementById("generateBtn");
+
+const fallbackBtn =
+  document.getElementById("fallbackBtn");
+
+const statusBox =
+  document.getElementById("status");
+
+const deviceBox =
+  document.getElementById("deviceBox");
+
+const results =
+  document.getElementById("results");
+
+const aiLimitBox =
+  document.getElementById("aiLimitBox");
+
+
+/* =====================================================
+   STATE
+===================================================== */
 
 let verifiedDevice = null;
+
 let lastVerifiedInput = "";
 
-function showStatus(message, type = "info"){
-  statusBox.textContent = message;
-  statusBox.className = "status show " + type;
+let aiTemporarilyUnavailable = false;
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function showStatus(
+  message,
+  type = "info"
+){
+
+  statusBox.textContent =
+    message;
+
+  statusBox.className =
+    "status show " + type;
 }
+
 
 function hideStatus(){
-  statusBox.className = "status";
-  statusBox.textContent = "";
+
+  statusBox.className =
+    "status";
+
+  statusBox.textContent =
+    "";
 }
 
-function normalizeClientPhone(value){
+
+/* =====================================================
+   PHONE NORMALIZATION
+===================================================== */
+
+function normalizeClientPhone(
+  value
+){
+
   return String(value || "")
     .toLowerCase()
     .trim()
@@ -941,202 +1487,438 @@ function normalizeClientPhone(value){
     .replace(/\s+/g," ");
 }
 
+
+/* =====================================================
+   CLEAR VERIFICATION
+===================================================== */
+
 function clearVerification(){
+
   verifiedDevice = null;
+
   lastVerifiedInput = "";
 
-  deviceBox.classList.remove("show");
-  results.classList.remove("show");
-
-  generateBtn.disabled = true;
-  generateBtn.textContent = "Verify your phone first";
-}
-
-phoneInput.addEventListener("input", () => {
-  const current = normalizeClientPhone(phoneInput.value);
-
-  if (
-    lastVerifiedInput &&
-    current !== lastVerifiedInput
-  ){
-    clearVerification();
-    hideStatus();
-  }
-});
-
-verifyBtn.addEventListener("click", async () => {
-
-  const phone = phoneInput.value.trim();
-
-  if(!phone){
-    showStatus("Enter your phone model first.","error");
-    phoneInput.focus();
-    return;
-  }
-
-  verifyBtn.disabled = true;
-  verifyBtn.textContent = "Verifying...";
-  clearVerification();
-
-  showStatus(
-    "Checking the exact phone model. No sensitivity will be generated unless it is verified.",
-    "info"
+  deviceBox.classList.remove(
+    "show"
   );
 
-  try{
+  results.classList.remove(
+    "show"
+  );
 
-    const response = await fetch("/api/identify-phone",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        phone:phone
-      })
-    });
+  generateBtn.disabled = true;
 
-    const data = await response.json();
+  generateBtn.textContent =
+    "Verify your phone first";
 
-    if(!response.ok){
-
-      if(response.status === 429){
-        const seconds = Number(data.retryAfterSeconds || 0);
-
-        if(seconds > 0){
-          showStatus(
-            "Verification limit reached. Please try again later.",
-            "error"
-          );
-        }else{
-          showStatus(
-            data.error || "AI verification is temporarily unavailable.",
-            "error"
-          );
-        }
-      }else{
-        showStatus(
-          data.error || data.note || "Phone verification failed.",
-          "error"
-        );
-      }
-
-      return;
-    }
-
-    if(!data.verified){
-
-      showStatus(
-        data.note ||
-        "The exact phone model could not be verified confidently. No sensitivity was generated.",
-        "error"
-      );
-
-      return;
-    }
-
-    verifiedDevice = data;
-    lastVerifiedInput = normalizeClientPhone(phone);
-
-    document.getElementById("deviceName").textContent =
-      `${data.brand} ${data.model}`;
-
-    document.getElementById("deviceChipset").textContent =
-      data.chipset || "Unknown";
-
-    document.getElementById("deviceTier").textContent =
-      data.tier
-        ? data.tier.charAt(0).toUpperCase() + data.tier.slice(1)
-        : "Unknown";
-
-    document.getElementById("deviceRefresh").textContent =
-      `${data.refresh || 60} Hz`;
-
-    document.getElementById("deviceConfidence").textContent =
-      `${Math.round(Number(data.confidence || 0) * 100)}%`;
-
-    document.getElementById("deviceNote").textContent =
-      data.note || "Device verified.";
-
-    deviceBox.classList.add("show");
-
-    generateBtn.disabled = false;
-    generateBtn.textContent = "Generate sensitivity";
-
-    showStatus(
-      data.cached
-        ? "✓ Phone verified using cached device information."
-        : "✓ Phone verified successfully.",
-      "success"
-    );
-
-    localStorage.setItem(
-      "luharDevice",
-      JSON.stringify(data)
-    );
-
-    localStorage.setItem(
-      "luharPlatform",
-      data.ios ? "ios" : "android"
-    );
-
-    if(typeof gtag === "function"){
-      gtag("event","phone_verified",{
-        phone_model:`${data.brand} ${data.model}`,
-        cached:Boolean(data.cached)
-      });
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    showStatus(
-      "Could not contact the verification server. Please try again.",
-      "error"
-    );
-
-  }finally{
-
-    verifyBtn.disabled = false;
-    verifyBtn.textContent = "Verify phone";
-
-  }
-
-});
-
-
-document.querySelectorAll('input[name="dpiMode"]').forEach(input => {
-
-  input.addEventListener("change", () => {
-
-    const mode =
-      document.querySelector('input[name="dpiMode"]:checked').value;
-
-    document.getElementById("currentDpiField").style.display =
-      mode === "keep" ? "block" : "none";
-
-  });
-
-});
-
-
-function clamp(value,min,max){
-  return Math.max(min,Math.min(max,Math.round(value)));
 }
+
+
+/* =====================================================
+   GET SELECTED MODE
+===================================================== */
+
+function getGenerationMode(){
+
+  const selected =
+    document.querySelector(
+      'input[name="generationMode"]:checked'
+    );
+
+  return selected
+    ? selected.value
+    : "ai";
+}
+
+
+/* =====================================================
+   GET WEAPON / PREFERENCE
+===================================================== */
 
 function getWeapon(){
 
   const selected =
-    document.querySelector('input[name="weapon"]:checked');
+    document.querySelector(
+      'input[name="weapon"]:checked'
+    );
 
-  return selected ? selected.value : "Mixed / All weapons";
+  return selected
+    ? selected.value
+    : "Mixed / All";
+}
+
+
+/* =====================================================
+   VERIFY PHONE
+===================================================== */
+
+phoneInput.addEventListener(
+  "input",
+  () => {
+
+    const current =
+      normalizeClientPhone(
+        phoneInput.value
+      );
+
+    if(
+      lastVerifiedInput &&
+      current !== lastVerifiedInput
+    ){
+
+      clearVerification();
+
+      hideStatus();
+
+    }
+
+  }
+);
+
+
+verifyBtn.addEventListener(
+  "click",
+  async () => {
+
+    const phone =
+      phoneInput.value.trim();
+
+    if(!phone){
+
+      showStatus(
+        "Enter your phone model first.",
+        "error"
+      );
+
+      phoneInput.focus();
+
+      return;
+    }
+
+
+    verifyBtn.disabled = true;
+
+    verifyBtn.textContent =
+      "Verifying...";
+
+    clearVerification();
+
+
+    showStatus(
+      "Checking the exact phone model. No sensitivity will be generated unless it is verified.",
+      "info"
+    );
+
+
+    try{
+
+      const response =
+        await fetch(
+          "/api/identify-phone",
+          {
+            method:"POST",
+
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify({
+                phone:phone
+              })
+          }
+        );
+
+
+      const data =
+        await response.json();
+
+
+      if(!response.ok){
+
+        if(
+          response.status === 429
+        ){
+
+          showStatus(
+            data.error ||
+            "Verification limit reached. Please try again later.",
+            "error"
+          );
+
+        }else{
+
+          showStatus(
+            data.error ||
+            data.note ||
+            "Phone verification failed.",
+            "error"
+          );
+
+        }
+
+        return;
+      }
+
+
+      if(!data.verified){
+
+        showStatus(
+          data.note ||
+          "The exact phone model could not be verified confidently. No sensitivity was generated.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      verifiedDevice =
+        data;
+
+      lastVerifiedInput =
+        normalizeClientPhone(
+          phone
+        );
+
+
+      document.getElementById(
+        "deviceName"
+      ).textContent =
+        `${data.brand} ${data.model}`;
+
+
+      document.getElementById(
+        "deviceChipset"
+      ).textContent =
+        data.chipset ||
+        "Unknown";
+
+
+      document.getElementById(
+        "deviceTier"
+      ).textContent =
+        data.tier
+          ? data.tier
+              .charAt(0)
+              .toUpperCase() +
+            data.tier.slice(1)
+          : "Unknown";
+
+
+      document.getElementById(
+        "deviceRefresh"
+      ).textContent =
+        `${data.refresh || 60} Hz`;
+
+
+      document.getElementById(
+        "deviceConfidence"
+      ).textContent =
+        `${Math.round(
+          Number(
+            data.confidence || 0
+          ) * 100
+        )}%`;
+
+
+      document.getElementById(
+        "deviceNote"
+      ).textContent =
+        data.note ||
+        "Device verified.";
+
+
+      deviceBox.classList.add(
+        "show"
+      );
+
+
+      generateBtn.disabled =
+        false;
+
+      generateBtn.textContent =
+        "Generate sensitivity";
+
+
+      showStatus(
+        data.cached
+          ? "✓ Phone verified using cached device information."
+          : "✓ Phone verified successfully.",
+        "success"
+      );
+
+
+      localStorage.setItem(
+        "luharDevice",
+        JSON.stringify(data)
+      );
+
+
+      localStorage.setItem(
+        "luharPlatform",
+        data.ios
+          ? "ios"
+          : "android"
+      );
+
+
+      if(
+        typeof gtag === "function"
+      ){
+
+        gtag(
+          "event",
+          "phone_verified",
+          {
+            phone_model:
+              `${data.brand} ${data.model}`,
+
+            cached:
+              Boolean(data.cached)
+          }
+        );
+
+      }
+
+    }catch(error){
+
+      console.error(error);
+
+      showStatus(
+        "Could not contact the verification server. Please try again.",
+        "error"
+      );
+
+    }finally{
+
+      verifyBtn.disabled =
+        false;
+
+      verifyBtn.textContent =
+        "Verify phone";
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   DPI MODE
+===================================================== */
+
+document
+  .querySelectorAll(
+    'input[name="dpiMode"]'
+  )
+  .forEach(
+    input => {
+
+      input.addEventListener(
+        "change",
+        () => {
+
+          const mode =
+            document.querySelector(
+              'input[name="dpiMode"]:checked'
+            ).value;
+
+
+          document.getElementById(
+            "currentDpiField"
+          ).style.display =
+            mode === "keep"
+              ? "block"
+              : "none";
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   GENERATION MODE CHANGE
+===================================================== */
+
+document
+  .querySelectorAll(
+    'input[name="generationMode"]'
+  )
+  .forEach(
+    input => {
+
+      input.addEventListener(
+        "change",
+        () => {
+
+          aiLimitBox.classList.remove(
+            "show"
+          );
+
+          fallbackBtn.classList.remove(
+            "show"
+          );
+
+          aiTemporarilyUnavailable =
+            false;
+
+          if(
+            getGenerationMode() ===
+            "ai"
+          ){
+
+            generateBtn.textContent =
+              "Generate with AI";
+
+          }else{
+
+            generateBtn.textContent =
+              "Generate without AI";
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   CLAMP
+===================================================== */
+
+function clamp(
+  value,
+  min,
+  max
+){
+
+  return Math.max(
+    min,
+    Math.min(
+      max,
+      Math.round(value)
+    )
+  );
 
 }
 
 
-function generateSensitivity(){
+/* =====================================================
+   STANDARD GENERATOR
+===================================================== */
 
-  if(!verifiedDevice || !verifiedDevice.verified){
+function generateStandard(){
+
+  if(
+    !verifiedDevice ||
+    !verifiedDevice.verified
+  ){
 
     showStatus(
       "You must verify your exact phone before generating sensitivity.",
@@ -1146,329 +1928,902 @@ function generateSensitivity(){
     return;
   }
 
+
   const ram =
-    Number(document.getElementById("ram").value);
+    Number(
+      document.getElementById(
+        "ram"
+      ).value
+    );
+
 
   const playstyle =
-    document.getElementById("playstyle").value;
+    document.getElementById(
+      "playstyle"
+    ).value;
+
 
   const weapon =
     getWeapon();
+
 
   const dpiMode =
     document.querySelector(
       'input[name="dpiMode"]:checked'
     ).value;
 
+
   const performance =
-    Number(verifiedDevice.performance || 50);
+    Number(
+      verifiedDevice.performance ||
+      50
+    );
+
 
   const touch =
-    Number(verifiedDevice.touch || 50);
+    Number(
+      verifiedDevice.touch ||
+      50
+    );
+
 
   const refresh =
-    Number(verifiedDevice.refresh || 60);
+    Number(
+      verifiedDevice.refresh ||
+      60
+    );
 
-  /*
-    Base sensitivity.
-
-    The values are intentionally moderate.
-    Device performance affects the result slightly,
-    but the generator never invents a hardware value.
-  */
 
   let base;
 
-  if(playstyle === "movement"){
+
+  if(
+    playstyle ===
+    "movement"
+  ){
+
     base = 190;
-  }else if(playstyle === "balanced"){
+
+  }else if(
+    playstyle ===
+    "balanced"
+  ){
+
     base = 184;
+
   }else{
+
     base = 177;
+
   }
 
-  /*
-    RAM adjustment:
-    More RAM does NOT automatically mean higher sensitivity.
-    The adjustment is intentionally small.
-  */
 
   if(ram <= 2){
+
     base -= 3;
+
   }else if(ram === 3){
+
     base -= 2;
+
   }else if(ram === 4){
+
     base -= 1;
+
   }else if(ram >= 12){
+
     base += 1;
+
   }
 
-  /*
-    Refresh/touch/performance adjustments are conservative.
-  */
 
   if(refresh >= 120){
+
     base += 2;
+
   }else if(refresh >= 90){
+
     base += 1;
+
   }
+
 
   if(touch >= 75){
+
     base += 1;
+
   }
+
 
   if(performance < 35){
+
     base -= 2;
+
   }
 
+
   /*
-    Weapon adjustments.
+    Keep the existing standard calculation.
   */
 
   if(weapon === "SMG"){
+
     base += 2;
-  }else if(weapon === "Shotgun"){
+
+  }else if(
+    weapon === "Shotgun"
+  ){
+
     base += 3;
-  }else if(weapon === "AR"){
+
+  }else if(
+    weapon === "AR"
+  ){
+
     base -= 1;
-  }else if(weapon === "Sniper"){
+
+  }else if(
+    weapon === "Sniper"
+  ){
+
     base -= 7;
-  }else if(weapon === "One-tap / Headshot"){
+
+  }else if(
+    weapon === "One-tap"
+  ){
+
     base += 1;
-  }
-
-  const general = clamp(base,150,200);
-
-  const redDot = clamp(
-    general - 2,
-    145,
-    200
-  );
-
-  const scope2x = clamp(
-    general - 8,
-    135,
-    195
-  );
-
-  const scope4x = clamp(
-    general - 16,
-    125,
-    185
-  );
-
-  const sniper = clamp(
-    general - 28,
-    90,
-    170
-  );
-
-  const freeLook = clamp(
-    general + 5,
-    150,
-    200
-  );
-
-
-  document.getElementById("sGeneral").textContent =
-    general;
-
-  document.getElementById("sRedDot").textContent =
-    redDot;
-
-  document.getElementById("s2x").textContent =
-    scope2x;
-
-  document.getElementById("s4x").textContent =
-    scope4x;
-
-  document.getElementById("sSniper").textContent =
-    sniper;
-
-  document.getElementById("sFreeLook").textContent =
-    freeLook;
-
-
-  const dpiResult =
-    document.getElementById("dpiResult");
-
-  const dpiNote =
-    document.getElementById("dpiNote");
-
-  if(dpiMode === "keep"){
-
-    const currentDpi =
-      Number(document.getElementById("currentDpi").value);
-
-    if(
-      Number.isFinite(currentDpi) &&
-      currentDpi >= 300 &&
-      currentDpi <= 1200
-    ){
-
-      dpiResult.textContent =
-        `${currentDpi} DPI`;
-
-      dpiNote.textContent =
-        "Your current DPI is being kept. Sensitivity is generated without forcing a DPI change.";
-
-    }else{
-
-      dpiResult.textContent =
-        "Keep your current DPI";
-
-      dpiNote.textContent =
-        "No DPI was recommended. Keeping your existing DPI is the safer default.";
-
-    }
-
-  }else{
-
-    /*
-      DPI recommendation is deliberately conservative.
-
-      Low-end phones:
-      do NOT automatically receive high DPI.
-    */
-
-    let recommendedDpi;
-
-    const tier =
-      String(verifiedDevice.tier || "unknown").toLowerCase();
-
-    if(tier === "low" || performance < 40){
-
-      recommendedDpi = 600;
-
-      dpiNote.textContent =
-        "Your device is in the lower performance range, so a conservative DPI is recommended rather than an aggressive value.";
-
-    }else if(tier === "mid" || performance < 70){
-
-      recommendedDpi = 700;
-
-      dpiNote.textContent =
-        "A moderate DPI is recommended to balance touch response and stability.";
-
-    }else if(tier === "gaming" || performance >= 85){
-
-      recommendedDpi = 800;
-
-      dpiNote.textContent =
-        "Your device has stronger performance, so a moderate-high DPI can be tested.";
-
-    }else{
-
-      recommendedDpi = 750;
-
-      dpiNote.textContent =
-        "A moderate DPI is recommended as a starting point.";
-
-    }
-
-    dpiResult.textContent =
-      `${recommendedDpi} DPI`;
 
   }
 
 
-  results.classList.add("show");
+  const general =
+    clamp(
+      base,
+      150,
+      200
+    );
 
-  results.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
 
-  const resultData = {
-    device:`${verifiedDevice.brand} ${verifiedDevice.model}`,
-    ram,
-    playstyle,
-    weapon,
+  const redDot =
+    clamp(
+      general - 2,
+      145,
+      200
+    );
+
+
+  const scope2x =
+    clamp(
+      general - 8,
+      135,
+      195
+    );
+
+
+  const scope4x =
+    clamp(
+      general - 16,
+      125,
+      185
+    );
+
+
+  const sniper =
+    clamp(
+      general - 28,
+      90,
+      170
+    );
+
+
+  const freeLook =
+    clamp(
+      general + 5,
+      150,
+      200
+    );
+
+
+  showResults({
+
     general,
     redDot,
     scope2x,
     scope4x,
     sniper,
     freeLook,
-    dpi:dpiResult.textContent
-  };
 
-  localStorage.setItem(
-    "luharLastSensitivity",
-    JSON.stringify(resultData)
+    source:
+      "STANDARD",
+
+    dpiMode,
+
+    standard:true,
+
+    note:
+      "Generated locally without using AI."
+
+  });
+
+}
+
+
+/* =====================================================
+   AI GENERATOR
+===================================================== */
+
+async function generateWithAI(){
+
+  if(
+    !verifiedDevice ||
+    !verifiedDevice.verified
+  ){
+
+    showStatus(
+      "You must verify your exact phone before using AI generation.",
+      "error"
+    );
+
+    return;
+  }
+
+
+  const ram =
+    Number(
+      document.getElementById(
+        "ram"
+      ).value
+    );
+
+
+  const playstyle =
+    document.getElementById(
+      "playstyle"
+    ).value;
+
+
+  const weapon =
+    getWeapon();
+
+
+  const dpiMode =
+    document.querySelector(
+      'input[name="dpiMode"]:checked'
+    ).value;
+
+
+  const currentDpi =
+    Number(
+      document.getElementById(
+        "currentDpi"
+      ).value
+    );
+
+
+  generateBtn.disabled =
+    true;
+
+  fallbackBtn.classList.remove(
+    "show"
   );
 
-  if(typeof gtag === "function"){
 
-    gtag("event","sensitivity_generated",{
-      phone_model:`${verifiedDevice.brand} ${verifiedDevice.model}`,
-      ram:ram,
-      playstyle:playstyle,
-      weapon:weapon,
-      dpi_mode:dpiMode
+  showStatus(
+    "🤖 AI is creating your device-specific sensitivity...",
+    "info"
+  );
+
+
+  try{
+
+    const response =
+      await fetch(
+        "/api/generate-ai",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+
+              phone:
+                verifiedDevice,
+
+              ram,
+
+              playstyle,
+
+              weapon,
+
+              dpiMode,
+
+              currentDpi
+
+            })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    /*
+      AI limit reached
+    */
+
+    if(
+      response.status === 429 &&
+      data.aiLimitReached
+    ){
+
+      aiTemporarilyUnavailable =
+        true;
+
+
+      aiLimitBox.classList.add(
+        "show"
+      );
+
+
+      fallbackBtn.classList.add(
+        "show"
+      );
+
+
+      showStatus(
+        "AI limit is over. You can generate without AI now.",
+        "error"
+      );
+
+
+      generateBtn.disabled =
+        false;
+
+      generateBtn.textContent =
+        "Generate with AI";
+
+
+      return;
+    }
+
+
+    /*
+      AI temporarily unavailable
+    */
+
+    if(
+      data.aiTemporarilyUnavailable
+    ){
+
+      aiTemporarilyUnavailable =
+        true;
+
+
+      aiLimitBox.classList.add(
+        "show"
+      );
+
+
+      fallbackBtn.classList.add(
+        "show"
+      );
+
+
+      showStatus(
+        data.error ||
+        "AI generation is temporarily unavailable. You can generate without AI.",
+        "error"
+      );
+
+
+      generateBtn.disabled =
+        false;
+
+
+      return;
+    }
+
+
+    if(
+      !response.ok ||
+      !data.aiAvailable
+    ){
+
+      fallbackBtn.classList.add(
+        "show"
+      );
+
+
+      showStatus(
+        data.error ||
+        "AI generation failed. You can generate without AI.",
+        "error"
+      );
+
+
+      generateBtn.disabled =
+        false;
+
+
+      return;
+    }
+
+
+    /*
+      AI SUCCESS
+    */
+
+    aiLimitBox.classList.remove(
+      "show"
+    );
+
+
+    fallbackBtn.classList.remove(
+      "show"
+    );
+
+
+    showResults({
+
+      general:
+        Number(data.general),
+
+      redDot:
+        Number(data.redDot),
+
+      scope2x:
+        Number(data.scope2x),
+
+      scope4x:
+        Number(data.scope4x),
+
+      sniper:
+        Number(data.sniper),
+
+      freeLook:
+        Number(data.freeLook),
+
+      source:
+        "AI GENERATED",
+
+      dpi:
+        data.dpi ||
+        "Keep your current DPI",
+
+      dpiNote:
+        data.dpiNote ||
+        "",
+
+      standard:false,
+
+      note:
+        data.note ||
+        "AI-generated sensitivity."
+
     });
+
+
+    showStatus(
+      "✓ AI sensitivity generated successfully.",
+      "success"
+    );
+
+
+    if(
+      typeof gtag === "function"
+    ){
+
+      gtag(
+        "event",
+        "ai_sensitivity_generated",
+        {
+          phone_model:
+            `${verifiedDevice.brand} ${verifiedDevice.model}`,
+
+          ram,
+
+          playstyle,
+
+          weapon,
+
+          dpi_mode:
+            dpiMode
+        }
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    fallbackBtn.classList.add(
+      "show"
+    );
+
+
+    showStatus(
+      "AI generation could not be completed. You can generate without AI.",
+      "error"
+    );
+
+  }finally{
+
+    generateBtn.disabled =
+      false;
 
   }
 
 }
 
 
+/* =====================================================
+   SHOW RESULTS
+===================================================== */
+
+function showResults(data){
+
+  document.getElementById(
+    "sGeneral"
+  ).textContent =
+    data.general;
+
+
+  document.getElementById(
+    "sRedDot"
+  ).textContent =
+    data.redDot;
+
+
+  document.getElementById(
+    "s2x"
+  ).textContent =
+    data.scope2x;
+
+
+  document.getElementById(
+    "s4x"
+  ).textContent =
+    data.scope4x;
+
+
+  document.getElementById(
+    "sSniper"
+  ).textContent =
+    data.sniper;
+
+
+  document.getElementById(
+    "sFreeLook"
+  ).textContent =
+    data.freeLook;
+
+
+  const dpiResult =
+    document.getElementById(
+      "dpiResult"
+    );
+
+
+  const dpiNote =
+    document.getElementById(
+      "dpiNote"
+    );
+
+
+  /*
+    AI result provides its own DPI.
+  */
+
+  if(
+    !data.standard &&
+    data.dpi
+  ){
+
+    dpiResult.textContent =
+      data.dpi;
+
+    dpiNote.textContent =
+      data.dpiNote || "";
+
+  }else{
+
+    /*
+      Standard DPI calculation.
+    */
+
+    const dpiMode =
+      document.querySelector(
+        'input[name="dpiMode"]:checked'
+      ).value;
+
+
+    if(
+      dpiMode === "keep"
+    ){
+
+      const currentDpi =
+        Number(
+          document.getElementById(
+            "currentDpi"
+          ).value
+        );
+
+
+      if(
+        Number.isFinite(
+          currentDpi
+        ) &&
+        currentDpi >= 300 &&
+        currentDpi <= 1200
+      ){
+
+        dpiResult.textContent =
+          `${currentDpi} DPI`;
+
+        dpiNote.textContent =
+          "Your current DPI is being kept. Sensitivity is generated without forcing a DPI change.";
+
+      }else{
+
+        dpiResult.textContent =
+          "Keep your current DPI";
+
+        dpiNote.textContent =
+          "No DPI was recommended. Keeping your existing DPI is the safer default.";
+
+      }
+
+    }else{
+
+      let recommendedDpi;
+
+
+      const performance =
+        Number(
+          verifiedDevice.performance ||
+          50
+        );
+
+
+      const tier =
+        String(
+          verifiedDevice.tier ||
+          "unknown"
+        ).toLowerCase();
+
+
+      if(
+        tier === "low" ||
+        performance < 40
+      ){
+
+        recommendedDpi =
+          600;
+
+        dpiNote.textContent =
+          "Your device is in the lower performance range, so a conservative DPI is recommended.";
+
+      }else if(
+        tier === "mid" ||
+        performance < 70
+      ){
+
+        recommendedDpi =
+          700;
+
+        dpiNote.textContent =
+          "A moderate DPI is recommended to balance touch response and stability.";
+
+      }else if(
+        tier === "gaming" ||
+        performance >= 85
+      ){
+
+        recommendedDpi =
+          800;
+
+        dpiNote.textContent =
+          "Your device has stronger performance, so a moderate-high DPI can be tested.";
+
+      }else{
+
+        recommendedDpi =
+          750;
+
+        dpiNote.textContent =
+          "A moderate DPI is recommended as a starting point.";
+
+      }
+
+
+      dpiResult.textContent =
+        `${recommendedDpi} DPI`;
+
+    }
+
+  }
+
+
+  /*
+    Result source tag.
+  */
+
+  const resultTag =
+    document.getElementById(
+      "resultTag"
+    );
+
+
+  resultTag.textContent =
+    data.source;
+
+
+  if(
+    data.source ===
+    "AI GENERATED"
+  ){
+
+    resultTag.classList.add(
+      "ai-tag"
+    );
+
+  }else{
+
+    resultTag.classList.remove(
+      "ai-tag"
+    );
+
+  }
+
+
+  document.getElementById(
+    "aiResultNote"
+  ).textContent =
+    data.note || "";
+
+
+  results.classList.add(
+    "show"
+  );
+
+
+  results.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+
+  /*
+    Save result.
+  */
+
+  const resultData = {
+
+    device:
+      `${verifiedDevice.brand} ${verifiedDevice.model}`,
+
+    ram:
+      Number(
+        document.getElementById(
+          "ram"
+        ).value
+      ),
+
+    playstyle:
+      document.getElementById(
+        "playstyle"
+      ).value,
+
+    weapon:
+      getWeapon(),
+
+    source:
+      data.source,
+
+    general:
+      data.general,
+
+    redDot:
+      data.redDot,
+
+    scope2x:
+      data.scope2x,
+
+    scope4x:
+      data.scope4x,
+
+    sniper:
+      data.sniper,
+
+    freeLook:
+      data.freeLook,
+
+    dpi:
+      document.getElementById(
+        "dpiResult"
+      ).textContent
+
+  };
+
+
+  localStorage.setItem(
+    "luharLastSensitivity",
+    JSON.stringify(
+      resultData
+    )
+  );
+
+
+  if(
+    typeof gtag === "function"
+  ){
+
+    gtag(
+      "event",
+      "sensitivity_generated",
+      {
+
+        phone_model:
+          `${verifiedDevice.brand} ${verifiedDevice.model}`,
+
+        ram:
+          resultData.ram,
+
+        playstyle:
+          resultData.playstyle,
+
+        source:
+          resultData.source
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   MAIN GENERATE BUTTON
+===================================================== */
+
 generateBtn.addEventListener(
-  "click",
-  generateSensitivity
-);
-
-
-document.getElementById("copyBtn").addEventListener(
   "click",
   async () => {
 
-    if(!verifiedDevice){
+    if(
+      !verifiedDevice
+    ){
+
+      showStatus(
+        "Verify your phone first.",
+        "error"
+      );
+
       return;
     }
 
-    const text = `
-LuharSensi Free Fire Settings
 
-Phone: ${verifiedDevice.brand} ${verifiedDevice.model}
-RAM: ${document.getElementById("ram").value} GB
-Playstyle: ${document.getElementById("playstyle").value}
-Weapon: ${getWeapon()}
+    const mode =
+      getGenerationMode();
 
-General: ${document.getElementById("sGeneral").textContent}
-Red Dot: ${document.getElementById("sRedDot").textContent}
-2X Scope: ${document.getElementById("s2x").textContent}
-4X Scope: ${document.getElementById("s4x").textContent}
-Sniper Scope: ${document.getElementById("sSniper").textContent}
-Free Look: ${document.getElementById("sFreeLook").textContent}
 
-DPI: ${document.getElementById("dpiResult").textContent}
-`.trim();
+    if(
+      mode === "standard"
+    ){
 
-    try{
+      generateStandard();
 
-      await navigator.clipboard.writeText(text);
+    }else{
 
-      const old =
-        document.getElementById("copyBtn").textContent;
-
-      document.getElementById("copyBtn").textContent =
-        "✓ Copied";
-
-      if(typeof gtag === "function"){
-        gtag("event","copy_settings");
-      }
-
-      setTimeout(() => {
-
-        document.getElementById("copyBtn").textContent =
-          old;
-
-      },1500);
-
-    }catch(error){
-
-      alert("Copy failed. Please select and copy the settings manually.");
+      await generateWithAI();
 
     }
 
@@ -1476,33 +2831,251 @@ DPI: ${document.getElementById("dpiResult").textContent}
 );
 
 
-/*
-  Restore previously verified device from localStorage
-  only as a display convenience.
+/* =====================================================
+   FALLBACK BUTTON
+===================================================== */
 
-  We still require the server verification for the
-  current phone input before generation.
-*/
+fallbackBtn.addEventListener(
+  "click",
+  () => {
+
+    if(
+      !verifiedDevice
+    ){
+
+      return;
+    }
+
+
+    /*
+      Switch UI to Standard mode.
+    */
+
+    document.getElementById(
+      "modeStandard"
+    ).checked = true;
+
+
+    aiLimitBox.classList.remove(
+      "show"
+    );
+
+
+    fallbackBtn.classList.remove(
+      "show"
+    );
+
+
+    showStatus(
+      "Generating without AI...",
+      "info"
+    );
+
+
+    generateStandard();
+
+  }
+);
+
+
+/* =====================================================
+   COPY SETTINGS
+===================================================== */
+
+document.getElementById(
+  "copyBtn"
+).addEventListener(
+  "click",
+  async () => {
+
+    if(
+      !verifiedDevice
+    ){
+
+      return;
+    }
+
+
+    const text = `
+
+LuharSensi Free Fire Settings
+
+Phone: ${verifiedDevice.brand} ${verifiedDevice.model}
+
+RAM: ${
+  document.getElementById(
+    "ram"
+  ).value
+} GB
+
+Playstyle: ${
+  document.getElementById(
+    "playstyle"
+  ).value
+}
+
+Preference: ${getWeapon()}
+
+Generation: ${
+  document.getElementById(
+    "resultTag"
+  ).textContent
+}
+
+General: ${
+  document.getElementById(
+    "sGeneral"
+  ).textContent
+}
+
+Red Dot: ${
+  document.getElementById(
+    "sRedDot"
+  ).textContent
+}
+
+2X Scope: ${
+  document.getElementById(
+    "s2x"
+  ).textContent
+}
+
+4X Scope: ${
+  document.getElementById(
+    "s4x"
+  ).textContent
+}
+
+Sniper Scope: ${
+  document.getElementById(
+    "sSniper"
+  ).textContent
+}
+
+Free Look: ${
+  document.getElementById(
+    "sFreeLook"
+  ).textContent
+}
+
+DPI: ${
+  document.getElementById(
+    "dpiResult"
+  ).textContent
+}
+
+`.trim();
+
+
+    try{
+
+      await navigator.clipboard.writeText(
+        text
+      );
+
+
+      const copyBtn =
+        document.getElementById(
+          "copyBtn"
+        );
+
+
+      const old =
+        copyBtn.textContent;
+
+
+      copyBtn.textContent =
+        "✓ Copied";
+
+
+      if(
+        typeof gtag === "function"
+      ){
+
+        gtag(
+          "event",
+          "copy_settings"
+        );
+
+      }
+
+
+      setTimeout(
+        () => {
+
+          copyBtn.textContent =
+            old;
+
+        },
+        1500
+      );
+
+
+    }catch(error){
+
+      alert(
+        "Copy failed. Please select and copy the settings manually."
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   RESTORE DEVICE DISPLAY ONLY
+===================================================== */
 
 try{
 
   const saved =
     JSON.parse(
-      localStorage.getItem("luharDevice") || "null"
+      localStorage.getItem(
+        "luharDevice"
+      ) || "null"
     );
 
-  if(saved && saved.verified){
 
-    /*
-      Do not automatically trust saved data for generation.
-      It is only retained locally until the user verifies
-      the current input again.
-    */
+  /*
+    We intentionally DO NOT automatically trust
+    saved device information for generation.
+
+    The user must verify the phone through the server.
+  */
+
+  if(
+    saved &&
+    saved.verified
+  ){
+
+    console.log(
+      "Saved device found. Verification is still required."
+    );
 
   }
 
 }catch(error){
-  console.log("No saved device data.");
+
+  console.log(
+    "No saved device data."
+  );
+
+}
+
+
+/* =====================================================
+   INITIAL GENERATION BUTTON
+===================================================== */
+
+if(
+  getGenerationMode() ===
+  "ai"
+){
+
+  generateBtn.textContent =
+    "Verify your phone first";
+
 }
 
 </script>
