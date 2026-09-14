@@ -6,52 +6,163 @@ const PORT = process.env.PORT || 3000;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5.6-luna";
 
-app.use(express.json({ limit: "64kb" }));
+app.use(express.json({ limit: "32kb" }));
 app.use(express.static(__dirname));
 
-/* =========================================================
-   BASIC HELPERS
-========================================================= */
+/*
+========================================================
+ LuharSensi Device Cache
+========================================================
 
-function requireKey(res) {
-  if (!OPENAI_API_KEY) {
-    res.status(500).json({
-      error:
-        "AI backend is not configured. Add OPENAI_API_KEY on the server."
-    });
-    return false;
+The server remembers verified phone information while
+the server is running.
+
+Example:
+
+"Tecno Spark 8C"
+"tecno spark 8c"
+"TECNO SPARK 8C"
+
+all become:
+
+"tecno spark 8c"
+*/
+
+const deviceCache = new Map();
+
+/*
+========================================================
+ Rate limiter
+========================================================
+
+Only NEW/uncached phone verification requests count.
+
+5 new phone verifications per IP per hour.
+Cached phones are NOT limited.
+*/
+
+const verificationAttempts = new Map();
+
+const MAX_NEW_VERIFICATIONS = 5;
+const RATE_WINDOW_MS = 60 * 60 * 1000;
+
+/*
+========================================================
+ Common aliases
+========================================================
+
+Only safe/common spelling variations go here.
+We do NOT blindly correct every typo.
+*/
+
+const PHONE_ALIASES = {
+  "tecno sapar 8c": "tecno spark 8c",
+  "tecno sparc 8c": "tecno spark 8c",
+  "tecno spark8c": "tecno spark 8c"
+};
+
+/*
+========================================================
+ Normalize phone name
+========================================================
+*/
+
+function normalizePhoneName(name) {
+  let value = String(name || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[®™]/g, "")
+    .replace(/\s+/g, " ");
+
+  value = value.replace(/\s*-\s*/g, "-");
+
+  if (PHONE_ALIASES[value]) {
+    value = PHONE_ALIASES[value];
   }
 
-  return true;
+  return value;
 }
 
-function cleanString(value, max = 500) {
-  return String(value || "").trim().slice(0, max);
+/*
+========================================================
+ Get client IP
+========================================================
+*/
+
+function getClientIp(req) {
+  const forwarded = req.headers["x-forwarded-for"];
+
+  if (forwarded) {
+    return String(forwarded).split(",")[0].trim();
+  }
+
+  return req.ip || req.socket?.remoteAddress || "unknown";
 }
 
-function clampNumber(value, min, max, fallback) {
-  const n = Number(value);
+/*
+========================================================
+ Rate-limit check
+========================================================
+*/
 
-  if (!Number.isFinite(n)) return fallback;
+function canUseNewVerification(ip) {
+  const now = Date.now();
 
-  return Math.max(min, Math.min(max, n));
+  let attempts = verificationAttempts.get(ip) || [];
+
+  attempts = attempts.filter(
+    timestamp => now - timestamp < RATE_WINDOW_MS
+  );
+
+  if (attempts.length >= MAX_NEW_VERIFICATIONS) {
+    verificationAttempts.set(ip, attempts);
+
+    const oldest = attempts[0];
+    const retryAfterMs = RATE_WINDOW_MS - (now - oldest);
+
+    return {
+      allowed: false,
+      retryAfterSeconds: Math.ceil(retryAfterMs / 1000)
+    };
+  }
+
+  attempts.push(now);
+  verificationAttempts.set(ip, attempts);
+
+  return {
+    allowed: true,
+    retryAfterSeconds: 0
+  };
 }
 
-/* =========================================================
-   OPENAI RESPONSES API
-========================================================= */
+/*
+========================================================
+ OpenAI helper
+========================================================
+*/
 
-async function openAI(input, options = {}) {
+async function openAI(prompt, options = {}) {
+  if (!OPENAI_API_KEY) {
+    throw new Error(
+      "AI backend is not configured. Add OPENAI_API_KEY on the server."
+    );
+  }
+
   const body = {
     model: OPENAI_MODEL,
-    input
+    input: prompt,
+
+    /*
+    Keep the response compact.
+    This helps reduce token usage.
+    */
+    max_output_tokens: options.max_output_tokens || 1200
   };
 
   /*
-    Web search is only enabled when requested.
+  Optional web search.
 
-    This prevents every normal AI Chat question from
-    unnecessarily performing a web search.
+  Only enable this when explicitly requested by the caller.
   */
   if (options.webSearch) {
     body.tools = [
@@ -67,7 +178,7 @@ async function openAI(input, options = {}) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`
+        "Authorization": `Bearer ${OPENAI_API_KEY}`
       },
       body: JSON.stringify(body)
     }
@@ -76,15 +187,16 @@ async function openAI(input, options = {}) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(
+    const error = new Error(
       data?.error?.message || "OpenAI request failed."
     );
+
+    error.status = response.status;
+    error.code = data?.error?.code;
+
+    throw error;
   }
 
-  /*
-    Responses API can contain multiple output items.
-    Collect all output_text safely.
-  */
   const text = (data.output || [])
     .flatMap(item => item.content || [])
     .filter(item => item.type === "output_text")
@@ -99,14 +211,14 @@ async function openAI(input, options = {}) {
   return text;
 }
 
-/* =========================================================
-   JSON PARSER
-========================================================= */
+/*
+========================================================
+ JSON parser
+========================================================
+*/
 
 function parseJson(text) {
-  let cleaned = String(text || "").trim();
-
-  cleaned = cleaned
+  const cleaned = String(text)
     .replace(/```json/gi, "")
     .replace(/```/g, "")
     .trim();
@@ -114,135 +226,191 @@ function parseJson(text) {
   const first = cleaned.indexOf("{");
   const last = cleaned.lastIndexOf("}");
 
-  if (first === -1 || last === -1) {
-    throw new Error("AI returned invalid JSON.");
+  if (first === -1 || last === -1 || last <= first) {
+    throw new Error(
+      "AI returned invalid identification data."
+    );
   }
 
-  const jsonText = cleaned.slice(first, last + 1);
-
-  return JSON.parse(jsonText);
-}
-
-/* =========================================================
-   PHONE TIER
-========================================================= */
-
-function normalizeTier(value) {
-  const tier = String(value || "").toLowerCase();
-
-  if (tier.includes("gaming")) return "gaming";
-  if (tier.includes("high")) return "high";
-  if (tier.includes("mid")) return "mid";
-  if (tier.includes("low")) return "low";
-
-  return "unknown";
+  return JSON.parse(
+    cleaned.slice(first, last + 1)
+  );
 }
 
 /*
-  If the AI/research result doesn't provide a tier,
-  calculate a conservative one from performance,
-  refresh rate and touch response.
+========================================================
+ Validate device information
+========================================================
 
-  This is intentionally bounded. It does NOT claim
-  that RAM alone determines phone performance.
+We NEVER accept a result as verified unless the model
+identification is sufficiently confident.
 */
-function calculateTier(data) {
-  const performance = clampNumber(
-    data.performance,
-    1,
-    100,
-    50
-  );
 
-  const touch = clampNumber(
-    data.touch,
-    1,
-    100,
-    50
-  );
+function validateDeviceResult(result, originalInput) {
+  if (!result || typeof result !== "object") {
+    return {
+      verified: false,
+      note: "The phone information could not be verified."
+    };
+  }
 
-  const refresh = clampNumber(
-    data.refresh,
-    30,
-    240,
-    60
-  );
-
-  const gaming =
-    performance >= 82 &&
-    refresh >= 90 &&
-    touch >= 75;
-
-  if (gaming) return "gaming";
+  const confidence = Number(result.confidence);
 
   if (
-    performance >= 72 ||
-    (performance >= 65 && refresh >= 90)
+    result.verified !== true ||
+    !result.brand ||
+    !result.model ||
+    !Number.isFinite(confidence) ||
+    confidence < 0.80
   ) {
-    return "high";
+    return {
+      verified: false,
+      confidence: Number.isFinite(confidence)
+        ? confidence
+        : 0,
+      note:
+        result.note ||
+        `The exact phone model "${originalInput}" could not be verified confidently.`
+    };
   }
 
-  if (performance >= 45) {
-    return "mid";
-  }
+  const refresh = Number(result.refresh);
+  const performance = Number(result.performance);
+  const touch = Number(result.touch);
+  const screenSize = Number(result.screenSize);
 
-  return "low";
+  return {
+    verified: true,
+
+    brand: String(result.brand).trim(),
+    model: String(result.model).trim(),
+
+    ios: Boolean(result.ios),
+
+    confidence,
+
+    chipset: result.chipset
+      ? String(result.chipset).trim()
+      : "Unknown",
+
+    tier: result.tier
+      ? String(result.tier).toLowerCase().trim()
+      : "unknown",
+
+    refresh: Number.isFinite(refresh) ? refresh : 60,
+
+    performance:
+      Number.isFinite(performance)
+        ? Math.max(1, Math.min(100, performance))
+        : 50,
+
+    touch:
+      Number.isFinite(touch)
+        ? Math.max(1, Math.min(100, touch))
+        : 50,
+
+    screenSize:
+      Number.isFinite(screenSize)
+        ? screenSize
+        : null,
+
+    note: result.note
+      ? String(result.note).trim()
+      : "Verified device information."
+  };
 }
 
-/* =========================================================
-   PHONE IDENTIFICATION
-========================================================= */
+/*
+========================================================
+ IDENTIFY PHONE
+========================================================
+*/
 
 app.post("/api/identify-phone", async (req, res) => {
-  if (!requireKey(res)) return;
+  const originalInput = String(
+    req.body?.phone || ""
+  ).trim();
 
-  const phone = cleanString(req.body?.phone, 200);
-
-  if (!phone) {
+  if (!originalInput) {
     return res.status(400).json({
+      verified: false,
       error: "Enter a phone model."
     });
   }
 
+  const normalized = normalizePhoneName(originalInput);
+
+  /*
+  ------------------------------------------------------
+  STEP 1 — CACHE
+  ------------------------------------------------------
+  */
+
+  const cached = deviceCache.get(normalized);
+
+  if (cached) {
+    console.log(
+      `[CACHE HIT] ${originalInput} → ${cached.brand} ${cached.model}`
+    );
+
+    return res.json({
+      ...cached,
+      cached: true
+    });
+  }
+
+  console.log(
+    `[NEW PHONE] ${originalInput} → ${normalized}`
+  );
+
+  /*
+  ------------------------------------------------------
+  STEP 2 — RATE LIMIT
+  ------------------------------------------------------
+  */
+
+  const ip = getClientIp(req);
+
+  const rate = canUseNewVerification(ip);
+
+  if (!rate.allowed) {
+    return res.status(429).json({
+      verified: false,
+      rateLimited: true,
+      error:
+        "Too many new phone verification requests. Please try again later.",
+      retryAfterSeconds: rate.retryAfterSeconds
+    });
+  }
+
+  /*
+  ------------------------------------------------------
+  STEP 3 — AI VERIFICATION
+  ------------------------------------------------------
+  */
+
   try {
-    /*
-      Phone research is deliberately web-enabled.
-
-      The AI is instructed to prefer manufacturer/spec
-      sources and cross-check important specifications.
-    */
     const prompt = `
-You are the device research engine for LuharSensi,
-a Free Fire sensitivity website.
+You are the phone verification engine for LuharSensi.
 
-The user entered this phone name:
+User entered:
+"${originalInput}"
 
-"${phone}"
+Normalized search name:
+"${normalized}"
 
-Your job is to identify the EXACT smartphone model
-and research its real hardware characteristics.
+Your job is to identify the EXACT smartphone model.
 
-IMPORTANT RULES:
-
-1. Do not invent a phone model.
-2. Normalize spelling mistakes and casual names.
-3. If the name could refer to multiple models,
-   do not pretend you know the exact one.
-4. Search the web when needed.
-5. Prefer reliable sources such as:
-   - official manufacturer specifications
-   - official product pages
-   - reputable technical specification databases
-   - reputable technology reviews
-6. Cross-check important specifications when possible.
-7. Do not use the user's requested RAM amount as proof
-   of the phone's performance tier.
-8. Performance is an estimate for gaming purposes,
-   not an official benchmark score.
-9. Touch score is an estimated gaming-oriented score,
-   not a manufacturer's official score.
-10. If a specification cannot be verified, say so in note.
-11. Do not manufacture a refresh rate, chipset or screen size.
+IMPORTANT:
+- Do NOT guess.
+- Do NOT invent specifications.
+- Do NOT turn an uncertain family name into an exact model.
+- Case differences must not matter.
+- Common spelling variations may be understood.
+- If you cannot confidently identify the exact model, return verified=false.
+- Verify the model before giving specifications.
+- If information conflicts, prefer reliable manufacturer information.
+- Do not create specifications just to complete the request.
 
 Return ONLY valid JSON.
 
@@ -250,468 +418,258 @@ Required format:
 
 {
   "verified": true,
-  "brand": "Brand",
-  "model": "Exact Model",
+  "brand": "exact brand",
+  "model": "exact model",
   "ios": false,
   "confidence": 0.95,
-
-  "chipset": "Exact chipset or Unknown",
-
-  "refresh": 90,
-
-  "screenSize": 6.6,
-
-  "performance": 65,
-
-  "touch": 70,
-
-  "tier": "mid",
-
-  "ramOptions": ["4GB", "6GB", "8GB"],
-
-  "note": "Short explanation of important uncertainty."
-}
-
-Definitions:
-
-performance:
-1-100 gaming-performance estimate.
-
-touch:
-1-100 estimated touch responsiveness
-based on available technical information.
-
-tier:
-Only one of:
-"low"
-"mid"
-"high"
-"gaming"
-
-refresh:
-Display refresh rate in Hz.
-
-screenSize:
-Display size in inches.
-
-confidence:
-0 to 1.
-
-If the exact model cannot be confidently identified,
-return:
-
-{
-  "verified": false,
-  "confidence": 0,
-  "brand": "",
-  "model": "",
-  "ios": false,
-  "chipset": "Unknown",
+  "chipset": "exact chipset",
+  "tier": "low",
   "refresh": 60,
-  "screenSize": 0,
-  "performance": 50,
-  "touch": 50,
-  "tier": "unknown",
-  "ramOptions": [],
-  "note": "Unable to identify the exact model confidently."
+  "performance": 40,
+  "touch": 45,
+  "screenSize": 6.6,
+  "note": "short verification note"
 }
+
+Rules for confidence:
+- 0.90 to 1.00 = highly confident
+- 0.80 to 0.89 = reasonably confident
+- below 0.80 = verified must be false
+
+Rules for tier:
+- low
+- mid
+- high
+- gaming
+
+Performance and touch are relative 1-100 classifications,
+not benchmark scores.
+
+If exact specifications are unavailable or uncertain,
+do not invent them.
+
+Keep the JSON compact.
 `;
 
     const text = await openAI(prompt, {
-      webSearch: true
+      max_output_tokens: 1200
     });
 
-    const result = parseJson(text);
+    const rawResult = parseJson(text);
 
-    const confidence = clampNumber(
-      result.confidence,
-      0,
-      1,
-      0
+    const result = validateDeviceResult(
+      rawResult,
+      originalInput
     );
 
     /*
-      Require a reasonably strong match.
+    ----------------------------------------------------
+    Do not cache failed verification.
+    ----------------------------------------------------
     */
-    if (
-      !result.verified ||
-      !result.model ||
-      confidence < 0.75
-    ) {
+
+    if (!result.verified) {
+      console.log(
+        `[NOT VERIFIED] ${originalInput}`
+      );
+
       return res.json({
-        verified: false,
-        confidence,
-        note:
-          result.note ||
-          "The exact phone model could not be verified confidently."
+        ...result,
+        cached: false
       });
     }
 
-    const performance = clampNumber(
-      result.performance,
-      1,
-      100,
-      50
+    /*
+    ----------------------------------------------------
+    SAVE VERIFIED DEVICE
+    ----------------------------------------------------
+    */
+
+    deviceCache.set(normalized, result);
+
+    console.log(
+      `[CACHED] ${normalized} → ${result.brand} ${result.model}`
     );
 
-    const touch = clampNumber(
-      result.touch,
-      1,
-      100,
-      50
-    );
-
-    const refresh = clampNumber(
-      result.refresh,
-      30,
-      240,
-      60
-    );
-
-    const screenSize = clampNumber(
-      result.screenSize,
-      0,
-      20,
-      0
-    );
-
-    const tier =
-      normalizeTier(result.tier) !== "unknown"
-        ? normalizeTier(result.tier)
-        : calculateTier({
-            performance,
-            touch,
-            refresh
-          });
-
-    res.json({
-      verified: true,
-
-      brand: cleanString(result.brand, 80),
-      model: cleanString(result.model, 150),
-
-      ios: Boolean(result.ios),
-
-      confidence,
-
-      chipset:
-        cleanString(result.chipset, 120) ||
-        "Unknown",
-
-      refresh,
-
-      screenSize,
-
-      performance,
-
-      touch,
-
-      tier,
-
-      ramOptions: Array.isArray(result.ramOptions)
-        ? result.ramOptions
-            .map(x => cleanString(x, 20))
-            .filter(Boolean)
-            .slice(0, 8)
-        : [],
-
-      note:
-        cleanString(result.note, 500) ||
-        "Specifications researched from available sources."
+    return res.json({
+      ...result,
+      cached: false
     });
-  } catch (err) {
-    console.error("PHONE IDENTIFICATION ERROR:", err);
 
-    res.status(502).json({
+  } catch (err) {
+    console.error(
+      "[PHONE VERIFICATION ERROR]",
+      err.message
+    );
+
+    /*
+    ----------------------------------------------------
+    OpenAI rate limit
+    ----------------------------------------------------
+    */
+
+    if (
+      err.status === 429 ||
+      /rate limit/i.test(err.message) ||
+      /tokens per minute/i.test(err.message) ||
+      /TPM/i.test(err.message)
+    ) {
+      return res.status(429).json({
+        verified: false,
+        rateLimited: true,
+        error:
+          "AI verification is temporarily rate-limited. No phone specifications were guessed.",
+        note:
+          "Please try this phone again later."
+      });
+    }
+
+    return res.status(502).json({
+      verified: false,
       error:
-        err.message ||
-        "Phone research failed. Please try again."
+        "The phone could not be verified right now.",
+      note:
+        "No sensitivity was generated from unverified phone data."
     });
   }
 });
 
-/* =========================================================
-   AI CHAT
-========================================================= */
+/*
+========================================================
+ AI ASSISTANT
+========================================================
+*/
 
 app.post("/api/assistant", async (req, res) => {
-  if (!requireKey(res)) return;
+  if (!OPENAI_API_KEY) {
+    return res.status(500).json({
+      error:
+        "AI backend is not configured. Add OPENAI_API_KEY on the server."
+    });
+  }
 
-  const question = cleanString(
-    req.body?.question,
-    1000
+  const question = String(
+    req.body?.question || ""
+  ).trim();
+
+  const phone = req.body?.phone;
+
+  const playstyle = String(
+    req.body?.playstyle || "movement"
+  );
+
+  const weapon = String(
+    req.body?.weapon || "Mixed / All weapons"
   );
 
   if (!question) {
     return res.status(400).json({
-      error: "Type your gaming problem first."
+      error:
+        "Type your gaming problem first."
     });
   }
 
-  const phone = req.body?.phone || null;
+  try {
+    const phoneText = phone
+      ? `${phone.brand || ""} ${phone.model || ""}`.trim()
+      : "No verified phone";
 
-  const playstyle = cleanString(
-    req.body?.playstyle || "Not specified",
-    100
-  );
-
-  const weapon = cleanString(
-    req.body?.weapon || "Not specified",
-    100
-  );
-
-  /*
-    Conversation history lets follow-up questions
-    actually depend on previous messages.
-  */
-  const history = Array.isArray(req.body?.history)
-    ? req.body.history
-        .slice(-8)
-        .map(item => ({
-          role:
-            item?.role === "assistant"
-              ? "assistant"
-              : "user",
-          content: cleanString(
-            item?.content,
-            1000
-          )
-        }))
-        .filter(item => item.content)
-    : [];
-
-  const phoneText = phone
-    ? `
-Brand: ${cleanString(phone.brand, 80)}
-Model: ${cleanString(phone.model, 150)}
-Chipset: ${cleanString(
-        phone.chipset || "Unknown",
-        120
-      )}
-Performance score: ${clampNumber(
-        phone.performance,
-        1,
-        100,
-        50
-      )}
-Touch score: ${clampNumber(
-        phone.touch,
-        1,
-        100,
-        50
-      )}
-Refresh rate: ${clampNumber(
-        phone.refresh,
-        30,
-        240,
-        60
-      )} Hz
-Screen size: ${clampNumber(
-        phone.screenSize,
-        0,
-        20,
-        0
-      )} inches
-Device tier: ${normalizeTier(
-        phone.tier
-      )}
+    const phoneDetails = phone
+      ? `
+Chipset: ${phone.chipset || "Unknown"}
+Device tier: ${phone.tier || "Unknown"}
+Refresh rate: ${phone.refresh || "Unknown"} Hz
+Performance class: ${phone.performance || "Unknown"}/100
+Touch class: ${phone.touch || "Unknown"}/100
 `
-    : "No verified phone selected.";
+      : "";
 
-  /*
-    Determine whether current question is likely to
-    benefit from fresh device information.
-
-    This avoids web-searching every simple question.
-  */
-  const lowerQuestion = question.toLowerCase();
-
-  const needsResearch =
-    /spec|chipset|processor|cpu|gpu|refresh|hz|touch|sampling|screen|display|fps|performance|benchmark|phone|device|model|ram|storage|latest|new phone|compare/i.test(
-      lowerQuestion
-    );
-
-  const conversationText =
-    history.length > 0
-      ? history
-          .map(item => {
-            const who =
-              item.role === "assistant"
-                ? "AI"
-                : "USER";
-
-            return `${who}: ${item.content}`;
-          })
-          .join("\n")
-      : "No previous conversation.";
-
-  const prompt = `
+    const prompt = `
 You are LuharSensi AI.
 
-You are an intelligent Free Fire settings assistant.
-Your job is to answer the USER'S ACTUAL QUESTION.
+Give practical Free Fire settings advice.
 
-Do NOT automatically give a generic sensitivity preset.
-
-==================================================
-DEVICE
-==================================================
-
+VERIFIED PHONE:
 ${phoneText}
 
-==================================================
-USER CONTEXT
-==================================================
+${phoneDetails}
 
-Playstyle:
+PLAYSTYLE:
 ${playstyle}
 
-Main weapon:
+WEAPON PREFERENCE:
 ${weapon}
 
-==================================================
-PREVIOUS CONVERSATION
-==================================================
-
-${conversationText}
-
-==================================================
-CURRENT QUESTION
-==================================================
-
+USER'S QUESTION:
 ${question}
 
-==================================================
-HOW TO ANSWER
-==================================================
-
-First understand what the user is actually asking.
-
-Possible categories include:
-
-- sensitivity
-- drag shots
-- aim too fast
-- aim too slow
-- recoil
-- shotgun
-- SMG
-- AR
-- sniper
-- DPI
-- HUD
-- movement
-- FPS
-- lag
-- overheating
-- refresh rate
-- touch response
-- device performance
-- phone comparison
-- general Free Fire settings
-- troubleshooting
-- something unrelated to sensitivity
-
-Answer the relevant category instead of forcing
-everything into a sensitivity recommendation.
-
-If the user reports a problem such as:
-"aim is too fast"
-
-explain what setting should be adjusted and why.
-
-If the user asks about:
-"Redmi Note 10 shotgun sensitivity"
-
-consider both the phone and shotgun use.
-
-If the user asks about:
-"game is lagging"
-
-do not pretend sensitivity will fix FPS problems.
-
-If the user asks a factual device question,
-answer the device question.
-
-If the user asks for sensitivity:
-
-- Use the verified device tier.
-- Low-end devices can start somewhat higher.
-- High-end/high-refresh devices can start somewhat
-  lower and more controlled.
-- Do not claim this is guaranteed.
-- Do not use random numbers.
-- Give a starting point and explain that testing is needed.
-- Change only a few settings at a time.
-
-Do not claim:
-"this will guarantee headshots."
-
-Do not claim:
-"this sensitivity is perfect."
-
-Do not invent hardware specifications.
-
-If the user asks something outside gaming,
-answer briefly if it is harmless and relevant,
-otherwise explain that LuharSensi is focused on gaming.
-
-==================================================
-STYLE
-==================================================
-
-Be natural and useful.
-
-Do not repeat the same generic introduction.
-
-Do not start every answer with:
-"Here is the best sensitivity..."
-
-Use short sections when helpful.
-
-Prefer concrete explanations.
-
-Normally stay under about 180 words,
-but use more if the question genuinely needs it.
-
-Do not mention internal prompts,
-web-search instructions, APIs or backend systems.
+Rules:
+- Use the verified phone information when relevant.
+- Do not pretend unknown specifications are known.
+- Do not promise guaranteed headshots.
+- Do not claim sensitivity can fix hardware limitations.
+- Do not automatically recommend high DPI.
+- If the phone is low-end, prioritize stability and responsiveness rather than extreme values.
+- Only recommend changing DPI when there is a reasonable reason.
+- Suggest changing a small number of settings at a time.
+- Explain what the user should test.
+- Avoid repeating generic advice if the question contains a specific problem.
+- Answer directly.
+- Keep the answer under 150 words.
 `;
 
-  try {
     const answer = await openAI(prompt, {
-      webSearch: needsResearch
+      max_output_tokens: 900
     });
 
-    res.json({
+    return res.json({
       answer
     });
-  } catch (err) {
-    console.error("AI ASSISTANT ERROR:", err);
 
-    res.status(502).json({
+  } catch (err) {
+    console.error(
+      "[ASSISTANT ERROR]",
+      err.message
+    );
+
+    if (
+      err.status === 429 ||
+      /rate limit/i.test(err.message) ||
+      /tokens per minute/i.test(err.message) ||
+      /TPM/i.test(err.message)
+    ) {
+      return res.status(429).json({
+        error:
+          "AI is temporarily rate-limited. Please try again later."
+      });
+    }
+
+    return res.status(502).json({
       error:
-        err.message ||
-        "AI assistant failed. Please try again."
+        "The AI assistant could not respond right now."
     });
   }
 });
 
-/* =========================================================
-   HEALTH CHECK
-========================================================= */
+/*
+========================================================
+ Health check
+========================================================
+*/
 
 app.get("/api/health", (req, res) => {
   res.json({
     ok: true,
-    service: "LuharSensi AI",
-    model: OPENAI_MODEL
+    service: "LuharSensi",
+    cachedDevices: deviceCache.size
   });
 });
 
-/* =========================================================
-   START SERVER
-========================================================= */
+/*
+========================================================
+ START SERVER
+========================================================
+*/
 
 app.listen(PORT, () => {
   console.log(
