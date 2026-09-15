@@ -4,9 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>LuharSensi — Generate Without AI</title>
+<title>LuharSensi Free Fire Sensitivity Generator</title>
 
-<meta name="description" content="Generate Free Fire sensitivity without AI using LuharSensi.">
+<meta name="description" content="Generate Free Fire sensitivity settings without AI using your phone range, RAM and playstyle.">
+
+<link rel="icon" type="image/png" href="favicon.png">
 
 <!-- Google AdSense -->
 <script async
@@ -27,374 +29,406 @@ gtag('config', 'G-C8YB323Q61');
 <style>
 
 *{
-  box-sizing:border-box;
+box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+scroll-behavior:smooth;
 }
 
 body{
-  margin:0;
-  min-height:100vh;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:
-    radial-gradient(circle at 15% 10%,rgba(0,229,255,.13),transparent 30%),
-    radial-gradient(circle at 85% 85%,rgba(100,80,255,.10),transparent 30%),
-    #08090d;
-  color:#f4f6fb;
+margin:0;
+min-height:100vh;
+font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+background:
+radial-gradient(circle at 15% 5%,rgba(124,108,255,.16),transparent 30%),
+radial-gradient(circle at 85% 90%,rgba(0,229,255,.08),transparent 30%),
+#08090d;
+color:#f4f6fb;
 }
 
 a{
-  color:inherit;
-  text-decoration:none;
+color:inherit;
+text-decoration:none;
 }
 
-/* NAVBAR */
+/* ================= NAV ================= */
 
 header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(8,9,13,.88);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid rgba(255,255,255,.07);
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(8,9,13,.88);
+backdrop-filter:blur(15px);
+border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .nav{
-  max-width:1100px;
-  margin:auto;
-  padding:14px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
+max-width:1100px;
+margin:auto;
+padding:14px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
 }
 
 .logo{
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:.4px;
+font-size:22px;
+font-weight:900;
 }
 
 .logo span{
-  color:#00e5ff;
+color:#7c6cff;
 }
 
 nav{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
+display:flex;
+gap:7px;
+flex-wrap:wrap;
 }
 
 nav a{
-  color:#9ba5b7;
-  padding:9px 12px;
-  border-radius:10px;
-  font-size:13px;
+font-size:13px;
+color:#9ba5b7;
+padding:9px 12px;
+border-radius:10px;
 }
 
 nav a:hover,
 nav a.active{
-  background:rgba(255,255,255,.08);
-  color:#fff;
+color:#fff;
+background:rgba(255,255,255,.08);
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
 
 .container{
-  width:min(950px,calc(100% - 30px));
-  margin:auto;
-  padding:45px 0 70px;
+width:min(950px,calc(100% - 30px));
+margin:auto;
+padding:45px 0 70px;
 }
 
 .hero{
-  text-align:center;
-  margin-bottom:30px;
+text-align:center;
+margin-bottom:30px;
 }
 
 .badge{
-  display:inline-block;
-  padding:7px 13px;
-  border-radius:999px;
-  border:1px solid rgba(0,229,255,.22);
-  background:rgba(0,229,255,.06);
-  color:#78f3ff;
-  font-size:12px;
-  font-weight:800;
-  margin-bottom:16px;
+display:inline-block;
+padding:7px 13px;
+border-radius:999px;
+border:1px solid rgba(0,229,255,.25);
+background:rgba(0,229,255,.06);
+color:#72eaff;
+font-size:12px;
+font-weight:800;
+margin-bottom:16px;
 }
 
 h1{
-  margin:0;
-  font-size:clamp(35px,7vw,58px);
-  letter-spacing:-2px;
+margin:0;
+font-size:clamp(35px,7vw,58px);
+letter-spacing:-2px;
+}
+
+.hero h1 span{
+background:linear-gradient(90deg,#8b7cff,#54d8ff);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
 }
 
 .hero p{
-  max-width:650px;
-  margin:16px auto 0;
-  color:#929cad;
-  line-height:1.6;
+max-width:680px;
+margin:16px auto 0;
+color:#929cad;
+line-height:1.6;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 
 .card{
-  background:rgba(17,20,27,.88);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
-  padding:25px;
-  margin-bottom:20px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
+background:rgba(17,20,27,.9);
+border:1px solid rgba(255,255,255,.08);
+border-radius:22px;
+padding:25px;
+margin-bottom:20px;
+box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
 .card h2{
-  margin:0 0 7px;
+margin:0 0 7px;
 }
 
 .card-sub{
-  color:#8993a5;
-  font-size:13px;
-  line-height:1.5;
-  margin-bottom:20px;
+color:#8993a5;
+font-size:13px;
+line-height:1.5;
+margin-bottom:20px;
 }
 
-/* FORM */
+/* ================= FORM ================= */
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:17px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:17px;
 }
 
 .field{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+display:flex;
+flex-direction:column;
+gap:8px;
 }
 
 .field.full{
-  grid-column:1/-1;
+grid-column:1/-1;
 }
 
 label{
-  font-size:13px;
-  font-weight:700;
-  color:#dce2ec;
+font-size:13px;
+font-weight:700;
+color:#dce2ec;
 }
 
-select,
-input{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  background:#0b0d13;
-  border:1px solid rgba(255,255,255,.1);
-  color:#fff;
-  font-size:14px;
-  outline:none;
+input,
+select{
+width:100%;
+padding:14px;
+border-radius:12px;
+background:#0b0d13;
+border:1px solid rgba(255,255,255,.1);
+color:#fff;
+font-size:14px;
+outline:none;
 }
 
-select:focus,
-input:focus{
-  border-color:#00e5ff;
-  box-shadow:0 0 0 3px rgba(0,229,255,.08);
+input:focus,
+select:focus{
+border-color:#7c6cff;
+box-shadow:0 0 0 3px rgba(124,108,255,.08);
 }
 
-/* RADIO */
+input::placeholder{
+color:#626c7c;
+}
+
+/* ================= RADIO ================= */
 
 .radio-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
 }
 
 .radio{
-  position:relative;
+position:relative;
 }
 
 .radio input{
-  position:absolute;
-  opacity:0;
+position:absolute;
+opacity:0;
 }
 
 .radio label{
-  display:block;
-  padding:13px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.09);
-  background:#0b0d13;
-  cursor:pointer;
-  text-align:center;
-  transition:.2s;
+display:block;
+padding:13px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.09);
+background:#0b0d13;
+cursor:pointer;
+text-align:center;
+transition:.2s;
 }
 
 .radio input:checked + label{
-  border-color:#00e5ff;
-  background:rgba(0,229,255,.09);
-  color:#fff;
+border-color:#7c6cff;
+background:rgba(124,108,255,.1);
+color:#fff;
 }
 
-/* BUTTON */
-
-button{
-  border:0;
-  cursor:pointer;
-  border-radius:13px;
-  padding:14px 18px;
-  font-size:15px;
-  font-weight:900;
-  transition:.2s;
-}
-
-button:hover{
-  transform:translateY(-1px);
-}
+/* ================= GENERATE ================= */
 
 .generate{
-  width:100%;
-  background:#00e5ff;
-  color:#001014;
-  margin-top:20px;
-  padding:17px;
+width:100%;
+margin-top:20px;
+padding:17px;
+border:0;
+border-radius:13px;
+background:linear-gradient(135deg,#7868ff,#5548e8);
+color:#fff;
+font-size:15px;
+font-weight:900;
+cursor:pointer;
+box-shadow:0 12px 30px rgba(100,80,255,.2);
+transition:.2s;
 }
 
-.secondary{
-  width:100%;
-  margin-top:17px;
-  background:#151923;
-  border:1px solid rgba(255,255,255,.1);
-  color:#fff;
+.generate:hover{
+transform:translateY(-1px);
+filter:brightness(1.07);
 }
 
-/* RESULTS */
+/* ================= RESULTS ================= */
 
 .results{
-  display:none;
+display:none;
 }
 
 .results.show{
-  display:block;
+display:block;
 }
 
 .result-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+margin-bottom:20px;
 }
 
 .result-tag{
-  font-size:11px;
-  font-weight:900;
-  padding:7px 10px;
-  border-radius:999px;
-  color:#75efff;
-  border:1px solid rgba(0,229,255,.2);
-  background:rgba(0,229,255,.07);
+font-size:11px;
+font-weight:900;
+padding:7px 10px;
+border-radius:999px;
+color:#72eaff;
+border:1px solid rgba(0,229,255,.2);
+background:rgba(0,229,255,.05);
+}
+
+.device-info{
+margin-bottom:18px;
+padding:15px;
+border-radius:15px;
+background:#0b0e14;
+border:1px solid rgba(255,255,255,.07);
+}
+
+.device-name{
+font-size:17px;
+font-weight:900;
+}
+
+.device-range{
+margin-top:5px;
+font-size:12px;
+color:#8993a5;
 }
 
 .sensitivity-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
 }
 
 .sense{
-  background:#0b0e14;
-  border:1px solid rgba(255,255,255,.07);
-  padding:17px;
-  border-radius:15px;
+background:#0b0e14;
+border:1px solid rgba(255,255,255,.07);
+padding:17px;
+border-radius:15px;
 }
 
 .sense-name{
-  color:#8993a5;
-  font-size:12px;
+color:#8993a5;
+font-size:12px;
 }
 
 .sense-value{
-  font-size:31px;
-  font-weight:900;
-  color:#00e5ff;
-  margin-top:5px;
+font-size:31px;
+font-weight:900;
+color:#a99fff;
+margin-top:5px;
 }
 
-/* DPI */
-
 .dpi-box{
-  margin-top:16px;
-  padding:17px;
-  border-radius:15px;
-  background:rgba(0,229,255,.05);
-  border:1px solid rgba(0,229,255,.13);
+margin-top:16px;
+padding:17px;
+border-radius:15px;
+background:rgba(124,108,255,.05);
+border:1px solid rgba(124,108,255,.14);
 }
 
 .dpi-title{
-  font-size:12px;
-  color:#96a0b3;
+font-size:12px;
+color:#96a0b3;
 }
 
 .dpi-value{
-  margin-top:4px;
-  font-size:24px;
-  font-weight:900;
+margin-top:4px;
+font-size:24px;
+font-weight:900;
 }
 
 .note{
-  margin-top:12px;
-  color:#828c9d;
-  font-size:12px;
-  line-height:1.6;
+margin-top:12px;
+color:#828c9d;
+font-size:12px;
+line-height:1.6;
 }
 
-/* AD */
+.copy{
+width:100%;
+margin-top:17px;
+padding:14px;
+border-radius:12px;
+background:#151923;
+border:1px solid rgba(255,255,255,.1);
+color:#fff;
+font-weight:800;
+cursor:pointer;
+}
+
+/* ================= AD ================= */
 
 .ad{
-  min-height:90px;
-  margin:20px 0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+min-height:90px;
+margin:20px 0;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 footer{
-  border-top:1px solid rgba(255,255,255,.07);
-  text-align:center;
-  padding:25px;
-  color:#707a8c;
-  font-size:12px;
+border-top:1px solid rgba(255,255,255,.07);
+text-align:center;
+padding:25px;
+color:#707a8c;
+font-size:12px;
 }
+
+/* ================= MOBILE ================= */
 
 @media(max-width:700px){
 
-  .nav{
-    flex-direction:column;
-    align-items:flex-start;
-  }
+.nav{
+flex-direction:column;
+align-items:flex-start;
+}
 
-  nav{
-    width:100%;
-    overflow-x:auto;
-    flex-wrap:nowrap;
-  }
+nav{
+width:100%;
+overflow-x:auto;
+flex-wrap:nowrap;
+}
 
-  nav a{
-    white-space:nowrap;
-  }
+nav a{
+white-space:nowrap;
+}
 
-  .grid,
-  .sensitivity-grid,
-  .radio-grid{
-    grid-template-columns:1fr;
-  }
+.grid,
+.sensitivity-grid,
+.radio-grid{
+grid-template-columns:1fr;
+}
 
-  .field.full{
-    grid-column:auto;
-  }
+.field.full{
+grid-column:auto;
+}
 
 }
 
@@ -414,8 +448,8 @@ LUHAR<span>SENSI</span>
 <nav>
 <a href="index.html">Home</a>
 <a href="generator.html" class="active">Generator</a>
-<a href="ai.html">AI Generator</a>
-<a href="ai-chat.html">AI Chat</a>
+<a href="ai-generator.html">AI Generator</a>
+<a href="ai.html">AI Chat</a>
 <a href="about.html">About</a>
 <a href="contact.html">Contact</a>
 </nav>
@@ -430,16 +464,16 @@ LUHAR<span>SENSI</span>
 <section class="hero">
 
 <div class="badge">
-NO AI • INSTANT GENERATION
+⚡ NO AI REQUIRED
 </div>
 
 <h1>
-Generate Without <span style="color:#00e5ff">AI</span>
+Free Fire <span>Generator</span>
 </h1>
 
 <p>
-Choose your phone type, RAM, playstyle and weapon preference.
-Your sensitivity is generated instantly without using the AI server.
+Create sensitivity settings instantly using your phone,
+device range, RAM and playing style — without AI sensitivity generation.
 </p>
 
 </section>
@@ -461,46 +495,119 @@ data-full-width-responsive="true"></ins>
 </div>
 
 
-<!-- PHONE TYPE -->
+<!-- ================= PHONE NAME ================= -->
 
 <section class="card">
 
-<h2>1. Your device</h2>
+<h2>1. Phone Name</h2>
 
 <div class="card-sub">
-Select your general device performance level.
+Enter your phone model first.
 </div>
-
-<div class="grid">
 
 <div class="field">
 
-<label for="deviceType">
-Phone performance
+<label for="phoneName">
+Phone model
 </label>
 
-<select id="deviceType">
-
-<option value="low">
-Low-end / Older phone
-</option>
-
-<option value="mid" selected>
-Mid-range phone
-</option>
-
-<option value="high">
-High-end phone
-</option>
-
-<option value="gaming">
-Gaming phone
-</option>
-
-</select>
+<input
+id="phoneName"
+type="text"
+placeholder="Example: Tecno Spark 8C"
+autocomplete="off">
 
 </div>
 
+</section>
+
+
+<!-- ================= PHONE RANGE ================= -->
+
+<section class="card">
+
+<h2>2. Phone Range</h2>
+
+<div class="card-sub">
+Choose the performance range of your phone.
+</div>
+
+<div class="radio-grid">
+
+<div class="radio">
+
+<input
+type="radio"
+name="phoneRange"
+id="low"
+value="low"
+checked>
+
+<label for="low">
+Low-end
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="phoneRange"
+id="mid"
+value="mid">
+
+<label for="mid">
+Mid-range
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="phoneRange"
+id="high"
+value="high">
+
+<label for="high">
+High-end
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="phoneRange"
+id="gaming"
+value="gaming">
+
+<label for="gaming">
+Gaming
+</label>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= RAM ================= -->
+
+<section class="card">
+
+<h2>3. RAM</h2>
+
+<div class="card-sub">
+Choose your phone's RAM.
+</div>
 
 <div class="field">
 
@@ -522,19 +629,17 @@ RAM
 
 </div>
 
-</div>
-
 </section>
 
 
-<!-- PLAYSTYLE -->
+<!-- ================= PLAYSTYLE ================= -->
 
 <section class="card">
 
-<h2>2. Your playstyle</h2>
+<h2>4. Playstyle</h2>
 
 <div class="card-sub">
-Choose the style that matches how you normally play.
+Choose what you want the sensitivity to prioritize.
 </div>
 
 <div class="radio-grid">
@@ -589,14 +694,14 @@ Accuracy
 </section>
 
 
-<!-- WEAPON -->
+<!-- ================= WEAPON ================= -->
 
 <section class="card">
 
-<h2>3. Main weapon</h2>
+<h2>5. Weapon Preference</h2>
 
 <div class="card-sub">
-Select the weapon type you use most often.
+Choose your main weapon style.
 </div>
 
 <div class="radio-grid">
@@ -696,59 +801,43 @@ Headshot
 </section>
 
 
-<!-- DPI -->
+<!-- ================= DPI ================= -->
 
 <section class="card">
 
-<h2>4. DPI preference</h2>
+<h2>6. DPI</h2>
 
 <div class="card-sub">
-DPI is optional. Lower-performance phones will not automatically receive extreme DPI recommendations.
+Choose whether to keep your current DPI or get a recommended starting point.
 </div>
 
-<div class="radio-grid">
+<div class="grid">
 
-<div class="radio">
+<div class="field">
 
-<input
-type="radio"
-name="dpi"
-id="keepDpi"
-value="keep"
-checked>
+<label for="dpiMode">
+DPI preference
+</label>
 
-<label for="keepDpi">
+<select id="dpiMode">
+
+<option value="keep">
 Keep current DPI
-</label>
+</option>
 
-</div>
-
-
-<div class="radio">
-
-<input
-type="radio"
-name="dpi"
-id="recommendDpi"
-value="recommend">
-
-<label for="recommendDpi">
+<option value="recommend">
 Recommend DPI
-</label>
+</option>
+
+</select>
 
 </div>
 
-</div>
-
-
-<div
-id="currentDpiBox"
-style="margin-top:16px">
 
 <div class="field">
 
 <label for="currentDpi">
-Current DPI (optional)
+Current DPI
 </label>
 
 <input
@@ -765,20 +854,18 @@ placeholder="Example: 700">
 </section>
 
 
-<section class="card">
+<!-- ================= GENERATE ================= -->
 
 <button
 id="generateBtn"
 class="generate">
 
-Generate Sensitivity
+⚡ Generate Sensitivity Without AI
 
 </button>
 
-</section>
 
-
-<!-- RESULTS -->
+<!-- ================= RESULTS ================= -->
 
 <section
 id="results"
@@ -792,11 +879,8 @@ class="card results">
 Your Sensitivity
 </h2>
 
-<div class="card-sub"
-style="margin:5px 0 0">
-
+<div class="card-sub" style="margin:5px 0 0">
 Generated instantly without AI.
-
 </div>
 
 </div>
@@ -808,7 +892,25 @@ NO AI
 </div>
 
 
+<div class="device-info">
+
+<div
+id="resultPhone"
+class="device-name">
+—
+</div>
+
+<div
+id="resultRange"
+class="device-range">
+—
+</div>
+
+</div>
+
+
 <div class="sensitivity-grid">
+
 
 <div class="sense">
 
@@ -816,12 +918,8 @@ NO AI
 General
 </div>
 
-<div
-class="sense-value"
-id="general">
-
+<div id="general" class="sense-value">
 —
-
 </div>
 
 </div>
@@ -833,12 +931,8 @@ id="general">
 Red Dot
 </div>
 
-<div
-class="sense-value"
-id="redDot">
-
+<div id="redDot" class="sense-value">
 —
-
 </div>
 
 </div>
@@ -850,12 +944,8 @@ id="redDot">
 2X Scope
 </div>
 
-<div
-class="sense-value"
-id="scope2x">
-
+<div id="scope2x" class="sense-value">
 —
-
 </div>
 
 </div>
@@ -867,12 +957,8 @@ id="scope2x">
 4X Scope
 </div>
 
-<div
-class="sense-value"
-id="scope4x">
-
+<div id="scope4x" class="sense-value">
 —
-
 </div>
 
 </div>
@@ -884,12 +970,8 @@ id="scope4x">
 Sniper Scope
 </div>
 
-<div
-class="sense-value"
-id="sniper">
-
+<div id="sniper" class="sense-value">
 —
-
 </div>
 
 </div>
@@ -901,15 +983,12 @@ id="sniper">
 Free Look
 </div>
 
-<div
-class="sense-value"
-id="freeLook">
-
+<div id="freeLook" class="sense-value">
 —
-
 </div>
 
 </div>
+
 
 </div>
 
@@ -921,36 +1000,32 @@ DPI
 </div>
 
 <div
-class="dpi-value"
-id="dpiResult">
-
-Keep your current DPI
-
+id="dpiResult"
+class="dpi-value">
+—
 </div>
 
 <div
-class="note"
-id="dpiNote">
+id="dpiNote"
+class="note">
+</div>
 
 </div>
 
+
+<div
+id="resultNote"
+class="note">
 </div>
 
 
 <button
 id="copyBtn"
-class="secondary">
+class="copy">
 
 Copy Settings
 
 </button>
-
-
-<div class="note">
-
-These settings are a starting point. Test them in Free Fire training mode and adjust small amounts if needed.
-
-</div>
 
 </section>
 
@@ -982,6 +1057,18 @@ data-full-width-responsive="true"></ins>
 
 <script>
 
+/*
+========================================================
+ LUHARSENSI STANDARD GENERATOR
+========================================================
+
+This page DOES NOT call /api/generate-ai.
+
+All sensitivity calculations happen inside the browser.
+========================================================
+*/
+
+
 const generateBtn =
 document.getElementById("generateBtn");
 
@@ -989,126 +1076,164 @@ const results =
 document.getElementById("results");
 
 
-function clamp(value,min,max){
-
-return Math.max(
-min,
-Math.min(
-max,
-Math.round(value)
-)
-);
-
-}
-
-
-document
-.querySelectorAll(
-'input[name="dpi"]'
-)
-.forEach(input=>{
-
-input.addEventListener(
-"change",
-()=>{
-
-const mode =
-document.querySelector(
-'input[name="dpi"]:checked'
-).value;
-
-document
-.getElementById("currentDpiBox")
-.style.display =
-mode === "keep"
-? "block"
-: "none";
-
-});
-
-});
-
+/* ================= GENERATE ================= */
 
 generateBtn.addEventListener(
 "click",
 ()=>{
 
-const deviceType =
-document.getElementById("deviceType").value;
+
+/*
+--------------------------------------------------------
+PHONE NAME
+--------------------------------------------------------
+*/
+
+const phoneName =
+document
+.getElementById("phoneName")
+.value
+.trim();
+
+
+if(!phoneName){
+
+alert(
+"Please enter your phone name first."
+);
+
+document
+.getElementById("phoneName")
+.focus();
+
+return;
+
+}
+
+
+/*
+--------------------------------------------------------
+PHONE RANGE
+--------------------------------------------------------
+*/
+
+const phoneRange =
+document
+.querySelector(
+'input[name="phoneRange"]:checked'
+)
+.value;
+
+
+/*
+--------------------------------------------------------
+RAM
+--------------------------------------------------------
+*/
 
 const ram =
 Number(
-document.getElementById("ram").value
+document
+.getElementById("ram")
+.value
 );
 
+
+/*
+--------------------------------------------------------
+PLAYSTYLE
+--------------------------------------------------------
+*/
+
 const playstyle =
-document.querySelector(
+document
+.querySelector(
 'input[name="playstyle"]:checked'
-).value;
+)
+.value;
+
+
+/*
+--------------------------------------------------------
+WEAPON
+--------------------------------------------------------
+*/
 
 const weapon =
-document.querySelector(
+document
+.querySelector(
 'input[name="weapon"]:checked'
-).value;
+)
+.value;
+
+
+/*
+--------------------------------------------------------
+DPI
+--------------------------------------------------------
+*/
 
 const dpiMode =
-document.querySelector(
-'input[name="dpi"]:checked'
-).value;
+document
+.getElementById("dpiMode")
+.value;
 
 
-/* BASE */
+const currentDpi =
+Number(
+document
+.getElementById("currentDpi")
+.value
+);
+
+
+/*
+========================================================
+ BASE SENSITIVITY
+========================================================
+*/
 
 let base;
 
 
-/* PLAYSTYLE */
+/*
+PHONE RANGE
+*/
 
-if(playstyle === "movement"){
-
-base = 188;
-
-}
-
-else if(playstyle === "balanced"){
-
-base = 180;
-
-}
-
-else{
+if(phoneRange === "low"){
 
 base = 172;
 
 }
 
+else if(phoneRange === "mid"){
 
-/* DEVICE PERFORMANCE */
-
-if(deviceType === "low"){
-
-base -= 5;
+base = 180;
 
 }
 
-else if(deviceType === "high"){
+else if(phoneRange === "high"){
 
-base += 3;
+base = 188;
 
 }
 
-else if(deviceType === "gaming"){
+else if(phoneRange === "gaming"){
 
-base += 5;
+base = 194;
 
 }
 
 
-/* RAM */
+/*
+========================================================
+ RAM ADJUSTMENT
+========================================================
+*/
 
 if(ram <= 2){
 
-base -= 4;
+base -= 5;
 
 }
 
@@ -1124,93 +1249,306 @@ base -= 1;
 
 }
 
-else if(ram >= 12){
+else if(ram >= 8){
 
 base += 2;
 
 }
 
 
-/* WEAPON */
+/*
+========================================================
+ PLAYSTYLE
+========================================================
+*/
+
+if(playstyle === "movement"){
+
+base += 6;
+
+}
+
+else if(playstyle === "balanced"){
+
+base += 0;
+
+}
+
+else if(playstyle === "accuracy"){
+
+base -= 7;
+
+}
+
+
+/*
+========================================================
+ WEAPON
+========================================================
+*/
 
 if(weapon === "smg"){
 
-base += 2;
+base += 4;
 
 }
 
 else if(weapon === "shotgun"){
 
-base += 3;
+base += 7;
 
 }
 
 else if(weapon === "ar"){
 
-base -= 2;
+base += 1;
 
 }
 
 else if(weapon === "sniper"){
 
-base -= 8;
+base -= 5;
 
 }
 
 else if(weapon === "headshot"){
 
-base += 2;
+base += 5;
 
 }
 
 
-/* FINAL VALUES */
+/*
+========================================================
+ CLAMP GENERAL
+========================================================
+*/
 
-const general =
-clamp(base,145,200);
-
-const redDot =
-clamp(general - 2,140,200);
-
-const scope2x =
-clamp(general - 9,125,195);
-
-const scope4x =
-clamp(general - 18,110,185);
-
-const sniper =
-clamp(general - 30,80,165);
-
-const freeLook =
-clamp(general + 4,145,200);
+base =
+Math.round(
+Math.max(
+150,
+Math.min(
+200,
+base
+)
+)
+);
 
 
-/* SHOW RESULTS */
+/*
+========================================================
+ OTHER SENSITIVITIES
+========================================================
+*/
+
+let general =
+base;
+
+let redDot =
+general - 2;
+
+let scope2x =
+general - 8;
+
+let scope4x =
+general - 16;
+
+let sniper =
+general - 28;
+
+let freeLook =
+general + 5;
+
+
+/*
+========================================================
+ CLAMP EACH VALUE
+========================================================
+*/
+
+redDot =
+Math.round(
+Math.max(
+0,
+Math.min(
+200,
+redDot
+)
+)
+);
+
+scope2x =
+Math.round(
+Math.max(
+0,
+Math.min(
+200,
+scope2x
+)
+)
+);
+
+scope4x =
+Math.round(
+Math.max(
+0,
+Math.min(
+200,
+scope4x
+)
+)
+);
+
+sniper =
+Math.round(
+Math.max(
+0,
+Math.min(
+200,
+sniper
+)
+)
+);
+
+freeLook =
+Math.round(
+Math.max(
+0,
+Math.min(
+200,
+freeLook
+)
+)
+);
+
+
+/*
+========================================================
+ DPI
+========================================================
+*/
+
+let dpi;
+
+let dpiNote;
+
+
+if(
+dpiMode === "keep"
+){
+
+if(
+Number.isFinite(currentDpi) &&
+currentDpi >= 300 &&
+currentDpi <= 1200
+){
+
+dpi =
+currentDpi;
+
+dpiNote =
+"Keep your current DPI and test the sensitivity first.";
+
+}
+
+else{
+
+dpi =
+"Current DPI";
+
+dpiNote =
+"Enter your current DPI if you want it shown in the result.";
+
+}
+
+}
+
+else{
+
+/*
+Recommended starting DPI based on phone range.
+*/
+
+if(phoneRange === "low"){
+
+dpi = 600;
+
+}
+
+else if(phoneRange === "mid"){
+
+dpi = 700;
+
+}
+
+else if(phoneRange === "high"){
+
+dpi = 750;
+
+}
+
+else{
+
+dpi = 800;
+
+}
+
+
+dpiNote =
+"This is a starting-point recommendation. Adjust it only if your controls feel uncomfortable.";
+
+}
+
+
+/*
+========================================================
+ RESULT
+========================================================
+*/
+
+document
+.getElementById("resultPhone")
+.textContent =
+phoneName;
+
+
+document
+.getElementById("resultRange")
+.textContent =
+"Phone range: " +
+getRangeName(phoneRange);
+
 
 document
 .getElementById("general")
 .textContent =
 general;
 
+
 document
 .getElementById("redDot")
 .textContent =
 redDot;
+
 
 document
 .getElementById("scope2x")
 .textContent =
 scope2x;
 
+
 document
 .getElementById("scope4x")
 .textContent =
 scope4x;
 
+
 document
 .getElementById("sniper")
 .textContent =
 sniper;
+
 
 document
 .getElementById("freeLook")
@@ -1218,159 +1556,102 @@ document
 freeLook;
 
 
-/* DPI */
-
-const dpiResult =
-document.getElementById("dpiResult");
-
-const dpiNote =
-document.getElementById("dpiNote");
+document
+.getElementById("dpiResult")
+.textContent =
+dpi;
 
 
-if(dpiMode === "keep"){
-
-const currentDpi =
-Number(
-document.getElementById("currentDpi").value
-);
-
-if(
-currentDpi >= 300 &&
-currentDpi <= 1200
-){
-
-dpiResult.textContent =
-currentDpi + " DPI";
-
-dpiNote.textContent =
-"Your current DPI is kept.";
-
-}
-
-else{
-
-dpiResult.textContent =
-"Keep your current DPI";
-
-dpiNote.textContent =
-"No DPI change is required.";
-
-}
-
-}
-
-else{
-
-let recommendedDpi;
-
-if(deviceType === "low"){
-
-recommendedDpi = 600;
-
-dpiNote.textContent =
-"Conservative DPI recommended for better stability on lower-performance devices.";
-
-}
-
-else if(deviceType === "mid"){
-
-recommendedDpi = 700;
-
-dpiNote.textContent =
-"Moderate DPI recommended as a balanced starting point.";
-
-}
-
-else if(deviceType === "high"){
-
-recommendedDpi = 750;
-
-dpiNote.textContent =
-"Moderate-high DPI can be tested on stronger devices.";
-
-}
-
-else{
-
-recommendedDpi = 800;
-
-dpiNote.textContent =
-"Your device can test a higher DPI, but avoid increasing it too aggressively.";
-
-}
-
-dpiResult.textContent =
-recommendedDpi + " DPI";
-
-}
+document
+.getElementById("dpiNote")
+.textContent =
+dpiNote;
 
 
-/* SAVE */
-
-const resultData = {
-
-deviceType,
-ram,
-playstyle,
-weapon,
-
-general,
-redDot,
-scope2x,
-scope4x,
-sniper,
-freeLook,
-
-dpi:
-dpiResult.textContent
-
-};
-
-localStorage.setItem(
-"luharLastSensitivity",
-JSON.stringify(resultData)
-);
+document
+.getElementById("resultNote")
+.textContent =
+"Starting settings for " +
+phoneName +
+". Test the settings in-game and adjust gradually if needed.";
 
 
-/* ANALYTICS */
-
-if(typeof gtag === "function"){
-
-gtag(
-"event",
-"sensitivity_generated_no_ai",
-{
-
-device_type:deviceType,
-
-ram:ram,
-
-playstyle:playstyle,
-
-weapon:weapon,
-
-dpi_mode:dpiMode
-
-}
-);
-
-}
-
-
-/* SHOW */
+/*
+========================================================
+ SHOW RESULT
+========================================================
+*/
 
 results.classList.add("show");
+
 
 results.scrollIntoView({
 behavior:"smooth",
 block:"start"
 });
 
+
+/*
+========================================================
+ ANALYTICS
+========================================================
+*/
+
+gtag(
+"event",
+"standard_sensitivity_generated",
+{
+
+phone_range:
+phoneRange,
+
+ram:
+ram,
+
+playstyle:
+playstyle,
+
+weapon:
+weapon
+
+}
+);
+
 });
 
 
+/*
+========================================================
+ RANGE NAME
+========================================================
+*/
 
-/* COPY SETTINGS */
+function getRangeName(
+range
+){
+
+if(range === "low")
+return "Low-end";
+
+if(range === "mid")
+return "Mid-range";
+
+if(range === "high")
+return "High-end";
+
+if(range === "gaming")
+return "Gaming";
+
+return range;
+
+}
+
+
+/*
+========================================================
+ COPY SETTINGS
+========================================================
+*/
 
 document
 .getElementById("copyBtn")
@@ -1378,12 +1659,16 @@ document
 "click",
 async()=>{
 
+
 const text = `
 
 LuharSensi Free Fire Settings
 
-Device Type:
-${document.getElementById("deviceType").value}
+Phone:
+${document.getElementById("resultPhone").textContent}
+
+Phone Range:
+${document.getElementById("resultRange").textContent.replace("Phone range: ","")}
 
 RAM:
 ${document.getElementById("ram").value} GB
@@ -1406,7 +1691,7 @@ ${document.getElementById("scope2x").textContent}
 4X Scope:
 ${document.getElementById("scope4x").textContent}
 
-Sniper Scope:
+Sniper:
 ${document.getElementById("sniper").textContent}
 
 Free Look:
@@ -1420,22 +1705,31 @@ ${document.getElementById("dpiResult").textContent}
 
 try{
 
-await navigator.clipboard.writeText(text);
+await navigator.clipboard.writeText(
+text
+);
+
 
 const button =
 document.getElementById("copyBtn");
 
-const old =
+
+const oldText =
 button.textContent;
+
 
 button.textContent =
 "✓ Copied";
 
-setTimeout(()=>{
 
-button.textContent = old;
+setTimeout(
+()=>{
+button.textContent =
+oldText;
+},
+1500
+);
 
-},1500);
 
 }
 
@@ -1447,8 +1741,7 @@ alert(
 
 }
 
-}
-);
+});
 
 </script>
 
