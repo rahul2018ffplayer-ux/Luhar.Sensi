@@ -1,10 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>LuharSensi AI - Free Fire Sensitivity Generator</title>
+
+  <meta name="description" content="LuharSensi AI helps generate Free Fire sensitivity settings for your phone and playstyle.">
+  <meta name="keywords" content="Free Fire sensitivity, sensitivity generator, LuharSensi, Free Fire settings">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
 
   <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6579899788641813"
-       crossorigin="anonymous"></script>
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6579899788641813"
+    crossorigin="anonymous"></script>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script>
@@ -15,471 +26,581 @@
     gtag('config', 'G-C8YB323Q61');
   </script>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title>LuharSensi — Choose Platform</title>
-  <meta name="description" content="LuharSensi Free Fire sensitivity tools.">
-
-  <!-- LuharSensi Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png">
-
   <style>
-    *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      font-family:Inter,system-ui,Arial,sans-serif;
-      background:#08090d;
-      color:#f4f6fb
+    * {
+      box-sizing: border-box;
     }
 
-    body:before{
-      content:"";
-      position:fixed;
-      inset:0;
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, Arial, sans-serif;
       background:
-        radial-gradient(circle at 20% 0%,#25345a33,transparent 35%),
-        radial-gradient(circle at 90% 20%,#00e5ff12,transparent 30%);
-      pointer-events:none
+        radial-gradient(circle at top left, rgba(88, 80, 255, 0.16), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(0, 210, 255, 0.08), transparent 30%),
+        #08090d;
+      color: #f4f6fb;
     }
 
-    .container{
-      width:min(1050px,92%);
-      margin:auto
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, black, transparent);
     }
 
-    .nav{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:22px 0
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .logo{
-      font-size:22px;
-      font-weight:900;
-      letter-spacing:.5px
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 9, 13, 0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    .logo span{
-      color:#00e5ff
+    .nav-inner {
+      max-width: 1150px;
+      margin: auto;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    .hero{
-      text-align:center;
-      padding:55px 0 35px
+    .brand {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
     }
 
-    .badge{
-      display:inline-block;
-      border:1px solid #ffffff18;
-      background:#ffffff08;
-      border-radius:999px;
-      padding:8px 13px;
-      font-size:12px;
-      color:#aeb8c9
+    .brand span {
+      color: #7c6cff;
     }
 
-    .hero h1{
-      font-size:clamp(38px,7vw,70px);
-      line-height:.95;
-      margin:20px 0 15px
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      color: #b7bdca;
     }
 
-    .hero h1 span{
-      color:#00e5ff
+    .nav-links a {
+      transition: 0.2s;
     }
 
-    .hero p{
-      color:#9da7b8;
-      max-width:620px;
-      margin:auto;
-      line-height:1.6
+    .nav-links a:hover {
+      color: #ffffff;
     }
 
-    .card{
-      background:#11141b;
-      border:1px solid #ffffff10;
-      border-radius:22px;
-      padding:26px;
-      box-shadow:0 20px 60px #0008;
-      margin:25px 0
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 80px 20px 30px;
+      text-align: center;
+      position: relative;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: rgba(124,108,255,0.10);
+      border: 1px solid rgba(124,108,255,0.25);
+      color: #bdb5ff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
     }
 
-    .field label{
-      display:block;
-      font-size:13px;
-      color:#aeb7c7;
-      margin-bottom:8px
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #7c6cff;
+      box-shadow: 0 0 12px rgba(124,108,255,0.9);
     }
 
-    .field select,
-    .field input{
-      width:100%;
-      padding:14px;
-      background:#0a0c11;
-      border:1px solid #ffffff15;
-      border-radius:12px;
-      color:#fff;
-      font-size:15px;
-      outline:none
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 8vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -3px;
+      font-weight: 950;
     }
 
-    .field input::placeholder{
-      color:#596273
+    h1 span {
+      background: linear-gradient(90deg, #8b7cff, #54d8ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    .field select:focus,
-    .field input:focus{
-      border-color:#00e5ff55
+    .subtitle {
+      max-width: 680px;
+      margin: 22px auto 0;
+      color: #9ea5b5;
+      font-size: 17px;
+      line-height: 1.7;
     }
 
-    .styles{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px
+    .main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 35px 20px 70px;
     }
 
-    .style{
-      padding:13px;
-      border:1px solid #ffffff12;
-      background:#0a0c11;
-      border-radius:12px;
-      color:#b8c0ce;
-      cursor:pointer;
-      text-align:center
+    .choose-title {
+      text-align: center;
+      font-size: 28px;
+      margin: 15px 0 10px;
+      font-weight: 850;
     }
 
-    .style.active{
-      border-color:#00e5ff;
-      background:#00e5ff12;
-      color:#fff
+    .choose-subtitle {
+      text-align: center;
+      color: #8f96a6;
+      margin: 0 auto 30px;
+      font-size: 14px;
     }
 
-    .generate{
-      width:100%;
-      border:0;
-      border-radius:14px;
-      padding:16px;
-      margin-top:20px;
-      background:#00e5ff;
-      color:#001016;
-      font-size:16px;
-      font-weight:900;
-      cursor:pointer
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      max-width: 900px;
+      margin: auto;
     }
 
-    .result{
-      display:none
+    .option {
+      position: relative;
+      padding: 30px;
+      min-height: 330px;
+      border-radius: 24px;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.055),
+        rgba(255,255,255,0.018)
+      );
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.25);
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      overflow: hidden;
     }
 
-    .result.show{
-      display:block
+    .option:before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -80px;
+      top: -80px;
+      border-radius: 50%;
+      background: rgba(124,108,255,0.12);
+      filter: blur(8px);
     }
 
-    .result h2{
-      margin-top:0
+    .option:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124,108,255,0.35);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.38);
     }
 
-    .settings{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px
+    .option.standard:hover {
+      border-color: rgba(84,216,255,0.35);
     }
 
-    .setting{
-      background:#0a0c11;
-      border:1px solid #ffffff0e;
-      border-radius:14px;
-      padding:16px
+    .icon {
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 17px;
+      background: rgba(124,108,255,0.12);
+      border: 1px solid rgba(124,108,255,0.22);
+      font-size: 28px;
+      margin-bottom: 22px;
     }
 
-    .setting small{
-      color:#8993a5
+    .standard .icon {
+      background: rgba(84,216,255,0.10);
+      border-color: rgba(84,216,255,0.20);
     }
 
-    .setting strong{
-      display:block;
-      font-size:28px;
-      margin-top:5px;
-      color:#00e5ff
+    .option h2 {
+      margin: 0 0 12px;
+      font-size: 25px;
+      font-weight: 850;
     }
 
-    .dpi{
-      font-size:42px;
-      font-weight:900
+    .option p {
+      color: #969dac;
+      line-height: 1.65;
+      font-size: 14px;
+      min-height: 70px;
+      margin: 0 0 22px;
     }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      margin-top:18px
+    .features {
+      margin: 0 0 25px;
+      padding: 0;
+      list-style: none;
     }
 
-    .actions button{
-      flex:1;
-      padding:13px;
-      border-radius:12px;
-      border:1px solid #ffffff16;
-      background:#ffffff08;
-      color:#fff;
-      cursor:pointer
+    .features li {
+      color: #c3c8d3;
+      font-size: 13px;
+      margin: 9px 0;
     }
 
-    .note{
-      color:#8791a3;
-      font-size:12px;
-      line-height:1.5;
-      margin-top:18px
+    .features li:before {
+      content: "✓";
+      color: #7c6cff;
+      font-weight: 900;
+      margin-right: 9px;
     }
 
-    .navlinks{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap
+    .standard .features li:before {
+      color: #54d8ff;
     }
 
-    .navlinks a{
-      color:#8f9aad;
-      text-decoration:none;
-      padding:9px 12px;
-      border-radius:10px;
-      font-size:13px
+    .button {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #7666ff, #5548e8);
+      box-shadow: 0 10px 30px rgba(100,80,255,0.20);
+      transition: transform .2s, filter .2s;
     }
 
-    .navlinks a:hover,
-    .navlinks a.active{
-      color:#fff;
-      background:#ffffff09
+    .button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
     }
 
-    .choice-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:16px;
-      margin-top:25px
+    .standard .button {
+      background: linear-gradient(135deg, #24bde5, #287be8);
+      box-shadow: 0 10px 30px rgba(36,189,229,0.15);
     }
 
-    .platform{
-      display:block;
-      text-decoration:none;
-      color:#fff;
-      background:#11141b;
-      border:1px solid #ffffff10;
-      border-radius:22px;
-      padding:32px;
-      text-align:center;
-      transition:.2s
+    .ad-container {
+      max-width: 900px;
+      min-height: 100px;
+      margin: 35px auto;
+      text-align: center;
+      overflow: hidden;
     }
 
-    .platform:hover{
-      transform:translateY(-4px);
-      border-color:#00e5ff66
+    .info {
+      max-width: 900px;
+      margin: 45px auto 0;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.025);
     }
 
-    .platform .emoji{
-      font-size:48px
+    .info h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
     }
 
-    .platform h2{
-      margin:12px 0 7px
+    .info p {
+      color: #949baa;
+      line-height: 1.7;
+      margin: 8px 0;
+      font-size: 14px;
     }
 
-    .platform p{
-      color:#8f99aa;
-      line-height:1.5
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 25px 20px;
+      text-align: center;
+      color: #747b89;
+      font-size: 13px;
     }
 
-    .small{
-      font-size:12px;
-      color:#748094
+    footer a {
+      color: #969dac;
+      margin: 0 7px;
     }
 
-    .chatbox{
-      min-height:130px;
-      width:100%;
-      resize:vertical;
-      padding:15px;
-      background:#0a0c11;
-      border:1px solid #ffffff15;
-      border-radius:12px;
-      color:#fff;
-      font:inherit
+    footer a:hover {
+      color: white;
     }
 
-    .messages{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:18px
-    }
-
-    .msg{
-      padding:14px;
-      border-radius:14px;
-      line-height:1.6;
-      white-space:pre-wrap
-    }
-
-    .msg.user{
-      background:#00e5ff12;
-      border:1px solid #00e5ff22
-    }
-
-    .msg.ai{
-      background:#0a0c11;
-      border:1px solid #ffffff0d;
-      color:#b9c2d0
-    }
-
-    .btnlink{
-      display:inline-block;
-      text-decoration:none
-    }
-
-    @media(max-width:650px){
-      .grid,
-      .settings{
-        grid-template-columns:1fr
+    @media (max-width: 750px) {
+      .nav-inner {
+        padding: 14px 15px;
       }
 
-      .styles{
-        grid-template-columns:1fr
+      .nav-links {
+        gap: 10px;
+        font-size: 12px;
       }
 
-      .hero{
-        padding-top:35px
+      .hero {
+        padding-top: 60px;
       }
 
-      .card{
-        padding:18px
+      h1 {
+        letter-spacing: -2px;
       }
 
-      .actions{
-        flex-direction:column
+      .subtitle {
+        font-size: 15px;
       }
 
-      .choice-grid{
-        grid-template-columns:1fr
+      .options {
+        grid-template-columns: 1fr;
       }
 
-      .navlinks{
-        width:100%
+      .option {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .brand {
+        font-size: 18px;
+      }
+
+      .nav-links a:nth-child(3),
+      .nav-links a:nth-child(4) {
+        display: none;
+      }
+
+      .hero {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .main {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      h1 {
+        font-size: 45px;
       }
     }
   </style>
-
 </head>
 
 <body>
 
-  <div class="container">
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-inner">
 
-    <nav class="nav">
-
-      <a href="index.html" class="logo" style="text-decoration:none;color:#fff">
-        LUHAR<span>SENSI</span>
+      <a href="index.html" class="brand">
+        Luhar<span>Sensi</span>
       </a>
 
-      <div class="navlinks">
+      <div class="nav-links">
         <a href="index.html">Home</a>
-        <a href="generator.html">Sensitivity</a>
-        <a href="ai.html">AI Chat</a>
+        <a href="generator.html">Generator</a>
+        <a href="ai-generator.html">AI Generator</a>
         <a href="about.html">About</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="contact.html">Contact</a>
       </div>
 
-    </nav>
+    </div>
+  </nav>
 
-    <section class="hero">
 
-      <div class="badge">WELCOME TO LUHAR SENSI</div>
+  <!-- HERO -->
+  <section class="hero">
 
-      <h1>Choose your <span>platform.</span></h1>
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Free Fire Sensitivity Generator
+    </div>
+
+    <h1>
+      Find Your<br>
+      <span>Perfect Sensitivity</span>
+    </h1>
+
+    <p class="subtitle">
+      Generate personalized Free Fire sensitivity settings
+      based on your phone, RAM, DPI, playstyle and weapon preference.
+    </p>
+
+  </section>
+
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <h2 class="choose-title">Choose Your Generator</h2>
+
+    <p class="choose-subtitle">
+      Select how you want LuharSensi to generate your sensitivity.
+    </p>
+
+
+    <div class="options">
+
+      <!-- AI OPTION -->
+      <div class="option">
+
+        <div class="icon">🤖</div>
+
+        <h2>Generate with AI</h2>
+
+        <p>
+          Let AI analyze your phone specifications, RAM,
+          playstyle and preferences to create personalized
+          sensitivity settings.
+        </p>
+
+        <ul class="features">
+          <li>AI-powered sensitivity</li>
+          <li>Phone specification analysis</li>
+          <li>Personalized settings</li>
+          <li>Advanced recommendations</li>
+        </ul>
+
+        <button
+          class="button"
+          onclick="goToAI()">
+          Generate with AI →
+        </button>
+
+      </div>
+
+
+      <!-- WITHOUT AI OPTION -->
+      <div class="option standard">
+
+        <div class="icon">⚡</div>
+
+        <h2>Generate without AI</h2>
+
+        <p>
+          Generate sensitivity instantly using LuharSensi's
+          built-in calculation system without AI sensitivity
+          generation.
+        </p>
+
+        <ul class="features">
+          <li>Fast generation</li>
+          <li>No AI sensitivity generation</li>
+          <li>Phone-based calculation</li>
+          <li>Completely free</li>
+        </ul>
+
+        <button
+          class="button"
+          onclick="goToStandard()">
+          Generate without AI →
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- AD -->
+    <div class="ad-container">
+
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6579899788641813"
+        data-ad-slot="auto"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+
+      <script>
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {}
+      </script>
+
+    </div>
+
+
+    <!-- INFORMATION -->
+    <section class="info">
+
+      <h3>How LuharSensi works</h3>
 
       <p>
-        Start by selecting your device platform. Then build your sensitivity
-        setup or chat with LuharSensi AI.
+        <strong>1.</strong> Choose whether you want AI or
+        standard sensitivity generation.
+      </p>
+
+      <p>
+        <strong>2.</strong> Enter your phone model and gaming
+        preferences.
+      </p>
+
+      <p>
+        <strong>3.</strong> LuharSensi analyzes your device
+        and generates suitable Free Fire sensitivity settings.
+      </p>
+
+      <p>
+        <strong>4.</strong> Copy the settings and test them
+        in Free Fire.
       </p>
 
     </section>
 
-    <section class="choice-grid">
+  </main>
 
-      <a
-        class="platform"
-        href="generator.html?platform=Android"
-        onclick="localStorage.setItem('platform','Android')"
-      >
 
-        <div class="emoji">🤖</div>
+  <!-- FOOTER -->
+  <footer>
 
-        <h2>Android</h2>
+    <div>
+      © 2026 LuharSensi. All rights reserved.
+    </div>
 
-        <p>
-          Generate Android-friendly DPI and sensitivity settings.
-        </p>
+    <div style="margin-top:10px;">
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </div>
 
-        <span class="small">
-          Continue with Android →
-        </span>
+  </footer>
 
-      </a>
 
-      <a
-        class="platform"
-        href="generator.html?platform=iOS"
-        onclick="localStorage.setItem('platform','iOS')"
-      >
+  <script>
 
-        <div class="emoji">🍎</div>
+    function goToAI() {
+      window.location.href = "ai-generator.html";
+    }
 
-        <h2>iOS</h2>
+    function goToStandard() {
+      window.location.href = "generator.html";
+    }
 
-        <p>
-          Generate iPhone/iPad sensitivity settings without Android DPI.
-        </p>
-
-        <span class="small">
-          Continue with iOS →
-        </span>
-
-      </a>
-
-    </section>
-
-    <section
-      class="card"
-      style="text-align:center;margin-top:28px"
-    >
-
-      <h2>What do you want to do?</h2>
-
-      <p style="color:#9da7b8;line-height:1.7">
-        Choose Android or iOS above, then use the Sensitivity Generator.
-        You can also ask LuharSensi AI about aim, recoil, movement, FPS and settings.
-      </p>
-
-      <a
-        class="generate btnlink"
-        style="padding:15px 22px;color:#001016"
-        href="ai.html"
-      >
-        🤖 Open LuharSensi AI
-      </a>
-
-    </section>
-
-  </div>
+  </script>
 
 </body>
 </html>
