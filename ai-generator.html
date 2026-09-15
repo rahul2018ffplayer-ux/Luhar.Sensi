@@ -1,0 +1,1646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>LuharSensi AI Generator</title>
+
+<meta name="description" content="Generate personalized Free Fire sensitivity using LuharSensi AI.">
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+<!-- Google AdSense -->
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6579899788641813"
+crossorigin="anonymous"></script>
+
+<!-- Google Analytics -->
+<script async
+src="https://www.googletagmanager.com/gtag/js?id=G-C8YB323Q61"></script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-C8YB323Q61');
+</script>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+min-height:100vh;
+font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+background:
+radial-gradient(circle at 15% 5%,rgba(124,108,255,.16),transparent 30%),
+radial-gradient(circle at 85% 90%,rgba(0,229,255,.08),transparent 30%),
+#08090d;
+color:#f4f6fb;
+}
+
+a{
+color:inherit;
+text-decoration:none;
+}
+
+/* NAV */
+
+header{
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(8,9,13,.88);
+backdrop-filter:blur(15px);
+border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.nav{
+max-width:1100px;
+margin:auto;
+padding:14px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.logo{
+font-size:22px;
+font-weight:900;
+}
+
+.logo span{
+color:#7c6cff;
+}
+
+nav{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:13px;
+color:#9ba5b7;
+padding:9px 12px;
+border-radius:10px;
+}
+
+nav a:hover,
+nav a.active{
+color:#fff;
+background:rgba(255,255,255,.08);
+}
+
+/* MAIN */
+
+.container{
+width:min(950px,calc(100% - 30px));
+margin:auto;
+padding:45px 0 70px;
+}
+
+.hero{
+text-align:center;
+margin-bottom:30px;
+}
+
+.badge{
+display:inline-block;
+padding:7px 13px;
+border-radius:999px;
+border:1px solid rgba(124,108,255,.3);
+background:rgba(124,108,255,.08);
+color:#bdb5ff;
+font-size:12px;
+font-weight:800;
+margin-bottom:16px;
+}
+
+h1{
+margin:0;
+font-size:clamp(35px,7vw,58px);
+letter-spacing:-2px;
+}
+
+.hero h1 span{
+background:linear-gradient(90deg,#8b7cff,#54d8ff);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+}
+
+.hero p{
+max-width:680px;
+margin:16px auto 0;
+color:#929cad;
+line-height:1.6;
+}
+
+/* CARD */
+
+.card{
+background:rgba(17,20,27,.9);
+border:1px solid rgba(255,255,255,.08);
+border-radius:22px;
+padding:25px;
+margin-bottom:20px;
+box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.card h2{
+margin:0 0 7px;
+}
+
+.card-sub{
+color:#8993a5;
+font-size:13px;
+line-height:1.5;
+margin-bottom:20px;
+}
+
+/* FORM */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:17px;
+}
+
+.field{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.field.full{
+grid-column:1/-1;
+}
+
+label{
+font-size:13px;
+font-weight:700;
+color:#dce2ec;
+}
+
+input,
+select{
+width:100%;
+padding:14px;
+border-radius:12px;
+background:#0b0d13;
+border:1px solid rgba(255,255,255,.1);
+color:#fff;
+font-size:14px;
+outline:none;
+}
+
+input:focus,
+select:focus{
+border-color:#7c6cff;
+box-shadow:0 0 0 3px rgba(124,108,255,.08);
+}
+
+/* RADIO */
+
+.radio-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
+
+.radio{
+position:relative;
+}
+
+.radio input{
+position:absolute;
+opacity:0;
+}
+
+.radio label{
+display:block;
+padding:13px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.09);
+background:#0b0d13;
+cursor:pointer;
+text-align:center;
+transition:.2s;
+}
+
+.radio input:checked + label{
+border-color:#7c6cff;
+background:rgba(124,108,255,.1);
+color:#fff;
+}
+
+/* VERIFY */
+
+.verify-btn{
+width:100%;
+margin-top:10px;
+background:#151923;
+border:1px solid rgba(255,255,255,.1);
+color:#fff;
+}
+
+.verify-btn:hover{
+border-color:#7c6cff;
+}
+
+.verify-status{
+display:none;
+margin-top:13px;
+padding:13px;
+border-radius:12px;
+font-size:13px;
+line-height:1.5;
+}
+
+.verify-status.show{
+display:block;
+}
+
+.verify-status.success{
+background:rgba(0,220,140,.07);
+border:1px solid rgba(0,220,140,.2);
+color:#76efc0;
+}
+
+.verify-status.error{
+background:rgba(255,70,70,.07);
+border:1px solid rgba(255,70,70,.2);
+color:#ff9b9b;
+}
+
+.verify-status.busy{
+background:rgba(255,190,50,.07);
+border:1px solid rgba(255,190,50,.2);
+color:#ffd477;
+}
+
+/* GENERATE */
+
+.generate{
+width:100%;
+margin-top:20px;
+padding:17px;
+border:0;
+border-radius:13px;
+background:linear-gradient(135deg,#7868ff,#5548e8);
+color:#fff;
+font-size:15px;
+font-weight:900;
+cursor:pointer;
+box-shadow:0 12px 30px rgba(100,80,255,.2);
+transition:.2s;
+}
+
+.generate:hover{
+transform:translateY(-1px);
+filter:brightness(1.07);
+}
+
+.generate:disabled{
+opacity:.55;
+cursor:not-allowed;
+transform:none;
+}
+
+/* AI LIMIT */
+
+.ai-limit{
+display:none;
+margin-bottom:20px;
+padding:18px;
+border-radius:17px;
+background:rgba(255,180,40,.07);
+border:1px solid rgba(255,180,40,.22);
+}
+
+.ai-limit.show{
+display:block;
+}
+
+.ai-limit-title{
+font-weight:900;
+color:#ffd477;
+margin-bottom:7px;
+}
+
+.ai-limit-text{
+color:#c9b78e;
+font-size:13px;
+line-height:1.6;
+}
+
+.fallback{
+margin-top:15px;
+width:100%;
+padding:13px;
+border-radius:12px;
+border:1px solid rgba(0,229,255,.22);
+background:rgba(0,229,255,.06);
+color:#73edff;
+font-weight:800;
+cursor:pointer;
+}
+
+/* LOADING */
+
+.loading{
+display:none;
+text-align:center;
+padding:25px 10px;
+}
+
+.loading.show{
+display:block;
+}
+
+.spinner{
+width:32px;
+height:32px;
+border:3px solid rgba(255,255,255,.12);
+border-top-color:#7c6cff;
+border-radius:50%;
+margin:0 auto 13px;
+animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+}
+
+.loading-text{
+color:#9ba4b4;
+font-size:13px;
+}
+
+/* RESULTS */
+
+.results{
+display:none;
+}
+
+.results.show{
+display:block;
+}
+
+.result-header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+margin-bottom:20px;
+}
+
+.result-tag{
+font-size:11px;
+font-weight:900;
+padding:7px 10px;
+border-radius:999px;
+color:#bdb5ff;
+border:1px solid rgba(124,108,255,.25);
+background:rgba(124,108,255,.08);
+}
+
+.sensitivity-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.sense{
+background:#0b0e14;
+border:1px solid rgba(255,255,255,.07);
+padding:17px;
+border-radius:15px;
+}
+
+.sense-name{
+color:#8993a5;
+font-size:12px;
+}
+
+.sense-value{
+font-size:31px;
+font-weight:900;
+color:#a99fff;
+margin-top:5px;
+}
+
+.dpi-box{
+margin-top:16px;
+padding:17px;
+border-radius:15px;
+background:rgba(124,108,255,.05);
+border:1px solid rgba(124,108,255,.14);
+}
+
+.dpi-title{
+font-size:12px;
+color:#96a0b3;
+}
+
+.dpi-value{
+margin-top:4px;
+font-size:24px;
+font-weight:900;
+}
+
+.note{
+margin-top:12px;
+color:#828c9d;
+font-size:12px;
+line-height:1.6;
+}
+
+.copy{
+width:100%;
+margin-top:17px;
+padding:14px;
+border-radius:12px;
+background:#151923;
+border:1px solid rgba(255,255,255,.1);
+color:#fff;
+font-weight:800;
+cursor:pointer;
+}
+
+/* AD */
+
+.ad{
+min-height:90px;
+margin:20px 0;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+/* FOOTER */
+
+footer{
+border-top:1px solid rgba(255,255,255,.07);
+text-align:center;
+padding:25px;
+color:#707a8c;
+font-size:12px;
+}
+
+@media(max-width:700px){
+
+.nav{
+flex-direction:column;
+align-items:flex-start;
+}
+
+nav{
+width:100%;
+overflow-x:auto;
+flex-wrap:nowrap;
+}
+
+nav a{
+white-space:nowrap;
+}
+
+.grid,
+.sensitivity-grid,
+.radio-grid{
+grid-template-columns:1fr;
+}
+
+.field.full{
+grid-column:auto;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<a href="index.html" class="logo">
+LUHAR<span>SENSI</span>
+</a>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="generator.html">Generator</a>
+<a href="ai-generator.html" class="active">AI Generator</a>
+<a href="ai.html">AI Chat</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<section class="hero">
+
+<div class="badge">
+🤖 AI POWERED
+</div>
+
+<h1>
+Generate with <span>AI</span>
+</h1>
+
+<p>
+Let LuharSensi AI analyze your device and preferences
+to create personalized Free Fire sensitivity settings.
+</p>
+
+</section>
+
+
+<div class="ad">
+
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-6579899788641813"
+data-ad-slot="auto"
+data-ad-format="auto"
+data-full-width-responsive="true"></ins>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
+
+<!-- AI LIMIT MESSAGE -->
+
+<div id="aiLimit" class="ai-limit">
+
+<div class="ai-limit-title">
+⚠️ AI is busy right now
+</div>
+
+<div class="ai-limit-text">
+Many users are trying to use AI right now. Please come back later, or generate your sensitivity without AI.
+</div>
+
+<button
+id="fallbackBtn"
+class="fallback">
+
+Generate without AI →
+
+</button>
+
+</div>
+
+
+<!-- PHONE -->
+
+<section class="card">
+
+<h2>1. Verify your phone</h2>
+
+<div class="card-sub">
+Enter your exact phone model so the AI can use your device information.
+</div>
+
+<div class="field">
+
+<label for="phone">
+Phone model
+</label>
+
+<input
+id="phone"
+type="text"
+placeholder="Example: Tecno Spark 8C"
+autocomplete="off">
+
+</div>
+
+<button
+id="verifyBtn"
+class="verify-btn">
+
+Verify Phone
+
+</button>
+
+<div
+id="verifyStatus"
+class="verify-status">
+</div>
+
+</section>
+
+
+<!-- PREFERENCES -->
+
+<section class="card">
+
+<h2>2. Your preferences</h2>
+
+<div class="card-sub">
+Tell the AI how you play.
+</div>
+
+
+<div class="grid">
+
+
+<div class="field">
+
+<label for="ram">
+RAM
+</label>
+
+<select id="ram">
+
+<option value="2">2 GB</option>
+<option value="3">3 GB</option>
+<option value="4">4 GB</option>
+<option value="6" selected>6 GB</option>
+<option value="8">8 GB</option>
+<option value="12">12 GB</option>
+<option value="16">16 GB</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label for="dpiMode">
+DPI preference
+</label>
+
+<select id="dpiMode">
+
+<option value="keep">
+Keep current DPI
+</option>
+
+<option value="recommend">
+Let AI recommend DPI
+</option>
+
+</select>
+
+</div>
+
+
+<div
+id="currentDpiField"
+class="field">
+
+<label for="currentDpi">
+Current DPI
+</label>
+
+<input
+id="currentDpi"
+type="number"
+min="300"
+max="1200"
+placeholder="Example: 700">
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- PLAYSTYLE -->
+
+<section class="card">
+
+<h2>3. Playstyle</h2>
+
+<div class="card-sub">
+Choose the style you want the AI to prioritize.
+</div>
+
+<div class="radio-grid">
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="playstyle"
+id="movement"
+value="movement"
+checked>
+
+<label for="movement">
+Movement
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="playstyle"
+id="balanced"
+value="balanced">
+
+<label for="balanced">
+Balanced
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="playstyle"
+id="accuracy"
+value="accuracy">
+
+<label for="accuracy">
+Accuracy
+</label>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- WEAPON -->
+
+<section class="card">
+
+<h2>4. Weapon preference</h2>
+
+<div class="card-sub">
+Choose your main weapon style.
+</div>
+
+<div class="radio-grid">
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="weapon"
+id="mixed"
+value="mixed"
+checked>
+
+<label for="mixed">
+Mixed
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="weapon"
+id="smg"
+value="smg">
+
+<label for="smg">
+SMG
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="weapon"
+id="shotgun"
+value="shotgun">
+
+<label for="shotgun">
+Shotgun
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="weapon"
+id="ar"
+value="ar">
+
+<label for="ar">
+AR
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="weapon"
+id="sniper"
+value="sniper">
+
+<label for="sniper">
+Sniper
+</label>
+
+</div>
+
+
+<div class="radio">
+
+<input
+type="radio"
+name="weapon"
+id="headshot"
+value="headshot">
+
+<label for="headshot">
+Headshot
+</label>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<button
+id="generateBtn"
+class="generate">
+
+🤖 Generate Sensitivity with AI
+
+</button>
+
+
+<div
+id="loading"
+class="loading">
+
+<div class="spinner"></div>
+
+<div class="loading-text">
+AI is analyzing your device and creating your sensitivity...
+</div>
+
+</div>
+
+
+<!-- RESULTS -->
+
+<section
+id="results"
+class="card results">
+
+<div class="result-header">
+
+<div>
+
+<h2 style="margin:0">
+Your AI Sensitivity
+</h2>
+
+<div class="card-sub" style="margin:5px 0 0">
+Personalized by LuharSensi AI.
+</div>
+
+</div>
+
+<div class="result-tag">
+AI
+</div>
+
+</div>
+
+
+<div class="sensitivity-grid">
+
+
+<div class="sense">
+
+<div class="sense-name">
+General
+</div>
+
+<div id="general" class="sense-value">
+—
+</div>
+
+</div>
+
+
+<div class="sense">
+
+<div class="sense-name">
+Red Dot
+</div>
+
+<div id="redDot" class="sense-value">
+—
+</div>
+
+</div>
+
+
+<div class="sense">
+
+<div class="sense-name">
+2X Scope
+</div>
+
+<div id="scope2x" class="sense-value">
+—
+</div>
+
+</div>
+
+
+<div class="sense">
+
+<div class="sense-name">
+4X Scope
+</div>
+
+<div id="scope4x" class="sense-value">
+—
+</div>
+
+</div>
+
+
+<div class="sense">
+
+<div class="sense-name">
+Sniper Scope
+</div>
+
+<div id="sniper" class="sense-value">
+—
+</div>
+
+</div>
+
+
+<div class="sense">
+
+<div class="sense-name">
+Free Look
+</div>
+
+<div id="freeLook" class="sense-value">
+—
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="dpi-box">
+
+<div class="dpi-title">
+Recommended DPI
+</div>
+
+<div id="dpiResult" class="dpi-value">
+—
+</div>
+
+<div id="dpiNote" class="note">
+</div>
+
+</div>
+
+
+<div id="aiNote" class="note">
+</div>
+
+
+<button
+id="copyBtn"
+class="copy">
+
+Copy Settings
+
+</button>
+
+</section>
+
+
+<div class="ad">
+
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-6579899788641813"
+data-ad-slot="auto"
+data-ad-format="auto"
+data-full-width-responsive="true"></ins>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
+</main>
+
+
+<footer>
+
+© 2026 LuharSensi — Free Fire Sensitivity Tools
+
+</footer>
+
+
+<script>
+
+let verifiedDevice = null;
+
+
+/* ELEMENTS */
+
+const phoneInput =
+document.getElementById("phone");
+
+const verifyBtn =
+document.getElementById("verifyBtn");
+
+const verifyStatus =
+document.getElementById("verifyStatus");
+
+const generateBtn =
+document.getElementById("generateBtn");
+
+const loading =
+document.getElementById("loading");
+
+const results =
+document.getElementById("results");
+
+const aiLimit =
+document.getElementById("aiLimit");
+
+const fallbackBtn =
+document.getElementById("fallbackBtn");
+
+const dpiMode =
+document.getElementById("dpiMode");
+
+const currentDpiField =
+document.getElementById("currentDpiField");
+
+
+/* DPI DISPLAY */
+
+dpiMode.addEventListener(
+"change",
+()=>{
+
+currentDpiField.style.display =
+dpiMode.value === "keep"
+? "flex"
+: "none";
+
+}
+);
+
+
+/* FALLBACK */
+
+fallbackBtn.addEventListener(
+"click",
+()=>{
+
+window.location.href =
+"generator.html";
+
+}
+);
+
+
+/* VERIFY PHONE */
+
+verifyBtn.addEventListener(
+"click",
+async()=>{
+
+const phone =
+phoneInput.value.trim();
+
+if(!phone){
+
+showVerify(
+"Please enter your phone model.",
+"error"
+);
+
+return;
+
+}
+
+
+verifyBtn.disabled = true;
+
+verifyBtn.textContent =
+"Verifying...";
+
+
+showVerify(
+"Checking your phone specifications...",
+"busy"
+);
+
+
+try{
+
+const response =
+await fetch(
+"/api/identify-phone",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+phone
+})
+
+}
+);
+
+
+const data =
+await response.json();
+
+
+if(
+response.status === 429 &&
+data.retryAfterSeconds
+){
+
+showVerify(
+"Phone verification is temporarily rate-limited. Please try again later.",
+"error"
+);
+
+return;
+
+}
+
+
+if(
+data.aiTemporarilyUnavailable
+){
+
+showVerify(
+"AI verification is temporarily unavailable. No phone specifications were guessed.",
+"error"
+);
+
+return;
+
+}
+
+
+if(
+!response.ok ||
+!data.verified
+){
+
+showVerify(
+data.error ||
+"Phone verification failed. Please enter the exact phone model.",
+"error"
+);
+
+return;
+
+}
+
+
+/* VERIFIED */
+
+verifiedDevice = data;
+
+showVerify(
+"✓ Verified: " +
+(data.brand || "") +
+" " +
+(data.model || ""),
+"success"
+);
+
+
+gtag(
+"event",
+"phone_verified",
+{
+brand:data.brand,
+model:data.model
+}
+);
+
+}
+
+catch(error){
+
+console.error(error);
+
+showVerify(
+"Could not connect to the server. Please try again.",
+"error"
+);
+
+}
+
+finally{
+
+verifyBtn.disabled = false;
+
+verifyBtn.textContent =
+"Verify Phone";
+
+}
+
+}
+);
+
+
+/* GENERATE AI */
+
+generateBtn.addEventListener(
+"click",
+async()=>{
+
+if(!verifiedDevice){
+
+showVerify(
+"Please verify your phone before generating AI sensitivity.",
+"error"
+);
+
+document
+.querySelector(".card")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+return;
+
+}
+
+
+aiLimit.classList.remove("show");
+
+results.classList.remove("show");
+
+generateBtn.disabled = true;
+
+loading.classList.add("show");
+
+
+const ram =
+Number(
+document.getElementById("ram").value
+);
+
+const playstyle =
+document.querySelector(
+'input[name="playstyle"]:checked'
+).value;
+
+const weapon =
+document.querySelector(
+'input[name="weapon"]:checked'
+).value;
+
+const selectedDpiMode =
+document.getElementById("dpiMode").value;
+
+const currentDpi =
+Number(
+document.getElementById("currentDpi").value
+);
+
+
+/* REQUEST */
+
+try{
+
+const response =
+await fetch(
+"/api/generate-ai",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+phone:verifiedDevice,
+
+ram,
+
+playstyle,
+
+weapon,
+
+dpiMode:selectedDpiMode,
+
+currentDpi
+
+})
+
+}
+);
+
+
+const data =
+await response.json();
+
+
+/* AI LIMIT */
+
+if(
+response.status === 429 &&
+data.aiLimitReached
+){
+
+aiLimit.classList.add("show");
+
+loading.classList.remove("show");
+
+return;
+
+}
+
+
+/* TEMPORARILY UNAVAILABLE */
+
+if(
+response.status === 503 &&
+data.aiTemporarilyUnavailable
+){
+
+aiLimit.classList.add("show");
+
+loading.classList.remove("show");
+
+return;
+
+}
+
+
+/* OTHER ERROR */
+
+if(!response.ok){
+
+throw new Error(
+data.error ||
+"AI generation failed."
+);
+
+}
+
+
+/* RESULT */
+
+const result =
+data.result || data;
+
+
+document.getElementById("general")
+.textContent =
+result.general ?? "—";
+
+document.getElementById("redDot")
+.textContent =
+result.redDot ?? "—";
+
+document.getElementById("scope2x")
+.textContent =
+result.scope2x ?? "—";
+
+document.getElementById("scope4x")
+.textContent =
+result.scope4x ?? "—";
+
+document.getElementById("sniper")
+.textContent =
+result.sniper ?? "—";
+
+document.getElementById("freeLook")
+.textContent =
+result.freeLook ?? "—";
+
+document.getElementById("dpiResult")
+.textContent =
+result.dpi ?? "—";
+
+document.getElementById("dpiNote")
+.textContent =
+result.dpiNote || "";
+
+document.getElementById("aiNote")
+.textContent =
+result.note || "";
+
+
+/* SHOW */
+
+results.classList.add("show");
+
+results.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+
+gtag(
+"event",
+"ai_sensitivity_generated",
+{
+playstyle,
+weapon,
+ram
+}
+);
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+error.message ||
+"Something went wrong while generating sensitivity."
+);
+
+}
+
+finally{
+
+generateBtn.disabled = false;
+
+loading.classList.remove("show");
+
+}
+
+}
+);
+
+
+/* VERIFY STATUS */
+
+function showVerify(
+message,
+type
+){
+
+verifyStatus.textContent =
+message;
+
+verifyStatus.className =
+"verify-status show " +
+type;
+
+}
+
+
+/* COPY */
+
+document
+.getElementById("copyBtn")
+.addEventListener(
+"click",
+async()=>{
+
+const text = `
+
+LuharSensi AI Free Fire Settings
+
+Phone:
+${verifiedDevice?.brand || ""} ${verifiedDevice?.model || ""}
+
+RAM:
+${document.getElementById("ram").value} GB
+
+Playstyle:
+${document.querySelector('input[name="playstyle"]:checked').value}
+
+Weapon:
+${document.querySelector('input[name="weapon"]:checked').value}
+
+General:
+${document.getElementById("general").textContent}
+
+Red Dot:
+${document.getElementById("redDot").textContent}
+
+2X Scope:
+${document.getElementById("scope2x").textContent}
+
+4X Scope:
+${document.getElementById("scope4x").textContent}
+
+Sniper Scope:
+${document.getElementById("sniper").textContent}
+
+Free Look:
+${document.getElementById("freeLook").textContent}
+
+DPI:
+${document.getElementById("dpiResult").textContent}
+
+`.trim();
+
+
+try{
+
+await navigator.clipboard.writeText(text);
+
+const btn =
+document.getElementById("copyBtn");
+
+const old =
+btn.textContent;
+
+btn.textContent =
+"✓ Copied";
+
+setTimeout(
+()=>{
+btn.textContent = old;
+},
+1500
+);
+
+}
+
+catch(error){
+
+alert(
+"Copy failed. Please copy the settings manually."
+);
+
+}
+
+}
+);
+
+</script>
+
+</body>
+</html>
